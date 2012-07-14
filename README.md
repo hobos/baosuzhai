@@ -1,7 +1,7 @@
 drip
 ====
 
-孜孜不倦 www.zizibujuan.com
+孜孜不倦学习网 www.zizibujuan.com
 
 全民学习，学有所成。
 
