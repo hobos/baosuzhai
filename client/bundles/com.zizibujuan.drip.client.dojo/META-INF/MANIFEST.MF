@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: dojo
+Bundle-SymbolicName: com.zizibujuan.drip.client.dojo
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: dojotoolkit.org
