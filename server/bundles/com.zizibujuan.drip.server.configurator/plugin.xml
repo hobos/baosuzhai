@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+<!--
 	<extension
 		id="com.zizibujuan.drip.application"
 	    point="org.eclipse.core.runtime.applications">
@@ -13,18 +14,18 @@
          </run>
       	</application>
 	</extension>
-
+-->
 	<extension
          point="org.eclipse.equinox.http.registry.httpcontexts">
          <httpcontext
             id="com.zizibujuan.drip.server.configurator.httpcontext.drip">
 	         <resource-mapping
-	               bundle="com.zizibujuan.drip.client.dojo"
-	               path="/static">
-	         </resource-mapping>
-	         <resource-mapping
 	               bundle="com.zizibujuan.drip.client.core"
 	               path="/web">
+	         </resource-mapping>
+	         <resource-mapping
+	               bundle="com.zizibujuan.drip.client.dojo"
+	               path="/static">
 	         </resource-mapping>
          </httpcontext>
     </extension>
