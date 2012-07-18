@@ -26,6 +26,23 @@ fetchTag=""
 publish=""
 javase170=""
 
+updateBaseBuilder () {
+    pushd $supportDir
+    if [[ ! -d org.eclipse.releng.basebuilder_${basebuilderBranch} ]]; then
+        echo "[start - `date +%H\:%M\:%S`] Get org.eclipse.releng.basebuilder_${basebuilderBranch}"
+        cmd="cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse $quietCVS ex -r $basebuilderBranch -d org.eclipse.releng.basebuilder_${basebuilderBranch} org.eclipse.releng.basebuilder"
+        echo $cmd
+        $cmd
+        echo "[finish - `date +%H\:%M\:%S`] Done getting org.eclipse.releng.basebuilder_${basebuilderBranch}"
+    fi
+
+    echo "[`date +%H\:%M\:%S`] Getting org.eclipse.releng.basebuilder_${basebuilderBranch}"
+    rm org.eclipse.releng.basebuilder
+    ln -s ${supportDir}/org.eclipse.releng.basebuilder_${basebuilderBranch} org.eclipse.releng.basebuilder
+    echo "[`date +%H\:%M\:%S`] Done setting org.eclipse.releng.basebuilder"
+	popd
+}
+
 
 updateRelengProject(){
 	pushd $supportDir
@@ -59,5 +76,6 @@ runBuild(){
 }
 
 updateRelengProject
+updateBaseBuilder
 setProperties
 runBuild
