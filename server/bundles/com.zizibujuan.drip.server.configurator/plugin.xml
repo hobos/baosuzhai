@@ -14,6 +14,12 @@
          </run>
       	</application>
 	</extension>
+	<extension id="com.zizibujuan.drip.product" point="org.eclipse.core.runtime.products"> 
+      <product name="Drip" application="org.eclipse.orion.application" description="baosuzhai"> 
+          <property name="appName" value="Drip"/> 
+          <!--<property name="preferenceCustomization" value="plugin_customization.ini"/>-->
+      </product> 
+    </extension> 
 
 	<extension
          point="org.eclipse.equinox.http.registry.httpcontexts">
