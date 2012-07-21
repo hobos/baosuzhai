@@ -3,12 +3,15 @@
 	<property name="super" value="Build specific targets and properties" />
 	<import file="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/>
 
+	<echo message="eclipse.pdebuild.templates: ${eclipse.pdebuild.templates}"/>
+	<echo message="buildDirectory: ${buildDirectory}"/>
+	<echo message="builder: ${builder}"/>
+	<echo message="eclipsePlatformRepo: ${eclipsePlatformRepo}"/>
+	
 	<!-- Map files are here in the releng project -->
 	<target name="getMapFiles"  unless="skipMaps">
 		<!--<property name="mapsCheckoutTag" value="HEAD" /> -->
-		<echo message="buildDirectory: ${buildDirectory}"/>
-		<echo message="builder: ${builder}"/>
-		<echo message="eclipsePlatformRepo: ${eclipsePlatformRepo}"/>
+		
 		
 		<mkdir dir="${buildDirectory}/maps" />
 
