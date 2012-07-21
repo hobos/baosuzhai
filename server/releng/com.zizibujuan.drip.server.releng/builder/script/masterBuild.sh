@@ -28,6 +28,7 @@ javase170=""
 
 
 updateBaseBuilder () {
+	echo "**********************update base builder begin**********************"
     pushd $supportDir
     if [[ ! -d org.eclipse.releng.basebuilder_${basebuilderBranch} ]]; then
         echo "[start - `date +%H\:%M\:%S`] Get org.eclipse.releng.basebuilder_${basebuilderBranch}"
@@ -42,11 +43,12 @@ updateBaseBuilder () {
     ln -s ${supportDir}/org.eclipse.releng.basebuilder_${basebuilderBranch} org.eclipse.releng.basebuilder
     echo "[`date +%H\:%M\:%S`] Done setting org.eclipse.releng.basebuilder"
 	popd
+	echo "**********************update base builder end**********************"
 }
 
 
 updateRelengProject(){
-	echo "update releng project begin..."
+	echo "**********************update releng project begin**********************"
 	
 	echo "cd $supportDir"
 	pushd $supportDir
@@ -74,11 +76,11 @@ updateRelengProject(){
 	
 	echo "[`date +%H\:%M\:%S`] Done getting com.zizibujuan.drip.server.releng"
 	popd
-	echo "update releng project end..."
-	ls
+	echo "**********************update releng project end**********************"
 }
 
 setProperties(){
+	echo "**********************set properties begin**********************"
 	buildDirectory=$writableBuldRoot/$buildType$timestamp
 	buildLabel=$buildType$date-$time
 	javaHome=/usr/lib64/jvm/java-7-oracle
@@ -93,10 +95,11 @@ setProperties(){
 	JAVA70_HOME=/usr/lib64/jvm/java-7-oracle
 
 	javase170="$JAVA70_HOME/jre/lib/resources.jar:$JAVA70_HOME/jre/lib/rt.jar:$JAVA70_HOME/jre/lib/jsse.jar:$JAVA70_HOME/jre/lib/jce.jar:$JAVA70_HOME/jre/lib/charsets.jar"
+	echo "**********************set properties end**********************"
 }
 
 runBuild(){
-	echo "runBuild begin..."
+	echo "**********************run build begin**********************"
 	cmd="$javaHome/bin/java -enableassertions -jar $launcherJar \
 			-application org.eclipse.ant.core.antRunner \
 			-buildfile $builderDir/buildWebIDE.xml \
@@ -138,7 +141,7 @@ EOF
 		exit
 	fi
 	
-	echo "run build end..."
+	echo "**********************run build end**********************"
 }
 
 updateRelengProject
