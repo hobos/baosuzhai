@@ -10,7 +10,7 @@ publish=""
 user=aniefer
 resultsEmail=orion-releng@eclipse.org
 
-buildType=I
+buildType=N
 date=$(date +%Y%m%d)
 time=$(date +%H%M)
 timestamp=$date$time
@@ -25,6 +25,14 @@ compareMaps=""
 fetchTag=""
 publish=""
 javase170=""
+
+
+tagMaps=""
+compareMaps=""
+fetchTag="-DfetchTag=CVS=HEAD,GIT=origin/master"
+publish="-DpublishToEclipse=true"
+
+
 
 
 updateBaseBuilder () {
