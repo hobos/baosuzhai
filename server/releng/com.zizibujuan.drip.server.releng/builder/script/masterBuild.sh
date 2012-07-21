@@ -46,13 +46,24 @@ updateBaseBuilder () {
 
 
 updateRelengProject(){
+	echo "update releng project begin..."
+	
+	echo "cd $supportDir"
 	pushd $supportDir
+	ls
+	
+	
 	
 	if [[ -d com.zizibujuan.drip.server.releng ]]; then
+		echo "check if exist com.zizibujuan.drip.server.releng in current directory"
+		echo "exist com.zizibujuan.drip.server.releng, then delete"
 		rm -rf com.zizibujuan.drip.server.releng
 	fi
 	
+	
 	if [ "$buildType" == "N" -o -n "$noTag" ]; then 
+		echo "check if buildType == N and noTag length == 0"
+		echo "git pull latest code"
 		pushd /home/git/baosuzhai
 		git pull
 		popd
@@ -63,6 +74,8 @@ updateRelengProject(){
 	
 	echo "[`date +%H\:%M\:%S`] Done getting com.zizibujuan.drip.server.releng"
 	popd
+	echo "update releng project end..."
+	ls
 }
 
 setProperties(){
@@ -71,7 +84,9 @@ setProperties(){
 	javaHome=/usr/lib64/jvm/java-7-oracle
 	
 	pushd $supportDir
+	ls
 	launcherJar=$supportDir/$( find org.eclipse.releng.basebuilder/ -name "org.eclipse.equinox.launcher_*.jar" | sort | head -1 )
+	echo "$launcherJar"
 	popd
 		
 	#Properties for compilation boot classpaths
@@ -81,7 +96,8 @@ setProperties(){
 }
 
 runBuild(){
-cmd="$javaHome/bin/java -enableassertions -jar $launcherJar \
+	echo "runBuild begin..."
+	cmd="$javaHome/bin/java -enableassertions -jar $launcherJar \
 			-application org.eclipse.ant.core.antRunner \
 			-buildfile $builderDir/buildWebIDE.xml \
 			-Dbuilder=$builderDir/builder \
@@ -111,7 +127,7 @@ cmd="$javaHome/bin/java -enableassertions -jar $launcherJar \
 			prereqMsg=`cat $buildDirectory/prereqErrors.log` 
 		fi
 		
-		mailx -s "Orion Build : $buildLabel failed" $resultsEmail <<EOF
+		mailx -s "Drip Build : $buildLabel failed" $resultsEmail <<EOF
 $compileMsg
 $compileProblems
 
@@ -121,6 +137,8 @@ $failure
 EOF
 		exit
 	fi
+	
+	echo "run build end..."
 }
 
 updateRelengProject
