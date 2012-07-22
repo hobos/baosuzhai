@@ -25,4 +25,8 @@
          id="com.zizibujuan.drip.server.feature"
          version="0.0.0"/>
 
+   <includes
+         id="com.zizibujuan.drip.base.feature"
+         version="0.0.0"/>
+
 </feature>
