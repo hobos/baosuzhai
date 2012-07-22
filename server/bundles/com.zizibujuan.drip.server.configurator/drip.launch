@@ -11,7 +11,7 @@
 <booleanAttribute key="default" value="false"/>
 <booleanAttribute key="default_auto_start" value="true"/>
 <intAttribute key="default_start_level" value="4"/>
-<stringAttribute key="featureDefaultLocation" value="external"/>
+<stringAttribute key="featureDefaultLocation" value="workspace"/>
 <stringAttribute key="featurePluginResolution" value="workspace"/>
 <booleanAttribute key="includeOptional" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console"/>
@@ -22,7 +22,6 @@
 <setEntry value="com.zizibujuan.drip.base.feature:default"/>
 <setEntry value="com.zizibujuan.drip.client.feature:default"/>
 <setEntry value="com.zizibujuan.drip.server.feature:default"/>
-<setEntry value="com.zizibujuan.drip:default"/>
 </setAttribute>
 <booleanAttribute key="show_selected_only" value="false"/>
 <booleanAttribute key="tracing" value="false"/>
