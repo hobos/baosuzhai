@@ -29,7 +29,7 @@ javase170=""
 
 tagMaps=""
 compareMaps=""
-fetchTag="-DfetchTag=CVS=HEAD,GIT=origin/master"
+fetchTag="-DfetchTag=CVS=HEAD,GIT=master"
 publish="-DpublishToEclipse=false"
 
 
