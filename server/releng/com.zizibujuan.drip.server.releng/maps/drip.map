@@ -22,3 +22,8 @@ plugin@com.zizibujuan.drip.server.configurator=GIT,repo=git://github.com/hobos/b
 
 #features
 #feature@org.eclipse.orion.base.feature=GIT,tag=v20120530-1904,repo=git://git.eclipse.org/gitroot/orion/org.eclipse.orion.server.git,path=features/org.eclipse.orion.base-feature
+
+feature@com.zizibujuan.drip.base.feature=GIT,repo=git://github.com/hobos/baosuzhai.git,path=server/features/com.zizibujuan.drip.base-feature
+feature@com.zizibujuan.drip.server.feature=GIT,repo=git://github.com/hobos/baosuzhai.git,path=server/features/com.zizibujuan.drip.server-feature
+feature@com.zizibujuan.drip.client.feature=GIT,repo=git://github.com/hobos/baosuzhai.git,path=server/features/com.zizibujuan.drip.client-feature
+feature@com.zizibujuan.drip=GIT,repo=git://github.com/hobos/baosuzhai.git,path=server/features/com.zizibujuan.drip-feature
