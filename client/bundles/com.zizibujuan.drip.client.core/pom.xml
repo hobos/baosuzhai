@@ -12,7 +12,7 @@
 		<groupId>com.zizibujuan.drip</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../../../server/releng/com.zizibujuan.drip.tycho/pom.xml</relativePath>
+		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
 	
