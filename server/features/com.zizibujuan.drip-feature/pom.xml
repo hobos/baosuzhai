@@ -4,14 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<version>0.0.1-SNAPSHOT</version>
-	<artifactId>drip-feature</artifactId>
+	<artifactId>com.zizibujuan.drip</artifactId>
 	<packaging>eclipse-feature</packaging>
 	<name></name>
 
 	<parent>
 		<groupId>com.zizibujuan.drip</groupId>
-		<artifactId>tycho</artifactId>
+		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../releng/com.zizibujuan.drip.tycho/pom.xml</relativePath>
 	</parent>
 
 </project>
