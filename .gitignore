@@ -1,1 +1,9 @@
 server/features/com.zizibujuan.drip-feature/target
+server/features/com.zizibujuan.drip.base-feature/target
+server/features/com.zizibujuan.drip.client-feature/target
+server/features/com.zizibujuan.drip.server-feature/target
+
+server/bundles/com.zizibujuan.drip.server.configurator/target
+
+client/bundles/com.zizibujuan.drip.client.core/target
+client/bundles/com.zizibujuan.drip.client.dojo/target
