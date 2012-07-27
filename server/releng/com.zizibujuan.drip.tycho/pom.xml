@@ -12,7 +12,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</properties>
 	
 	<modules>
+		<!-- features -->
 		<module>../../features/com.zizibujuan.drip-feature</module>
+		<module>../../features/com.zizibujuan.drip.base-feature</module>
+		<module>../../features/com.zizibujuan.drip.client-feature</module>
+		<module>../../features/com.zizibujuan.drip.server-feature</module>
+		<!-- plugins -->
+		<module>../../../client/bundles/com.zizibujuan.drip.client.core</module>
+		<module>../../../client/bundles/com.zizibujuan.drip.client.dojo</module>
+		<module>../../bundles/com.zizibujuan.drip.server.configurator</module>
 	</modules>
 
 	<repositories>
