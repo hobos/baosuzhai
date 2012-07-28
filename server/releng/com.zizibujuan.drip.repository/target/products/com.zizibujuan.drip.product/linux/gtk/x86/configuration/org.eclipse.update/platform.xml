@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config transient="false" date="1343461782628">
+<config transient="false" date="1343469300056">
 	<site enabled="true" updateable="true" policy="USER-EXCLUDE" url="platform:/base/">
-		<feature id="com.zizibujuan.drip.server.feature" url="features/com.zizibujuan.drip.server.feature_0.0.1.201207280749/" version="0.0.1.201207280749">
+		<feature id="com.zizibujuan.drip.base.feature" url="features/com.zizibujuan.drip.base.feature_0.0.1.201207280954/" version="0.0.1.201207280954">
 		</feature>
-		<feature id="com.zizibujuan.drip" url="features/com.zizibujuan.drip_0.0.1.201207280749/" version="0.0.1.201207280749">
+		<feature id="com.zizibujuan.drip.server.feature" url="features/com.zizibujuan.drip.server.feature_0.0.1.201207280954/" version="0.0.1.201207280954">
 		</feature>
-		<feature id="com.zizibujuan.drip.client.feature" url="features/com.zizibujuan.drip.client.feature_0.0.1.201207280749/" version="0.0.1.201207280749">
+		<feature id="com.zizibujuan.drip" url="features/com.zizibujuan.drip_0.0.1.201207280954/" version="0.0.1.201207280954">
 		</feature>
-		<feature id="com.zizibujuan.drip.base.feature" url="features/com.zizibujuan.drip.base.feature_0.0.1.201207280749/" version="0.0.1.201207280749">
+		<feature id="com.zizibujuan.drip.client.feature" url="features/com.zizibujuan.drip.client.feature_0.0.1.201207280954/" version="0.0.1.201207280954">
 		</feature>
 	</site>
 </config>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="drip.product" uid="com.zizibujuan.drip.product" id="com.zizibujuan.drip.product" application="com.zizibujuan.drip.application" version="0.0.1.201207280749" useFeatures="true" includeLaunchers="true">
+<product name="drip.product" uid="com.zizibujuan.drip.product" id="com.zizibujuan.drip.product" application="com.zizibujuan.drip.application" version="0.0.1.201207280954" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -44,7 +44,7 @@
    </plugins>
 
    <features>
-      <feature id="com.zizibujuan.drip" version="0.0.1.201207280749"/>
+      <feature id="com.zizibujuan.drip" version="0.0.1.201207280954"/>
    </features>
 
    <configurations>

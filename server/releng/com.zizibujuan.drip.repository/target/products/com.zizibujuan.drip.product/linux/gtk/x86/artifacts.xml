@@ -3,7 +3,7 @@
 <repository name='Bundle pool' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1343461781827'/>
+    <property name='p2.timestamp' value='1343469298601'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -51,17 +51,9 @@
         <property name='download.size' value='1396175'/>
       </properties>
     </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip' version='0.0.1.201207280749'>
+    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954'>
       <properties size='1'>
-        <property name='download.size' value='1984'/>
-      </properties>
-      <repositoryProperties size='1'>
-        <property name='artifact.folder' value='true'/>
-      </repositoryProperties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749'>
-      <properties size='1'>
-        <property name='download.size' value='19308006'/>
+        <property name='download.size' value='19308007'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.osgi.services' version='3.3.100.v20120522-1822'>
@@ -74,22 +66,20 @@
         <property name='download.size' value='282733'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'>
+    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.client.feature' version='0.0.1.201207280954'>
       <properties size='1'>
-        <property name='download.size' value='7948'/>
+        <property name='download.size' value='2124'/>
       </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.jetty.http' version='8.1.3.v20120522'>
       <properties size='1'>
         <property name='download.size' value='101520'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='org.eclipse.jetty.servlet' version='8.1.3.v20120522'>
-      <properties size='1'>
-        <property name='download.size' value='102982'/>
-      </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.server.feature' version='0.0.1.201207280749'>
+    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.server.feature' version='0.0.1.201207280954'>
       <properties size='1'>
         <property name='download.size' value='2122'/>
       </properties>
@@ -97,10 +87,23 @@
         <property name='artifact.folder' value='true'/>
       </repositoryProperties>
     </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.jetty.servlet' version='8.1.3.v20120522'>
+      <properties size='1'>
+        <property name='download.size' value='102982'/>
+      </properties>
+    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.equinox.http.registry' version='1.1.200.v20120522-2049'>
       <properties size='1'>
         <property name='download.size' value='45223'/>
       </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip' version='0.0.1.201207280954'>
+      <properties size='1'>
+        <property name='download.size' value='1984'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.equinox.http.jetty' version='3.0.0.v20120522-1841'>
       <properties size='1'>
@@ -132,26 +135,23 @@
         <property name='download.size' value='49278'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.core' version='0.0.1.201207280749'>
+    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.base.feature' version='0.0.1.201207280954'>
+      <properties size='1'>
+        <property name='download.size' value='2560'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.core' version='0.0.1.201207280954'>
       <properties size='1'>
         <property name='download.size' value='2114'/>
       </properties>
     </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.client.feature' version='0.0.1.201207280749'>
+    <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'>
       <properties size='1'>
-        <property name='download.size' value='2124'/>
+        <property name='download.size' value='7948'/>
       </properties>
-      <repositoryProperties size='1'>
-        <property name='artifact.folder' value='true'/>
-      </repositoryProperties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.base.feature' version='0.0.1.201207280749'>
-      <properties size='1'>
-        <property name='download.size' value='2561'/>
-      </properties>
-      <repositoryProperties size='1'>
-        <property name='artifact.folder' value='true'/>
-      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.equinox.ds' version='1.4.0.v20120522-1841'>
       <properties size='1'>

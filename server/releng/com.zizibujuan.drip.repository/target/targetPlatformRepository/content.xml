@@ -2,6 +2,39 @@
 <?metadataRepository version='1.1.0'?>
 <repository name='TychoTargetPlatform' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='0.0.1'>
   <units size='39'>
+    <unit id='com.zizibujuan.drip.server.feature.feature.group' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.server.feature.feature.group' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.server.feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.server.feature'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.group' version='0.0.1.201207280954'/>
+      </provides>
+      <requires size='2'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.configurator' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.jar' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
     <unit id='org.eclipse.equinox.executable.feature.jar' version='3.6.0.v20120522-1813-7P7OG2BFLWUl7UmbVUO9iCm'>
       <properties size='5'>
         <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
@@ -34,6 +67,40 @@
           %license
         </license>
       </licenses>
+    </unit>
+    <unit id='com.zizibujuan.drip.client.feature.feature.group' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.client.feature.feature.group' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.client.feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.client.feature'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.group' version='0.0.1.201207280954'/>
+      </provides>
+      <requires size='3'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.core' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.dojo' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.jar' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
     </unit>
     <unit id='org.eclipse.osgi.services' version='3.3.100.v20120522-1822' singleton='false'>
       <update id='org.eclipse.osgi.services' range='[0.0.0,3.3.100.v20120522-1822)' severity='0'/>
@@ -95,44 +162,6 @@
           </instruction>
         </instructions>
       </touchpointData>
-    </unit>
-    <unit id='com.zizibujuan.drip.server.feature.feature.jar' version='0.0.1.201207280749'>
-      <properties size='7'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.server.feature'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.server.feature'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.jar' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.server.feature' version='0.0.1.201207280749'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.server.feature' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
     </unit>
     <unit id='org.eclipse.equinox.executable_root.gtk.linux.x86' version='3.6.0.v20120522-1813-7P7OG2BFLWUl7UmbVUO9iCm'>
       <provides size='1'>
@@ -206,40 +235,31 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='com.zizibujuan.drip.feature.group' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.feature.group' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='8'>
-        <property name='org.eclipse.equinox.p2.name' value='drip'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+    <unit id='com.zizibujuan.drip.client.core' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.client.core' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='5'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.client.core'/>
         <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
         <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.client.core'/>
         <property name='maven-version' value='0.0.1-SNAPSHOT'/>
       </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.group' version='0.0.1.201207280749'/>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.core' version='0.0.1.201207280954'/>
+        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
       </provides>
-      <requires size='4'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.group' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.group' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.group' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.jar' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-          <filter>
-            (org.eclipse.update.install.features=true)
-          </filter>
-        </required>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.core' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: com.zizibujuan.drip.client.core&#xA;Bundle-Version: 0.0.1.201207280954&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
     </unit>
     <unit id='org.apache.felix.gogo.shell' version='0.8.0.v201110170705' singleton='false'>
       <update id='org.apache.felix.gogo.shell' range='[0.0.0,0.8.0.v201110170705)' severity='0'/>
@@ -272,6 +292,39 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.apache.felix.gogo.shell&#xA;Bundle-Version: 0.8.0.v201110170705
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'>
+      <update id='com.zizibujuan.drip.server.configurator' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='5'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.server.configurator'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.server.configurator'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'/>
+        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='5'>
+        <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100'/>
+        <required namespace='java.package' name='org.osgi.framework' range='1.3.0'/>
+        <required namespace='java.package' name='org.osgi.framework.wiring' range='1.1.0'/>
+        <required namespace='java.package' name='org.osgi.service.packageadmin' range='1.2.0'/>
+        <required namespace='java.package' name='org.osgi.util.tracker' range='1.5.1'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: com.zizibujuan.drip.server.configurator;singleton:=true&#xA;Bundle-Version: 0.0.1.201207280954&#xA;
           </instruction>
         </instructions>
       </touchpointData>
@@ -446,39 +499,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='javax.servlet' version='3.0.0.v201112011016' singleton='false'>
-      <update id='javax.servlet' range='[0.0.0,3.0.0.v201112011016)' severity='0'/>
-      <properties size='6'>
-        <property name='df_LT.bundleProvider' value='Eclipse Orbit'/>
-        <property name='df_LT.bundleName' value='Servlet API Bundle'/>
-        <property name='org.eclipse.equinox.p2.name' value='%bundleName'/>
-        <property name='org.eclipse.equinox.p2.description' value='glassfish javax.servlet.3.1.0.b33'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%bundleProvider'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-      </properties>
-      <provides size='9'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='javax.servlet' version='3.0.0.v201112011016'/>
-        <provided namespace='osgi.bundle' name='javax.servlet' version='3.0.0.v201112011016'/>
-        <provided namespace='java.package' name='javax.servlet' version='2.6.0'/>
-        <provided namespace='java.package' name='javax.servlet.annotation' version='2.6.0'/>
-        <provided namespace='java.package' name='javax.servlet.descriptor' version='2.6.0'/>
-        <provided namespace='java.package' name='javax.servlet.http' version='2.6.0'/>
-        <provided namespace='java.package' name='javax.servlet.resources' version='2.6.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
-      </provides>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='javax.servlet' version='3.0.0.v201112011016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: javax.servlet&#xA;Bundle-Version: 3.0.0.v201112011016
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.equinox.registry' version='3.5.200.v20120522-1841'>
       <update id='org.eclipse.equinox.registry' range='[0.0.0,3.5.200.v20120522-1841)' severity='0'/>
       <properties size='5'>
@@ -531,6 +551,39 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='javax.servlet' version='3.0.0.v201112011016' singleton='false'>
+      <update id='javax.servlet' range='[0.0.0,3.0.0.v201112011016)' severity='0'/>
+      <properties size='6'>
+        <property name='df_LT.bundleProvider' value='Eclipse Orbit'/>
+        <property name='df_LT.bundleName' value='Servlet API Bundle'/>
+        <property name='org.eclipse.equinox.p2.name' value='%bundleName'/>
+        <property name='org.eclipse.equinox.p2.description' value='glassfish javax.servlet.3.1.0.b33'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%bundleProvider'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='9'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='javax.servlet' version='3.0.0.v201112011016'/>
+        <provided namespace='osgi.bundle' name='javax.servlet' version='3.0.0.v201112011016'/>
+        <provided namespace='java.package' name='javax.servlet' version='2.6.0'/>
+        <provided namespace='java.package' name='javax.servlet.annotation' version='2.6.0'/>
+        <provided namespace='java.package' name='javax.servlet.descriptor' version='2.6.0'/>
+        <provided namespace='java.package' name='javax.servlet.http' version='2.6.0'/>
+        <provided namespace='java.package' name='javax.servlet.resources' version='2.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='javax.servlet' version='3.0.0.v201112011016'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: javax.servlet&#xA;Bundle-Version: 3.0.0.v201112011016
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
     <unit id='org.eclipse.equinox.launcher' version='1.3.0.v20120522-1813'>
       <update id='org.eclipse.equinox.launcher' range='[0.0.0,1.3.0.v20120522-1813)' severity='0'/>
       <properties size='5'>
@@ -560,44 +613,6 @@
           </instruction>
         </instructions>
       </touchpointData>
-    </unit>
-    <unit id='com.zizibujuan.drip.client.feature.feature.jar' version='0.0.1.201207280749'>
-      <properties size='7'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.client.feature'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.client.feature'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.jar' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.client.feature' version='0.0.1.201207280749'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.client.feature' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
     </unit>
     <unit id='org.eclipse.jetty.security' version='8.1.3.v20120522' singleton='false'>
       <update id='org.eclipse.jetty.security' range='[0.0.0,8.1.3.v20120522)' severity='0'/>
@@ -679,103 +694,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='com.zizibujuan.drip.base.feature.feature.jar' version='0.0.1.201207280749'>
-      <properties size='7'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.base.feature'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.base.feature'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.jar' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.base.feature' version='0.0.1.201207280749'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.base.feature' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
-    </unit>
-    <unit id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.client.dojo' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='5'>
-        <property name='org.eclipse.equinox.p2.name' value='dojo'/>
-        <property name='org.eclipse.equinox.p2.provider' value='dojotoolkit.org'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.client.dojo'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749'/>
-        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: com.zizibujuan.drip.client.dojo&#xA;Bundle-Version: 0.0.1.201207280749&#xA;
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'>
-      <update id='com.zizibujuan.drip.server.configurator' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='5'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.server.configurator'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.server.configurator'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'/>
-        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='5'>
-        <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100'/>
-        <required namespace='java.package' name='org.osgi.framework' range='1.3.0'/>
-        <required namespace='java.package' name='org.osgi.framework.wiring' range='1.1.0'/>
-        <required namespace='java.package' name='org.osgi.service.packageadmin' range='1.2.0'/>
-        <required namespace='java.package' name='org.osgi.util.tracker' range='1.5.1'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: com.zizibujuan.drip.server.configurator;singleton:=true&#xA;Bundle-Version: 0.0.1.201207280749&#xA;
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.equinox.app' version='1.3.100.v20120522-1841'>
       <update id='org.eclipse.equinox.app' range='[0.0.0,1.3.100.v20120522-1841)' severity='0'/>
       <properties size='5'>
@@ -823,31 +741,35 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='com.zizibujuan.drip.client.feature.feature.group' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.client.feature.feature.group' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='8'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.client.feature'/>
+    <unit id='com.zizibujuan.drip.base.feature.feature.jar' version='0.0.1.201207280954'>
+      <properties size='7'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.base.feature'/>
         <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
         <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
         <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
         <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.client.feature'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.base.feature'/>
         <property name='maven-version' value='0.0.1-SNAPSHOT'/>
       </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.group' version='0.0.1.201207280749'/>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.jar' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.base.feature' version='0.0.1.201207280954'/>
       </provides>
-      <requires size='3'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.core' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.dojo' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.jar' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-          <filter>
-            (org.eclipse.update.install.features=true)
-          </filter>
-        </required>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.base.feature' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
       <licenses size='1'>
         <license uri='http://www.example.com/license' url='http://www.example.com/license'>
           [Enter License Description here.]
@@ -1264,31 +1186,43 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='com.zizibujuan.drip.client.core' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.client.core' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='5'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.client.core'/>
+    <unit id='com.zizibujuan.drip.client.feature.feature.jar' version='0.0.1.201207280954'>
+      <properties size='7'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.client.feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
         <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
         <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.client.core'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.client.feature'/>
         <property name='maven-version' value='0.0.1-SNAPSHOT'/>
       </properties>
       <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.core' version='0.0.1.201207280749'/>
-        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.jar' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.client.feature' version='0.0.1.201207280954'/>
       </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.core' version='0.0.1.201207280749'/>
+        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.client.feature' version='0.0.1.201207280954'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: com.zizibujuan.drip.client.core&#xA;Bundle-Version: 0.0.1.201207280749&#xA;
+          <instruction key='zipped'>
+            true
           </instruction>
         </instructions>
       </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
     </unit>
     <unit id='org.eclipse.jetty.continuation' version='8.1.3.v20120522' singleton='false'>
       <update id='org.eclipse.jetty.continuation' range='[0.0.0,8.1.3.v20120522)' severity='0'/>
@@ -1362,60 +1296,31 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='com.zizibujuan.drip.base.feature.feature.group' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.base.feature.feature.group' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='8'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.base.feature'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+    <unit id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.client.dojo' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='5'>
+        <property name='org.eclipse.equinox.p2.name' value='dojo'/>
+        <property name='org.eclipse.equinox.p2.provider' value='dojotoolkit.org'/>
         <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.base.feature'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.client.dojo'/>
         <property name='maven-version' value='0.0.1-SNAPSHOT'/>
       </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.group' version='0.0.1.201207280749'/>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954'/>
+        <provided namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
       </provides>
-      <requires size='24'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='javax.servlet' range='[3.0.0.v201112011016,3.0.0.v201112011016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1.v201101211721,1.1.1.v201101211721]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.command' range='[0.8.0.v201108120515,0.8.0.v201108120515]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.runtime' range='[0.8.0.v201108120515,0.8.0.v201108120515]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.shell' range='[0.8.0.v201110170705,0.8.0.v201110170705]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.app' range='[1.3.100.v20120522-1841,1.3.100.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.common' range='[3.6.100.v20120522-1841,3.6.100.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.console' range='[1.0.0.v20120522-1841,1.0.0.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.ds' range='[1.4.0.v20120522-1841,1.4.0.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.jetty' range='[3.0.0.v20120522-1841,3.0.0.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.registry' range='[1.1.200.v20120522-2049,1.1.200.v20120522-2049]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.servlet' range='[1.1.300.v20120522-1841,1.1.300.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.registry' range='[3.5.200.v20120522-1841,3.5.200.v20120522-1841]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.util' range='[1.0.400.v20120522-2049,1.0.400.v20120522-2049]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.continuation' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.http' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.io' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.security' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.server' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.servlet' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.util' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi' range='[3.8.0.v20120529-1548,3.8.0.v20120529-1548]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi.services' range='[3.3.100.v20120522-1822,3.3.100.v20120522-1822]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.jar' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-          <filter>
-            (org.eclipse.update.install.features=true)
-          </filter>
-        </required>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: com.zizibujuan.drip.client.dojo&#xA;Bundle-Version: 0.0.1.201207280954&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
     </unit>
     <unit id='org.eclipse.jetty.servlet' version='8.1.3.v20120522' singleton='false'>
       <update id='org.eclipse.jetty.servlet' range='[0.0.0,8.1.3.v20120522)' severity='0'/>
@@ -1464,6 +1369,172 @@
           </instruction>
         </instructions>
       </touchpointData>
+    </unit>
+    <unit id='com.zizibujuan.drip.server.feature.feature.jar' version='0.0.1.201207280954'>
+      <properties size='7'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.server.feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.server.feature'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.jar' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip.server.feature' version='0.0.1.201207280954'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip.server.feature' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
+    <unit id='com.zizibujuan.drip.feature.jar' version='0.0.1.201207280954'>
+      <properties size='7'>
+        <property name='org.eclipse.equinox.p2.name' value='drip'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.jar' version='0.0.1.201207280954'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip' version='0.0.1.201207280954'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip' version='0.0.1.201207280954'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
+    <unit id='com.zizibujuan.drip.base.feature.feature.group' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.base.feature.feature.group' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='drip.base.feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip.base.feature'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.group' version='0.0.1.201207280954'/>
+      </provides>
+      <requires size='24'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='javax.servlet' range='[3.0.0.v201112011016,3.0.0.v201112011016]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1.v201101211721,1.1.1.v201101211721]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.command' range='[0.8.0.v201108120515,0.8.0.v201108120515]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.runtime' range='[0.8.0.v201108120515,0.8.0.v201108120515]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.felix.gogo.shell' range='[0.8.0.v201110170705,0.8.0.v201110170705]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.app' range='[1.3.100.v20120522-1841,1.3.100.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.common' range='[3.6.100.v20120522-1841,3.6.100.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.console' range='[1.0.0.v20120522-1841,1.0.0.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.ds' range='[1.4.0.v20120522-1841,1.4.0.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.jetty' range='[3.0.0.v20120522-1841,3.0.0.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.registry' range='[1.1.200.v20120522-2049,1.1.200.v20120522-2049]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.http.servlet' range='[1.1.300.v20120522-1841,1.1.300.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.registry' range='[3.5.200.v20120522-1841,3.5.200.v20120522-1841]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.util' range='[1.0.400.v20120522-2049,1.0.400.v20120522-2049]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.continuation' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.http' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.io' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.security' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.server' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.servlet' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jetty.util' range='[8.1.3.v20120522,8.1.3.v20120522]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi' range='[3.8.0.v20120529-1548,3.8.0.v20120529-1548]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi.services' range='[3.3.100.v20120522-1822,3.3.100.v20120522-1822]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.jar' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
+    <unit id='com.zizibujuan.drip.feature.group' version='0.0.1.201207280954' singleton='false'>
+      <update id='com.zizibujuan.drip.feature.group' range='[0.0.0,0.0.1.201207280954)' severity='0'/>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='drip'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='maven-groupId' value='com.zizibujuan.drip'/>
+        <property name='maven-artifactId' value='com.zizibujuan.drip'/>
+        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.group' version='0.0.1.201207280954'/>
+      </provides>
+      <requires size='4'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.client.feature.feature.group' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.group' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.base.feature.feature.group' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.jar' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
     </unit>
     <unit id='org.eclipse.equinox.executable.feature.group' version='3.6.0.v20120522-1813-7P7OG2BFLWUl7UmbVUO9iCm' singleton='false'>
       <update id='org.eclipse.equinox.executable.feature.group' range='[0.0.0,3.6.0.v20120522-1813-7P7OG2BFLWUl7UmbVUO9iCm)' severity='0'/>
@@ -1728,77 +1799,6 @@
           %license
         </license>
       </licenses>
-    </unit>
-    <unit id='com.zizibujuan.drip.feature.jar' version='0.0.1.201207280749'>
-      <properties size='7'>
-        <property name='org.eclipse.equinox.p2.name' value='drip'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.jar' version='0.0.1.201207280749'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='com.zizibujuan.drip' version='0.0.1.201207280749'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='com.zizibujuan.drip' version='0.0.1.201207280749'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
-    </unit>
-    <unit id='com.zizibujuan.drip.server.feature.feature.group' version='0.0.1.201207280749' singleton='false'>
-      <update id='com.zizibujuan.drip.server.feature.feature.group' range='[0.0.0,0.0.1.201207280749)' severity='0'/>
-      <properties size='8'>
-        <property name='org.eclipse.equinox.p2.name' value='drip.server.feature'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.provider' value='zizibujuan.com'/>
-        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
-        <property name='maven-groupId' value='com.zizibujuan.drip'/>
-        <property name='maven-artifactId' value='com.zizibujuan.drip.server.feature'/>
-        <property name='maven-version' value='0.0.1-SNAPSHOT'/>
-      </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.group' version='0.0.1.201207280749'/>
-      </provides>
-      <requires size='2'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.configurator' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.server.feature.feature.jar' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-          <filter>
-            (org.eclipse.update.install.features=true)
-          </filter>
-        </required>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
     </unit>
     <unit id='org.eclipse.jetty.http' version='8.1.3.v20120522' singleton='false'>
       <update id='org.eclipse.jetty.http' range='[0.0.0,8.1.3.v20120522)' severity='0'/>

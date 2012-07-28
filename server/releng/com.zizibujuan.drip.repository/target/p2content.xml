@@ -1,5 +1,182 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='41'>
+  <unit id='toolingcom.zizibujuan.drip.product.application' version='0.0.1.201207280954'>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.application' version='0.0.1.201207280954'/>
+    </provides>
+    <requires size='5'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingorg.eclipse.equinox.launcher' range='[1.3.0.v20120522-1813,1.3.0.v20120522-1813]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingorg.eclipse.equinox.launcher.gtk.linux.x86' range='[1.1.200.v20120522-1813,1.1.200.v20120522-1813]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+  </unit>
+  <unit id='toolingcom.zizibujuan.drip.product.configuration' version='0.0.1.201207280954'>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.configuration' version='0.0.1.201207280954'/>
+    </provides>
+    <requires size='28'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.util' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.registry' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.core' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.shell' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.security' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.app' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.console' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.http' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.registry' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.commons.logging' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.io' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.server' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi.services' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.continuation' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86javax.servlet' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.servlet' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.runtime' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.common' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.command' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.ds' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.util' range='[0.0.1.201207280954,0.0.1.201207280954]'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+  </unit>
   <unit id='tooling.source.default' version='1.0.0' singleton='false'>
     <hostRequirements size='1'>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='source' range='0.0.0' optional='true' multiple='true' greedy='false'/>
@@ -251,183 +428,6 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolingcom.zizibujuan.drip.product.application' version='0.0.1.201207280749'>
-    <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.application' version='0.0.1.201207280749'/>
-    </provides>
-    <requires size='5'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingorg.eclipse.equinox.launcher' range='[1.3.0.v20120522-1813,1.3.0.v20120522-1813]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingorg.eclipse.equinox.launcher.gtk.linux.x86' range='[1.1.200.v20120522-1813,1.1.200.v20120522-1813]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-    </requires>
-    <touchpoint id='null' version='0.0.0'/>
-  </unit>
-  <unit id='toolingcom.zizibujuan.drip.product.configuration' version='0.0.1.201207280749'>
-    <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.configuration' version='0.0.1.201207280749'/>
-    </provides>
-    <requires size='28'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.util' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.server' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.continuation' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.command' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.commons.logging' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.ds' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.util' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.runtime' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.registry' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.http' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi.services' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.core' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.shell' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.console' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86javax.servlet' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.servlet' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.io' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.security' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.registry' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.common' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.app' range='[0.0.1.201207280749,0.0.1.201207280749]'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-    </requires>
-    <touchpoint id='null' version='0.0.0'/>
-  </unit>
   <unit id='config.a.jre.javase' version='1.6.0' singleton='false'>
     <hostRequirements size='1'>
       <required namespace='org.eclipse.equinox.p2.iu' name='a.jre.javase' range='1.6.0'/>
@@ -450,168 +450,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.continuation' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.continuation' range='8.1.3.v20120522'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.continuation' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.continuation' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.util' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.util' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.util' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.util' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.server' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.server' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.server' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.server' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.apache.commons.logging' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.apache.commons.logging' range='1.1.1.v201101211721'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.commons.logging' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.apache.commons.logging' range='1.1.1.v201101211721'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.command' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.command' range='0.8.0.v201108120515'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.command' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.command' range='0.8.0.v201108120515'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -672,70 +524,7 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.ds' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.ds' range='1.4.0.v20120522-1841'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.ds' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.ds' range='1.4.0.v20120522-1841'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          setStartLevel(startLevel:-1);markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          setStartLevel(startLevel:1);markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='com.zizibujuan.drip.product' version='0.0.1.201207280749'>
-    <update id='com.zizibujuan.drip.product' range='0.0.0' severity='0'/>
-    <properties size='3'>
-      <property name='org.eclipse.equinox.p2.name' value='drip.product'/>
-      <property name='lineUp' value='true'/>
-      <property name='org.eclipse.equinox.p2.type.group' value='true'/>
-    </properties>
-    <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product' version='0.0.1.201207280749'/>
-    </provides>
-    <requires size='8'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.source.default' range='[1.0.0,1.0.0]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.group' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='a.jre.javase' range='[1.6.0,1.6.0]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.osgi.bundle.default' range='[1.0.0,1.0.0]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.org.eclipse.update.feature.default' range='[1.0.0,1.0.0]'>
-        <filter>
-          (org.eclipse.update.install.features=true)
-        </filter>
-      </required>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.application' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='config.a.jre.javase' range='[1.6.0,1.6.0]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.configuration' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
-    </requires>
-    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.util' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.util' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
       <required namespace='osgi.bundle' name='org.eclipse.equinox.util' range='1.0.400.v20120522-2049'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
@@ -744,7 +533,7 @@
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.util' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.util' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
@@ -772,20 +561,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.runtime' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.registry' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.runtime' range='0.8.0.v201108120515'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.registry' range='3.5.200.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.runtime' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.registry' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.runtime' range='0.8.0.v201108120515'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.registry' range='3.5.200.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -809,40 +598,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' version='0.0.1.201207280749' singleton='false'>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' version='0.0.1.201207280749'/>
-      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.config' version='0.0.1.201207280749'/>
-    </provides>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='2'>
-        <instruction key='unconfigure'>
-          setProgramProperty(propName:eclipse.application,propValue:);setProgramProperty(propName:eclipse.product,propValue:);
-        </instruction>
-        <instruction key='configure'>
-          setProgramProperty(propName:eclipse.application,propValue:com.zizibujuan.drip.application);setProgramProperty(propName:eclipse.product,propValue:com.zizibujuan.drip.product);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.registry' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.client.core' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.registry' range='1.1.200.v20120522-2049'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.registry' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.core' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.registry' range='1.1.200.v20120522-2049'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -866,20 +635,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.http' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.shell' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.http' range='8.1.3.v20120522'/>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.shell' range='0.8.0.v201110170705'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.http' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.shell' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.http' range='8.1.3.v20120522'/>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.shell' range='0.8.0.v201110170705'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -903,20 +672,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.osgi.services' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.security' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.3.100.v20120522-1822'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.security' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi.services' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.security' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.3.100.v20120522-1822'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.security' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -940,40 +709,94 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280749'>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280749'/>
-      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.executable' version='0.0.1.201207280749'/>
-    </provides>
-    <requires size='1'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.launcher.gtk.linux.x86' range='0.0.0'>
-        <filter>
-          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-        </filter>
-      </required>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <artifacts size='1'>
-      <artifact classifier='binary' id='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280749'/>
-    </artifacts>
-    <touchpoint id='org.eclipse.equinox.p2.native' version='1.0.0'/>
-  </unit>
-  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.client.core' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.app' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.core' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.app' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.core' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100.v20120522-1841'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.console' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.console' range='1.0.0.v20120522-1841'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.console' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.console' range='1.0.0.v20120522-1841'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.osgi' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.8.0.v20120529-1548'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.8.0.v20120529-1548'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1031,20 +854,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.http' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.http' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.client.dojo' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.http' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.client.dojo' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.http' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1068,20 +891,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.shell' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.shell' range='0.8.0.v201110170705'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.servlet' range='1.1.300.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.shell' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.apache.felix.gogo.shell' range='0.8.0.v201110170705'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.servlet' range='1.1.300.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1105,20 +928,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.console' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.registry' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.console' range='1.0.0.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.registry' range='1.1.200.v20120522-2049'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.console' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.registry' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.console' range='1.0.0.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.registry' range='1.1.200.v20120522-2049'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1142,112 +965,18 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86javax.servlet' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='javax.servlet' range='3.0.0.v201112011016'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86javax.servlet' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='javax.servlet' range='3.0.0.v201112011016'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' version='0.0.1.201207280749' singleton='false'>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' version='0.0.1.201207280749'/>
-      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.ini' version='0.0.1.201207280749'/>
-    </provides>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='2'>
-        <instruction key='unconfigure'>
-          removeJvmArg(jvmArg:-Declipse.ignoreApp=true);removeJvmArg(jvmArg:-Dosgi.noShutdown=true);removeJvmArg(jvmArg:-Dorg.osgi.service.http.port=8088);removeProgramArg(programArg:-consoleLog);removeProgramArg(programArg:-console);
-        </instruction>
-        <instruction key='configure'>
-          addJvmArg(jvmArg:-Declipse.ignoreApp=true);addJvmArg(jvmArg:-Dosgi.noShutdown=true);addJvmArg(jvmArg:-Dorg.osgi.service.http.port=8088);addProgramArg(programArg:-consoleLog);addProgramArg(programArg:-console);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.servlet' version='0.0.1.201207280749' singleton='false'>
-    <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.servlet' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </hostRequirements>
-    <properties size='1'>
-      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
-    </properties>
-    <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.servlet' version='0.0.1.201207280749'/>
-      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
-    </provides>
-    <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.servlet' range='8.1.3.v20120522'/>
-      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
-    </requires>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='null' version='0.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='4'>
-        <instruction key='install'>
-          installBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='uninstall'>
-          uninstallBundle(bundle:${artifact})
-        </instruction>
-        <instruction key='unconfigure'>
-          markStarted(started: false);
-        </instruction>
-        <instruction key='configure'>
-          markStarted(started: true);
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='1'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280954'/>
     </provides>
     <requires size='1'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280749,0.0.1.201207280749]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
     </requires>
     <filter>
       (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
@@ -1264,20 +993,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.osgi' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.apache.commons.logging' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.8.0.v20120529-1548'/>
+      <required namespace='osgi.bundle' name='org.apache.commons.logging' range='1.1.1.v201101211721'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.commons.logging' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='3.8.0.v20120529-1548'/>
+      <required namespace='osgi.bundle' name='org.apache.commons.logging' range='1.1.1.v201101211721'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1301,7 +1030,27 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.io' version='0.0.1.201207280749' singleton='false'>
+  <unit id='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280954'>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280954'/>
+      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.executable' version='0.0.1.201207280954'/>
+    </provides>
+    <requires size='1'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.equinox.launcher.gtk.linux.x86' range='0.0.0'>
+        <filter>
+          (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+        </filter>
+      </required>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <artifacts size='1'>
+      <artifact classifier='binary' id='com.zizibujuan.drip.product.executable.gtk.linux.x86' version='0.0.1.201207280954'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.native' version='1.0.0'/>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.io' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
       <required namespace='osgi.bundle' name='org.eclipse.jetty.io' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
@@ -1310,7 +1059,7 @@
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.io' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.io' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
@@ -1338,20 +1087,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.jetty.security' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.server' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.security' range='8.1.3.v20120522'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.server' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.security' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.server' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.jetty.security' range='8.1.3.v20120522'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.server' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1375,20 +1124,60 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' version='0.0.1.201207280954' singleton='false'>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.ini.gtk.linux.x86' version='0.0.1.201207280954'/>
+      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.ini' version='0.0.1.201207280954'/>
+    </provides>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='2'>
+        <instruction key='unconfigure'>
+          removeJvmArg(jvmArg:-Declipse.ignoreApp=true);removeJvmArg(jvmArg:-Dosgi.noShutdown=true);removeJvmArg(jvmArg:-Dorg.osgi.service.http.port=8088);removeProgramArg(programArg:-consoleLog);removeProgramArg(programArg:-console);
+        </instruction>
+        <instruction key='configure'>
+          addJvmArg(jvmArg:-Declipse.ignoreApp=true);addJvmArg(jvmArg:-Dosgi.noShutdown=true);addJvmArg(jvmArg:-Dorg.osgi.service.http.port=8088);addProgramArg(programArg:-consoleLog);addProgramArg(programArg:-console);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' version='0.0.1.201207280954' singleton='false'>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.config.gtk.linux.x86' version='0.0.1.201207280954'/>
+      <provided namespace='toolingcom.zizibujuan.drip.product' name='com.zizibujuan.drip.product.config' version='0.0.1.201207280954'/>
+    </provides>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='2'>
+        <instruction key='unconfigure'>
+          setProgramProperty(propName:eclipse.application,propValue:);setProgramProperty(propName:eclipse.product,propValue:);
+        </instruction>
+        <instruction key='configure'>
+          setProgramProperty(propName:eclipse.application,propValue:com.zizibujuan.drip.application);setProgramProperty(propName:eclipse.product,propValue:com.zizibujuan.drip.product);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86com.zizibujuan.drip.server.configurator' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' range='0.0.1.201207280749'/>
+      <required namespace='osgi.bundle' name='com.zizibujuan.drip.server.configurator' range='0.0.1.201207280954'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1412,20 +1201,46 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' version='0.0.1.201207280749' singleton='false'>
+  <unit id='com.zizibujuan.drip.product' version='0.0.1.201207280954'>
+    <update id='com.zizibujuan.drip.product' range='0.0.0' severity='0'/>
+    <properties size='3'>
+      <property name='org.eclipse.equinox.p2.name' value='drip.product'/>
+      <property name='lineUp' value='true'/>
+      <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+    </properties>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product' version='0.0.1.201207280954'/>
+    </provides>
+    <requires size='8'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.configuration' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='toolingcom.zizibujuan.drip.product.application' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.source.default' range='[1.0.0,1.0.0]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='a.jre.javase' range='[1.6.0,1.6.0]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.osgi.bundle.default' range='[1.0.0,1.0.0]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.feature.group' range='[0.0.1.201207280954,0.0.1.201207280954]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='tooling.org.eclipse.update.feature.default' range='[1.0.0,1.0.0]'>
+        <filter>
+          (org.eclipse.update.install.features=true)
+        </filter>
+      </required>
+      <required namespace='org.eclipse.equinox.p2.iu' name='config.a.jre.javase' range='[1.6.0,1.6.0]'/>
+    </requires>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.osgi.services' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.servlet' range='1.1.300.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.3.100.v20120522-1822'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.servlet' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.osgi.services' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.servlet' range='1.1.300.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.3.100.v20120522-1822'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1449,20 +1264,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.registry' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.registry' range='3.5.200.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.jetty' range='3.0.0.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.registry' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.registry' range='3.5.200.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.jetty' range='3.0.0.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1486,7 +1301,174 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.common' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.continuation' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.continuation' range='8.1.3.v20120522'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.continuation' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.continuation' range='8.1.3.v20120522'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86javax.servlet' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='javax.servlet' range='3.0.0.v201112011016'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86javax.servlet' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='javax.servlet' range='3.0.0.v201112011016'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' version='0.0.1.201207280954' singleton='false'>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' version='0.0.1.201207280954'/>
+    </provides>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='2'>
+        <instruction key='unconfigure'>
+          setLauncherName()
+        </instruction>
+        <instruction key='configure'>
+          setLauncherName(name:eclipse)
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.servlet' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.servlet' range='8.1.3.v20120522'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.servlet' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.servlet' range='8.1.3.v20120522'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.runtime' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.runtime' range='0.8.0.v201108120515'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.runtime' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.runtime' range='0.8.0.v201108120515'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.common' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
       <required namespace='osgi.bundle' name='org.eclipse.equinox.common' range='3.6.100.v20120522-1841'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
@@ -1495,7 +1477,7 @@
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.common' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.common' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
@@ -1523,20 +1505,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.apache.felix.gogo.command' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.jetty' range='3.0.0.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.command' range='0.8.0.v201108120515'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.http.jetty' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.apache.felix.gogo.command' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.http.jetty' range='3.0.0.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.apache.felix.gogo.command' range='0.8.0.v201108120515'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1560,39 +1542,20 @@
       </instructions>
     </touchpointData>
   </unit>
-  <unit id='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' version='0.0.1.201207280749' singleton='false'>
-    <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='com.zizibujuan.drip.product.executable.gtk.linux.x86.eclipse' version='0.0.1.201207280749'/>
-    </provides>
-    <filter>
-      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
-    </filter>
-    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-    <touchpointData size='1'>
-      <instructions size='2'>
-        <instruction key='unconfigure'>
-          setLauncherName()
-        </instruction>
-        <instruction key='configure'>
-          setLauncherName(name:eclipse)
-        </instruction>
-      </instructions>
-    </touchpointData>
-  </unit>
-  <unit id='toolinggtk.linux.x86org.eclipse.equinox.app' version='0.0.1.201207280749' singleton='false'>
+  <unit id='toolinggtk.linux.x86org.eclipse.jetty.util' version='0.0.1.201207280954' singleton='false'>
     <hostRequirements size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.util' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </hostRequirements>
     <properties size='1'>
       <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
     </properties>
     <provides size='2'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.app' version='0.0.1.201207280749'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.jetty.util' version='0.0.1.201207280954'/>
       <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
     </provides>
     <requires size='2'>
-      <required namespace='osgi.bundle' name='org.eclipse.equinox.app' range='1.3.100.v20120522-1841'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jetty.util' range='8.1.3.v20120522'/>
       <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
     </requires>
     <filter>
@@ -1612,6 +1575,43 @@
         </instruction>
         <instruction key='configure'>
           markStarted(started: true);
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='toolinggtk.linux.x86org.eclipse.equinox.ds' version='0.0.1.201207280954' singleton='false'>
+    <hostRequirements size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.ds' range='1.4.0.v20120522-1841'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </hostRequirements>
+    <properties size='1'>
+      <property name='org.eclipse.equinox.p2.type.fragment' value='true'/>
+    </properties>
+    <provides size='2'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='toolinggtk.linux.x86org.eclipse.equinox.ds' version='0.0.1.201207280954'/>
+      <provided namespace='org.eclipse.equinox.p2.flavor' name='toolinggtk.linux.x86' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.ds' range='1.4.0.v20120522-1841'/>
+      <required namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' range='[1.0.0,2.0.0)' greedy='false'/>
+    </requires>
+    <filter>
+      (&amp;(osgi.arch=x86)(osgi.os=linux)(osgi.ws=gtk))
+    </filter>
+    <touchpoint id='null' version='0.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='4'>
+        <instruction key='install'>
+          installBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='uninstall'>
+          uninstallBundle(bundle:${artifact})
+        </instruction>
+        <instruction key='unconfigure'>
+          setStartLevel(startLevel:-1);markStarted(started: false);
+        </instruction>
+        <instruction key='configure'>
+          setStartLevel(startLevel:1);markStarted(started: true);
         </instruction>
       </instructions>
     </touchpointData>
