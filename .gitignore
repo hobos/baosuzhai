@@ -8,4 +8,4 @@ server/bundles/com.zizibujuan.drip.server.configurator/target
 client/bundles/com.zizibujuan.drip.client.core/target
 client/bundles/com.zizibujuan.drip.client.dojo/target
 
-server/releng/com.zizibujuan.drip.repository
+server/releng/com.zizibujuan.drip.repository/target
