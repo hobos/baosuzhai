@@ -34,10 +34,10 @@ zipFile=com.zizibujuan.drip.product-0.0.1-SNAPSHOT-linux.gtk.x86_64.zip
 pushd $codeDir
 
 echo 更新最新的代码
-#git pull
+git pull
 
 echo 执行自动化构建
-#mvn clean install
+mvn clean install
 
 popd
 
