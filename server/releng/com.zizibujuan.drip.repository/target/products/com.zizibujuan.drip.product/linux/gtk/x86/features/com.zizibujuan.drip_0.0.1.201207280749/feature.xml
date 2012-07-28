@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.zizibujuan.drip"
+      label="drip"
+      version="0.0.1.201207280749"
+      provider-name="zizibujuan.com">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="com.zizibujuan.drip.client.feature"
+         version="0.0.1.201207280749"/>
+
+   <includes
+         id="com.zizibujuan.drip.server.feature"
+         version="0.0.1.201207280749"/>
+
+   <includes
+         id="com.zizibujuan.drip.base.feature"
+         version="0.0.1.201207280749"/>
+
+</feature>
