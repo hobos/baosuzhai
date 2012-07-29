@@ -22,7 +22,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>client/bundles/com.zizibujuan.drip.client.dojo</module>
 		<module>server/bundles/com.zizibujuan.drip.server.configurator</module>
 		<!-- repository -->		
-		<module>server/releng/com.zizibujuan.drip.repository</module>
+		<module>server/build/com.zizibujuan.drip.repository</module>
 	</modules>
 
 	<repositories>
