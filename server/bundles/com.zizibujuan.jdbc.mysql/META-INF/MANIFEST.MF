@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jdbc.mysql
+Bundle-SymbolicName: com.zizibujuan.jdbc.mysql
+Bundle-Version: 5.1.19
+Bundle-Activator: com.zizibujuan.jdbc.mysql.Activator
+Bundle-Vendor: mysql.com
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.3.0"
+Bundle-ClassPath: mysql-connector-java-5.1.19-bin.jar,
+ .
+Export-Package: com.mysql.jdbc
