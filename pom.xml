@@ -21,6 +21,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>client/bundles/com.zizibujuan.drip.client.core</module>
 		<module>client/bundles/com.zizibujuan.drip.client.dojo</module>
 		<module>server/bundles/com.zizibujuan.drip.server.configurator</module>
+		<module>server/bundles/com.zizibujuan.dbaccess.mysql</module>
+		<module>server/bundles/com.zizibujuan.jdbc.mysql</module>
 		<!-- repository -->		
 		<module>server/build/com.zizibujuan.drip.repository</module>
 	</modules>
