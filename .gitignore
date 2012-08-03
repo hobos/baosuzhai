@@ -7,6 +7,14 @@ server/bundles/com.zizibujuan.drip.server.configurator/target
 server/bundles/com.zizibujuan.dbaccess.mysql/target
 server/bundles/com.zizibujuan.jdbc.mysql/target
 
+server/bundles/com.zizibujuan.drip.server.servlet/target
+server/bundles/com.zizibujuan.drip.server.service/target
+server/bundles/com.zizibujuan.drip.server.service.impl/target
+server/bundles/com.zizibujuan.drip.server.dao/target
+server/bundles/com.zizibujuan.drip.server.dao.impl/target
+
+server/bundles/com.zizibujuan.drip.server.logback.config/target
+
 client/bundles/com.zizibujuan.drip.client.core/target
 client/bundles/com.zizibujuan.drip.client.dojo/target
 
