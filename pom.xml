@@ -18,11 +18,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>server/features/com.zizibujuan.drip.client-feature</module>
 		<module>server/features/com.zizibujuan.drip.server-feature</module>
 		<!-- plugins -->
+		<!-- client -->
 		<module>client/bundles/com.zizibujuan.drip.client.core</module>
 		<module>client/bundles/com.zizibujuan.drip.client.dojo</module>
+		<!-- server -->
 		<module>server/bundles/com.zizibujuan.drip.server.configurator</module>
 		<module>server/bundles/com.zizibujuan.dbaccess.mysql</module>
 		<module>server/bundles/com.zizibujuan.jdbc.mysql</module>
+		<module>server/bundles/com.zizibujuan.drip.server.servlet</module>
+		<module>server/bundles/com.zizibujuan.drip.server.service</module>
+		<module>server/bundles/com.zizibujuan.drip.server.service.impl</module>
+		<module>server/bundles/com.zizibujuan.drip.server.dao</module>
+		<module>server/bundles/com.zizibujuan.drip.server.dao.impl</module>
 		<!-- repository -->		
 		<module>server/build/com.zizibujuan.drip.repository</module>
 	</modules>
