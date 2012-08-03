@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: server.exception
+Bundle-SymbolicName: com.zizibujuan.drip.server.exception
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: com.zizibujuan.drip.server.exception.Activator
+Bundle-Vendor: zizibujuan.com
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.3.0"

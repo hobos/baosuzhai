@@ -30,6 +30,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>server/bundles/com.zizibujuan.drip.server.service.impl</module>
 		<module>server/bundles/com.zizibujuan.drip.server.dao</module>
 		<module>server/bundles/com.zizibujuan.drip.server.dao.impl</module>
+		<module>server/bundles/com.zizibujuan.drip.server.util</module>
+		<module>server/bundles/com.zizibujuan.drip.server.exception</module>
 		<!-- log -->
 		<module>server/bundles/com.zizibujuan.drip.server.logback.config</module>
 		<!-- repository -->		
