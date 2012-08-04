@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	name="com.zizibujuan.drip.server.service.impl.exerciseServiceImpl">
+   <implementation class="com.zizibujuan.drip.server.service.impl.ExerciseServiceImpl"/>
+   <reference 
+   		bind="setExerciseDao" 
+   		unbind="unsetExerciseDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.ExerciseDao" 
+   		name="exerciseDao" 
+   		policy="dynamic"/>
+   <service>
+      <provide interface="com.zizibujuan.drip.server.service.ExerciseService"/>
+   </service>
+</scr:component>

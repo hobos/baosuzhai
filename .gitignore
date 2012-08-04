@@ -11,7 +11,9 @@ server/bundles/com.zizibujuan.drip.server.servlet/target
 server/bundles/com.zizibujuan.drip.server.service/target
 server/bundles/com.zizibujuan.drip.server.service.impl/target
 server/bundles/com.zizibujuan.drip.server.dao/target
-server/bundles/com.zizibujuan.drip.server.dao.impl/target
+server/bundles/com.zizibujuan.drip.server.dao.mysql/target
+server/bundles/com.zizibujuan.drip.server.util/target
+server/bundles/com.zizibujuan.drip.server.exception/target
 
 server/bundles/com.zizibujuan.drip.server.logback.config/target
 

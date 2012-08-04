@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	activate="activate"
+	deactivate="deactivate"
+	enabled="true"
+	name="com.zizibujuan.drip.server.servlet.serviceHolder">
+	<implementation class="com.zizibujuan.drip.server.servlet.ServiceHolder"/>
+   
+	<reference 
+		bind="setExerciseService" 
+		unbind="unsetExerciseService" 
+		cardinality="0..1" 
+		interface="com.zizibujuan.drip.server.service.ExerciseService" 
+		name="exerciseService" 
+		policy="dynamic" />
+		
+</scr:component>

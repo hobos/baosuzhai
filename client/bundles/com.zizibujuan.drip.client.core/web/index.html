@@ -13,21 +13,13 @@
 	src="/dojo/dojo.js"></script>
 	
 <script type="text/javascript">
-
+require(["dojo/parser","Exercise","dojo/domReady!"]);
 </script>
 </head>
-<body style="">
+<body class="claro" style="">
 	<!-- 容器 -->
 	<div>
-		<div style="width:920px;margin: 0 auto">
-			<!-- 习题 -->
-			<div>
-			 	<div>内容</div>
-			 	<div>
-			 		<!-- 习题信息和可用的操作 -->
-			 	</div>
-		 	</div>
-		</div>
+		<div data-dojo-type="Exercise"></div>
 	</div>
 </body>
 </html>

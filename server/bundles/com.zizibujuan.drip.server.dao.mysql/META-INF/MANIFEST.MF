@@ -6,6 +6,8 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: com.zizibujuan.drip.server.dao.mysql.Activator
 Bundle-Vendor: zizibujuan.com
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: com.zizibujuan.drip.server.dao,
+Import-Package: com.zizibujuan.dbaccess.mysql.service,
+ com.zizibujuan.drip.server.dao,
  com.zizibujuan.drip.server.util.dao,
  org.osgi.framework;version="1.3.0"
+Service-Component: OSGI-INF/*.xml
