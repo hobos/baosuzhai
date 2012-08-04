@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<version>0.0.1-SNAPSHOT</version>
-	<artifactId>com.zizibujuan.drip.server.dao.impl</artifactId>
+	<artifactId>com.zizibujuan.drip.server.dao.mysql</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<name></name>
 
