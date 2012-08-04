@@ -10,7 +10,7 @@ var base = null;
 
 return declare("dojo.store.Memory", base, {
 	// summary:
-	//		This is a basic in-memory object store. It implements dojo.store.api.Store.
+	//		This is a basic in-memory object store. It implements dojo/store/api/Store.
 	constructor: function(options){
 		// summary:
 		//		Creates a memory object store.
@@ -48,19 +48,19 @@ return declare("dojo.store.Memory", base, {
 		return this.data[this.index[id]];
 	},
 	getIdentity: function(object){
-		// 	summary:
+		// summary:
 		//		Returns an object's identity
-		// 	object: Object
+		// object: Object
 		//		The object to get the identity from
 		// returns: Number
 		return object[this.idProperty];
 	},
 	put: function(object, options){
-		// 	summary:
+		// summary:
 		//		Stores an object
-		// 	object: Object
+		// object: Object
 		//		The object to store.
-		// 	options: Store.PutDirectives??
+		// options: Store.PutDirectives??
 		//		Additional metadata for storing the data.  Includes an "id"
 		//		property if a specific id is to be used.
 		// returns: Number
@@ -82,11 +82,11 @@ return declare("dojo.store.Memory", base, {
 		return id;
 	},
 	add: function(object, options){
-		// 	summary:
+		// summary:
 		//		Creates an object, throws an error if the object already exists
-		// 	object: Object
+		// object: Object
 		//		The object to store.
-		// 	options: Store.PutDirectives??
+		// options: Store.PutDirectives??
 		//		Additional metadata for storing the data.  Includes an "id"
 		//		property if a specific id is to be used.
 		// returns: Number
@@ -95,9 +95,9 @@ return declare("dojo.store.Memory", base, {
 		return this.put(object, options);
 	},
 	remove: function(id){
-		// 	summary:
+		// summary:
 		//		Deletes an object by its identity
-		// 	id: Number
+		// id: Number
 		//		The identity to use to delete the object
 		// returns: Boolean
 		//		Returns true if an object was removed, falsy (undefined) if no object matched the id
@@ -123,7 +123,7 @@ return declare("dojo.store.Memory", base, {
 		// example:
 		//		Given the following store:
 		//
-		// 	|	var store = new dojo.store.Memory({
+		// 	|	var store = new Memory({
 		// 	|		data: [
 		// 	|			{id: 1, name: "one", prime: false },
 		//	|			{id: 2, name: "two", even: true, prime: true},

@@ -135,6 +135,9 @@ return declare("dojox.data.ServiceStore",
 		estimateCountFactor: 1,
 		
 		getSchema: function(){
+			// summary:
+			//		Returns a reference to the JSON Schema
+			// returns: Object
 			return this.schema;
 		},
 
@@ -295,7 +298,7 @@ return declare("dojox.data.ServiceStore",
 		},
 		fetch: function(args){
 			// summary:
-			//		See dojo.data.api.Read.fetch
+			//		See dojo/data/api/Read.fetch
 			// args:
 			//		####The *queryOptions.cache* parameter
 			//

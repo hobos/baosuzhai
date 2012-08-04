@@ -147,7 +147,9 @@ var _ForcedPageStoreLayer = declare("dojox.grid.enhanced.plugins._ForcedPageStor
 
 var stopEvent = function(evt){
 	try{
-		event.stop(evt);
+		if(evt){
+			event.stop(evt);
+		}
 	}catch(e){}
 };
 
@@ -776,9 +778,9 @@ var Pagination = declare("dojox.grid.enhanced.plugins.Pagination", _Plugin, {
 	currentPageSize: function(size){
 		// summary:
 		//		Change the size of current page or return the current page size.
-		// size: Integer || null
+		// size: Integer|null
 		//		An integer identifying the number of rows per page. If the size
-		//		is an Infinity, all rows will be displayed; if an invalid value pssed
+		//		is an Infinity, all rows will be displayed; if an invalid value passed
 		//		in, the current page size will be returned.
 		// returns:
 		//		Current size of items per page.  

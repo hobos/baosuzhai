@@ -150,8 +150,7 @@ define(["./_base/kernel", "./has", "./dom", "./on", "./_base/array", "./_base/la
 		//		|	// even getting the coordinates of all the items
 		//		|	var coords = dojo.query(".thinger").coords();
 		// example:
-		//		DOM manipulation functions from the dojo.* namespace area also
-		//		available:
+		//		DOM manipulation functions from the dojo.* namespace area also available:
 		//		|	// remove all of the elements in the list from their
 		//		|	// parents (akin to "deleting" them from the document)
 		//		|	dojo.query(".thinger").orphan();
@@ -520,8 +519,8 @@ define(["./_base/kernel", "./has", "./dom", "./on", "./_base/array", "./_base/la
 			//		specified properties and each node in the NodeList as a
 			//		srcNodeRef.
 			// example:
-			//		Grabs all buttons in the page and converts them to diji.form.Buttons.
-			//	|	var buttons = dojo.query("button").instantiate("dijit.form.Button", {showLabel: true});
+			//		Grabs all buttons in the page and converts them to dijit/form/Button's.
+			//	|	var buttons = query("button").instantiate(Button, {showLabel: true});
 			var c = lang.isFunction(declaredClass) ? declaredClass : lang.getObject(declaredClass);
 			properties = properties || {};
 			return this.forEach(function(node){

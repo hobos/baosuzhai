@@ -47,7 +47,7 @@ define([
 
 	var StackController = declare("dijit.layout.StackController", [_Widget, _TemplatedMixin, _Container], {
 		// summary:
-		//		Set of buttons to select a page in a `dijit.layout.StackContainer`
+		//		Set of buttons to select a page in a `dijit/layout/StackContainer`
 		// description:
 		//		Monitors the specified StackContainer, and whenever a page is
 		//		added, deleted, or selected, updates itself accordingly.
@@ -63,10 +63,6 @@ define([
 		// buttonWidget: [const] Constructor
 		//		The button widget to create to correspond to each page
 		buttonWidget: StackButton,
-
-		// buttonWidgetClass: String
-		//		CSS class of button widget, used by event delegation code to tell when the button was clicked
-		buttonWidgetClass: "dijitToggleButton",
 
 		// buttonWidgetCloseClass: String
 		//		CSS class of [x] close icon, used by event delegation code to tell when close button was clicked
@@ -96,17 +92,17 @@ define([
 			this.subscribe(this.containerId+"-containerKeyPress", "onContainerKeyPress");
 
 			// Listen for click events to select or close tabs.
-			// No need to worry about ENTER/SPACe key handling: tabs are selected via left/right arrow keys,
+			// No need to worry about ENTER/SPACE key handling: tabs are selected via left/right arrow keys,
 			// and closed via shift-F10 (to show the close menu).
 			this.connect(this.containerNode, 'click', function(evt){
 				var button = registry.getEnclosingWidget(evt.target);
-				if(button != this.containerNode && !button.disabled){
+				if(button != this.containerNode && !button.disabled && button.page){
 					for(var target = evt.target; target !== this.containerNode; target = target.parentNode){
 						if(domClass.contains(target, this.buttonWidgetCloseClass)){
-							this.onCloseButtonClick(button);
+							this.onCloseButtonClick(button.page);
 							break;
-						}else if(domClass.contains(target, this.buttonWidgetClass)){
-							this.onButtonClick(button);
+						}else if(target == button.domNode){
+							this.onButtonClick(button.page);
 							break;
 						}
 					}
@@ -169,6 +165,7 @@ define([
 			var Cls = lang.isString(this.buttonWidget) ? lang.getObject(this.buttonWidget) : this.buttonWidget;
 			var button = new Cls({
 				id: this.id + "_" + page.id,
+				name: this.id + "_" + page.id,
 				label: page.title,
 				disabled: page.disabled,
 				ownerDocument: this.ownerDocument,
@@ -234,34 +231,32 @@ define([
 			container.containerNode.setAttribute("aria-labelledby", newButton.id);
 		},
 
-		onButtonClick: function(/*dijit/_WidgetBase*/ button){
+		onButtonClick: function(/*dijit/_WidgetBase*/ page){
 			// summary:
 			//		Called whenever one of my child buttons is pressed in an attempt to select a page
 			// tags:
 			//		private
 
+			var button = this.pane2button[page.id];
+
 			// For TabContainer where the tabs are <span>, need to set focus explicitly when left/right arrow
 			focus.focus(button.focusNode);
 
-			var page = button.page;
-
-			if(this._currentChild.id === page.id) {
+			if(this._currentChild && this._currentChild.id === page.id) {
 				//In case the user clicked the checked button, keep it in the checked state because it remains to be the selected stack page.
-				var button=this.pane2button[page.id];
 				button.set('checked', true);
 			}
 			var container = registry.byId(this.containerId);
 			container.selectChild(page);
 		},
 
-		onCloseButtonClick: function(/*dijit/_WidgetBase*/ button){
+		onCloseButtonClick: function(/*dijit/_WidgetBase*/ page){
 			// summary:
 			//		Called whenever one of my child buttons [X] is pressed in an attempt to close a page
 			// tags:
 			//		private
 
-			var page = button.page,
-				container = registry.byId(this.containerId);
+			var container = registry.byId(this.containerId);
 			container.closeChild(page);
 			if(this._currentChild){
 				var b = this.pane2button[this._currentChild.id];
@@ -326,7 +321,7 @@ define([
 						for(var idx = 0; idx < children.length; idx++){
 							var child = children[idx];
 							if(!child.disabled){
-								this.onButtonClick(child);
+								this.onButtonClick(child.page);
 								break;
 							}
 						}
@@ -338,7 +333,7 @@ define([
 						for(var idx = children.length-1; idx >= 0; idx--){
 							var child = children[idx];
 							if(!child.disabled){
-								this.onButtonClick(child);
+								this.onButtonClick(child.page);
 								break;
 							}
 						}
@@ -346,18 +341,18 @@ define([
 						break;
 					case keys.DELETE:
 						if(this._currentChild.closable){
-							this.onCloseButtonClick(this.pane2button[this._currentChild.id]);
+							this.onCloseButtonClick(this._currentChild);
 						}
 						event.stop(e);
 						break;
 					default:
 						if(e.ctrlKey){
 							if(e.charOrCode === keys.TAB){
-								this.onButtonClick(this.adjacent(!e.shiftKey));
+								this.onButtonClick(this.adjacent(!e.shiftKey).page);
 								event.stop(e);
 							}else if(e.charOrCode == "w"){
 								if(this._currentChild.closable){
-									this.onCloseButtonClick(this.pane2button[this._currentChild.id]);
+									this.onCloseButtonClick(this._currentChild);
 								}
 								event.stop(e); // avoid browser tab closing.
 							}
@@ -365,7 +360,7 @@ define([
 				}
 				// handle next/previous page navigation (left/right arrow, etc.)
 				if(forward !== null){
-					this.onButtonClick(this.adjacent(forward));
+					this.onButtonClick(this.adjacent(forward).page);
 					event.stop(e);
 				}
 			}

@@ -1,12 +1,13 @@
 define([
 	"dojo/_base/declare",
 	"dojo/_base/lang",
+	"dojo/_base/window",
 	"dojo/dom-class",
 	"dojo/dom-construct",
 	"dojo/dom-style",
 	"./sniff",
 	"./_ItemBase"
-], function(declare, lang, domClass, domConstruct, domStyle, has, ItemBase){
+], function(declare, lang, win, domClass, domConstruct, domStyle, has, ItemBase){
 
 	// module:
 	//		dojox/mobile/ToolBarButton
@@ -36,15 +37,22 @@ define([
 		//		try to set them.
 		light: true,
 
+		// defaultColor: String
+		//		CSS class for the default color.
+		//		Note: If this button has an arrow (typically back buttons on iOS),
+		//		the class selector used for it is the value of defaultColor + "45".
+		//		For example, by default the arrow selector is "mblColorDefault45".
+		defaultColor: "mblColorDefault",
+
+		// selColor: String
+		//		CSS class for the selected color.
+		//		Note: If this button has an arrow (typically back buttons on iOS),
+		//		the class selector used for it is the value of selColor + "45".
+		//		For example, by default the selected arrow selector is "mblColorDefaultSel45".
+		selColor: "mblColorDefaultSel",
+
 		/* internal properties */
 		baseClass: "mblToolBarButton",
-
-		// defaultColor: [private] String
-		//		CSS class for default color.
-		defaultColor: "mblColorDefault",
-		// selColor: [private] String
-		//		CSS class for default selected color.
-		selColor: "mblColorDefaultSel",
 
 		_selStartMethod: "touch",
 		_selEndMethod: "touch",
@@ -69,7 +77,8 @@ define([
 			if(this.arrow === "left" || this.arrow === "right"){
 				this.arrowNode = domConstruct.create("span", {
 					className: "mblToolBarButtonArrow mblToolBarButton" +
-					(this.arrow === "left" ? "Left" : "Right") + "Arrow"
+					(this.arrow === "left" ? "Left" : "Right") + "Arrow " +
+					(has("ie") ? "" : (this.defaultColor + " " + this.defaultColor + "45"))
 				}, this.domNode);
 				domClass.add(this.domNode, "mblToolBarButtonHas" +
 					(this.arrow === "left" ? "Left" : "Right") + "Arrow");
@@ -89,18 +98,6 @@ define([
 			}
 
 			domClass.add(this.bodyNode, this.defaultColor);
-			var _this = this;
-			setTimeout(function(){ // for programmatic instantiation
-				_this._updateArrowColor();
-			}, 0);
-			if(!has("webkit")){
-				var cntr = 0;
-				this._timer = setInterval(function(){ // compat mode browsers need this
-					if(_this._updateArrowColor() || cntr++ > 3){
-						clearInterval(_this._timer);
-					}
-				}, 500);
-			}
 		},
 
 		startup: function(){
@@ -113,19 +110,6 @@ define([
 				this._isOnLine = true;
 				this.set("icon", this.icon); // retry applying the attribute
 			}
-		},
-
-		_updateArrowColor: function(){
-			if(this.arrowNode && !has("ie")){
-				domStyle.set(this.arrowNode, "backgroundColor", domStyle.get(this.bodyNode, "backgroundColor"));
-				var s = domStyle.get(this.bodyNode, "backgroundImage");
-				if(s === "none"){ return false; }					
-				domStyle.set(this.arrowNode, "backgroundImage",
-							 s.replace(/\(top,/, "(top left,") // webkit new
-							 .replace(/0% 0%, 0% 100%/, "0% 0%, 100% 100%") // webkit old
-							 .replace(/50% 0%/, "0% 0%")); // moz
-			}
-			return true;
 		},
 
 		_onClick: function(e){
@@ -155,15 +139,23 @@ define([
 		_setSelectedAttr: function(/*Boolean*/selected){
 			// summary:
 			//		Makes this widget in the selected or unselected state.
+			var replace = function(node, a, b){
+				domClass.replace(node, a + " " + a + "45", b + " " + b + "45");
+			}
 			this.inherited(arguments);
 			if(selected){
 				domClass.replace(this.bodyNode, this.selColor, this.defaultColor);
+				if(!has("ie") && this.arrowNode){
+					replace(this.arrowNode, this.selColor, this.defaultColor);
+				}
 			}else{
 				domClass.replace(this.bodyNode, this.defaultColor, this.selColor);
+				if(!has("ie") && this.arrowNode){
+					replace(this.arrowNode, this.defaultColor, this.selColor);
+				}
 			}
 			domClass.toggle(this.domNode, "mblToolBarButtonSelected", selected);
 			domClass.toggle(this.bodyNode, "mblToolBarButtonBodySelected", selected);
-			this._updateArrowColor();
 		}
 	});
 });

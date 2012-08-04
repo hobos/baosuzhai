@@ -12,7 +12,7 @@ define([
 	//		dijit/tree/_dndContainer
 
 	/*=====
-	 var __Args = function(){
+	 var __Args = {
 		 // summary:
 		 //		A dict of parameters for Tree source configuration.
 		 // isSource: Boolean?
@@ -26,20 +26,14 @@ define([
 		 //		The move delay in pixels before detecting a drag; 0 by default
 		 // betweenThreshold: Integer
 		 //		Distance from upper/lower edge of node to allow drop to reorder nodes
-		 this.isSource = isSource;
-		 this.accept = accept;
-		 this.autoSync = autoSync;
-		 this.copyOnly = copyOnly;
-		 this.dragThreshold = dragThreshold;
-		 this.betweenThreshold = betweenThreshold;
 	 };
 	 =====*/
 
 	return declare("dijit.tree._dndContainer", null, {
 
 		// summary:
-		//		This is a base class for `dijit.tree._dndSelector`, and isn't meant to be used directly.
-		//		It's modeled after `dojo.dnd.Container`.
+		//		This is a base class for `dijit/tree/_dndSelector`, and isn't meant to be used directly.
+		//		It's modeled after `dojo/dnd/Container`.
 		// tags:
 		//		protected
 

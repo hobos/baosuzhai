@@ -820,11 +820,11 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		}
 	},
 
-	emit: function(/*String*/ type, /*Object*/ eventObj, /*Array?*/ callbackArgs){
+	emit: function(/*String*/ type, /*Object?*/ eventObj, /*Array?*/ callbackArgs){
 		// summary:
 		//		Used by widgets to signal that a synthetic event occurred, ex:
-		//		myWidget.emit("attrmodified-selectedChildWidget", {}).
-		// description:
+		//	|	myWidget.emit("attrmodified-selectedChildWidget", {}).
+		//
 		//		Emits an event on this.domNode named type.toLowerCase(), based on eventObj.
 		//		Also calls onType() method, if present, and returns value from that method.
 		//		By default passes eventObj to callback, but will pass callbackArgs instead, if specified.
@@ -843,7 +843,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 
 		var ret, callback = this["on"+type];
 		if(callback){
-			ret = callback.apply(this, callbackArgs ? callbackArgs : eventObj);
+			ret = callback.apply(this, callbackArgs ? callbackArgs : [eventObj]);
 		}
 
 		// Emit event, but avoid spurious emit()'s as parent sets properties on child during startup/destroy
@@ -919,9 +919,11 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 			/*String|Function*/ event,
 			/*String|Function*/ method){
 		// summary:
+		//		Deprecated, will be removed in 2.0, use this.own(on(...)) or this.own(aspect.after(...)) instead.
+		//
 		//		Connects specified obj/event to specified method of this object
 		//		and registers for disconnect() on widget destroy.
-		// description:
+		//
 		//		Provide widget-specific analog to dojo.connect, except with the
 		//		implicit use of this widget as the target object.
 		//		Events connected with `this.connect` are disconnected upon
@@ -930,7 +932,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		//		A handle that can be passed to `disconnect` in order to disconnect before
 		//		the widget is destroyed.
 		// example:
-		//	|	var btn = new dijit.form.Button();
+		//	|	var btn = new Button();
 		//	|	// when foo.bar() is called, call the listener we're going to
 		//	|	// provide in the scope of btn
 		//	|	btn.connect(foo, "bar", function(){
@@ -944,8 +946,9 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 
 	disconnect: function(handle){
 		// summary:
+		//		Deprecated, will be removed in 2.0, use handle.remove() instead.
+		//
 		//		Disconnects handle created by `connect`.
-		//		Deprecated.	Will be removed in 2.0.	Just use handle.remove() instead.
 		// tags:
 		//		protected
 
@@ -954,9 +957,11 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 
 	subscribe: function(t, method){
 		// summary:
+		//		Deprecated, will be removed in 2.0, use this.own(topic.subscribe()) instead.
+		//
 		//		Subscribes to the specified topic and calls the specified method
 		//		of this object and registers for unsubscribe() on widget destroy.
-		// description:
+		//
 		//		Provide widget-specific analog to dojo.subscribe, except with the
 		//		implicit use of this widget as the target object.
 		// t: String
@@ -964,7 +969,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		// method: Function
 		//		The callback
 		// example:
-		//	|	var btn = new dijit.form.Button();
+		//	|	var btn = new Button();
 		//	|	// when /my/topic is published, this button changes its label to
 		//	|	// be the parameter of the topic.
 		//	|	btn.subscribe("/my/topic", function(v){
@@ -977,6 +982,8 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 
 	unsubscribe: function(/*Object*/ handle){
 		// summary:
+		//		Deprecated, will be removed in 2.0, use handle.remove() instead.
+		//
 		//		Unsubscribes handle created by this.subscribe.
 		//		Also removes handle from this widget's list of subscriptions
 		// tags:
@@ -1024,19 +1031,19 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		//		to a variable.
 		// example:
 		//	|	// create a Button with no srcNodeRef, and place it in the body:
-		//	|	var button = new dijit.form.Button({ label:"click" }).placeAt(win.body());
+		//	|	var button = new Button({ label:"click" }).placeAt(win.body());
 		//	|	// now, 'button' is still the widget reference to the newly created button
 		//	|	button.on("click", function(e){ console.log('click'); }));
 		// example:
 		//	|	// create a button out of a node with id="src" and append it to id="wrapper":
-		//	|	var button = new dijit.form.Button({},"src").placeAt("wrapper");
+		//	|	var button = new Button({},"src").placeAt("wrapper");
 		// example:
 		//	|	// place a new button as the first element of some div
-		//	|	var button = new dijit.form.Button({ label:"click" }).placeAt("wrapper","first");
+		//	|	var button = new Button({ label:"click" }).placeAt("wrapper","first");
 		// example:
 		//	|	// create a contentpane and add it to a TabContainer
 		//	|	var tc = dijit.byId("myTabs");
-		//	|	new dijit.layout.ContentPane({ href:"foo.html", title:"Wow!" }).placeAt(tc)
+		//	|	new ContentPane({ href:"foo.html", title:"Wow!" }).placeAt(tc)
 
 		var refWidget = !reference.tagName && registry.byId(reference);
 		if(refWidget && refWidget.addChild && (!position || typeof position === "number")){

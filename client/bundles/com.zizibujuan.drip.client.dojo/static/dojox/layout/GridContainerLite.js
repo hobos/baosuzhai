@@ -134,13 +134,10 @@ define([
 					h: has("ie") ? geom.getBorderExtents(this.gridContainerTable).h : 0,
 					w: (has("ie") == 6) ? 1 : 0
 				}
-			}
-			else{
+			}else{
 				domStyle.set(this.domNode, "overflowY", "hidden");
 				domStyle.set(this.gridContainerTable, "height", "auto");
 			}
-			// Call postCreate of dijit.layout._LayoutWidget.
-			this.inherited(arguments);
 		},
 
 		startup: function(){
@@ -694,7 +691,7 @@ define([
 									focus.focus(focusNode);
 								}
 								else{
-									topic.publish("/dojox/layout/gridContainer/moveRestriction", [this]);
+									topic.publish("/dojox/layout/gridContainer/moveRestriction", this);
 								}
 							}
 							else{
@@ -761,7 +758,7 @@ define([
 									focus.focus(r);
 								}
 								else{
-									topic.publish("/dojox/layout/gridContainer/moveRestriction", [this]);
+									topic.publish("/dojox/layout/gridContainer/moveRestriction", this);
 								}
 							}
 							else{
@@ -827,7 +824,9 @@ define([
 		}
 	});
 
-	lang.extend(_WidgetBase, {
+	gcl.ChildWidgetProperties = {
+		// summary:
+		//		Properties set on children of a GridContainerLite
 
 		// column: String
 		//		Column of the grid to place the widget.
@@ -838,6 +837,10 @@ define([
 		//		If true, the widget can not be draggable.
 		//		Defined only if dojo.require("dojox.layout.GridContainerLite") is done.
 		dragRestriction: false
-	});
+	};
+
+	// Add to widget base for benefit of parser.   Remove for 2.0.   Also, hide from doc viewer.
+	lang.extend(_WidgetBase, /*===== {} || =====*/ gcl.ChildWidgetProperties);
+
 	return gcl;
 });

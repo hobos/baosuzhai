@@ -42,7 +42,7 @@ define([
 		//		every clickable element in the time picker increases.
 		//		Set in local time, without a time zone.
 		//		Example: `T00:15:00` creates 15 minute increments
-		//		Must divide dijit._TimePicker.visibleIncrement evenly
+		//		Must divide dijit/_TimePicker.visibleIncrement evenly
 		clickableIncrement: "T00:15:00",
 
 		// visibleIncrement: String
@@ -449,11 +449,11 @@ define([
 
 		handleKey: function(/*Event*/ e){
 			// summary:
-			//		Called from `dijit.form._DateTimeTextBox` to pass a keypress event
-			//		from the `dijit.form.TimeTextBox` to be handled in this widget
+			//		Called from `dijit/form/_DateTimeTextBox` to pass a keypress event
+			//		from the `dijit/form/TimeTextBox` to be handled in this widget
 			// tags:
 			//		protected
-			if(e.charOrCode == keys.DOWN_ARROW || e.charOrCode == keys.UP_ARROW){
+			if(e.keyCode == keys.DOWN_ARROW || e.keyCode == keys.UP_ARROW){
 				event.stop(e);
 				// Figure out which option to highlight now and then highlight it
 				if(this._highlighted_option && !this._highlighted_option.parentNode){
@@ -464,12 +464,12 @@ define([
 				if(!tgt){
 					tgt = timeMenu.childNodes[0];
 				}else if(timeMenu.childNodes.length){
-					if(e.charOrCode == keys.DOWN_ARROW && !tgt.nextSibling){
+					if(e.keyCode == keys.DOWN_ARROW && !tgt.nextSibling){
 						this._onArrowDown();
-					}else if(e.charOrCode == keys.UP_ARROW && !tgt.previousSibling){
+					}else if(e.keyCode == keys.UP_ARROW && !tgt.previousSibling){
 						this._onArrowUp();
 					}
-					if(e.charOrCode == keys.DOWN_ARROW){
+					if(e.keyCode == keys.DOWN_ARROW){
 						tgt = tgt.nextSibling;
 					}else{
 						tgt = tgt.previousSibling;
@@ -478,9 +478,9 @@ define([
 				this._highlightOption(tgt, true);
 				this._keyboardSelected = tgt;
 				return false;
-			}else if(e.charOrCode == keys.ENTER || e.charOrCode === keys.TAB){
+			}else if(e.keyCode == keys.ENTER || e.keyCode === keys.TAB){
 				// mouse hover followed by TAB is NO selection
-				if(!this._keyboardSelected && e.charOrCode === keys.TAB){
+				if(!this._keyboardSelected && e.keyCode === keys.TAB){
 					return true;	// true means don't call stopEvent()
 				}
 
@@ -491,7 +491,7 @@ define([
 
 				// Call stopEvent() for ENTER key so that form doesn't submit,
 				// but not for TAB, so that TAB does switch focus
-				return e.charOrCode === keys.TAB;
+				return e.keyCode === keys.TAB;
 			}
 			return undefined;
 		}
@@ -500,15 +500,15 @@ define([
 	/*=====
 	 TimePicker.__Constraints = declare(locale.__FormatOptions, {
 		 // clickableIncrement: String
-		 //		See `dijit._TimePicker.clickableIncrement`
+		 //		See `dijit/_TimePicker.clickableIncrement`
 		 clickableIncrement: "T00:15:00",
 
 		 // visibleIncrement: String
-		 //		See `dijit._TimePicker.visibleIncrement`
+		 //		See `dijit/_TimePicker.visibleIncrement`
 		 visibleIncrement: "T01:00:00",
 
 		 // visibleRange: String
-		 //		See `dijit._TimePicker.visibleRange`
+		 //		See `dijit/_TimePicker.visibleRange`
 		 visibleRange: "T05:00:00"
 	 });
 	 =====*/

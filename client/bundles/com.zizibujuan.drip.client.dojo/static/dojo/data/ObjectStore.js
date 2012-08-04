@@ -123,8 +123,8 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			//		that an item is loaded is situations when the item may or may not be loaded yet.
 			//		If you access a value directly through property access, you can use this to load
 			//		a lazy value as well (doesn't need to be an item).
-			//	args: Object
-			//		See dojo.data.api.Read.fetch
+			// args: Object
+			//		See dojo/data/api/Read.fetch()
 			// example:
 			//	|	store.loadItem({
 			//	|		item: item, // this item may or may not be loaded
@@ -150,13 +150,13 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			return item;
 		},
 		close: function(request){
-			//	summary:
-			// 		See dojo.data.api.Read.close()
+			// summary:
+			// 		See dojo/data/api/Read.close()
 			return request && request.abort && request.abort();
 		},
 		fetch: function(args){
 			// summary:
-			//		See dojo.data.api.Read.fetch
+			//		See dojo/data/api/Read.fetch()
 
 			args = lang.delegate(args, args && args.queryOptions);
 			var self = this;
@@ -247,7 +247,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 
 		getLabel: function(/* dojo/data/api/Item */ item){
 			// summary:
-			//		See dojo.data.api.Read.getLabel()
+			//		See dojo/data/api/Read.getLabel()
 			if(this.isItem(item)){
 				return this.getValue(item,this.labelProperty); //String
 			}
@@ -256,7 +256,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 
 		getLabelAttributes: function(/* dojo/data/api/Item */ item){
 			// summary:
-			//		See dojo.data.api.Read.getLabelAttributes()
+			//		See dojo/data/api/Read.getLabelAttributes()
 			return [this.labelProperty]; //array
 		},
 
@@ -266,7 +266,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 		getIdentity: function(item){
 			// summary:
 			//		returns the identity of the given item
-			//		See dojo.data.api.Read.getIdentity()
+			//		See dojo/data/api/Read.getIdentity()
 			return this.objectStore.getIdentity ? this.objectStore.getIdentity(item) : item[this.objectStore.idProperty || "id"];
 		},
 
@@ -274,7 +274,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			// summary:
 			//		returns the attributes which are used to make up the
 			//		identity of an item.	Basically returns this.objectStore.idProperty
-			//		See dojo.data.api.Read.getIdentityAttributes()
+			//		See dojo/data/api/Read.getIdentityAttributes()
 
 			return [this.objectStore.idProperty];
 		},
@@ -302,7 +302,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			// data: Object
 			//		The data to be added in as an item.
 			// data: Object
-			//		See dojo.data.api.Write.newItem()
+			//		See dojo/data/api/Write.newItem()
 					
 			if(parentInfo){
 				// get the previous value or any empty array
@@ -331,7 +331,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 		setValue: function(item, attribute, value){
 			// summary:
 			//		sets 'attribute' on 'item' to 'value'
-			//		See dojo.data.api.Write.setValue()
+			//		See dojo/data/api/Write.setValue()
 			
 			var old = item[attribute];
 			this.changing(item);
@@ -342,7 +342,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			// summary:
 			//		sets 'attribute' on 'item' to 'value' value
 			//		must be an array.
-			//		See dojo.data.api.Write.setValues()
+			//		See dojo/data/api/Write.setValues()
 
 			if(!lang.isArray(values)){
 				throw new Error("setValues expects to be passed an Array object as its value");
@@ -353,7 +353,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 		unsetAttribute: function(item, attribute){
 			// summary:
 			//		unsets 'attribute' on 'item'
-			//		See dojo.data.api.Write.unsetAttribute()
+			//		See dojo/data/api/Write.unsetAttribute()
 
 			this.changing(item);
 			var old = item[attribute];
@@ -367,10 +367,10 @@ return declare("dojo.data.ObjectStore", [Evented],{
 			//		contains a reference to the object itself as well as a
 			//		cloned and trimmed version of old object for use with
 			//		revert.
-			//	object: Object
+			// object: Object
 			//		Indicates that the given object is changing and should be marked as 
 			// 		dirty for the next save
-			// _deleting: [private]
+			// _deleting: [private] Boolean
 			
 			object.__isDirty = true;
 			//if an object is already in the list of dirty objects, don't add it again
@@ -399,7 +399,7 @@ return declare("dojo.data.ObjectStore", [Evented],{
 
 		save: function(kwArgs){
 			// summary:
-			//		Saves the dirty data using object store provider. See dojo.data.api.Write for API.
+			//		Saves the dirty data using object store provider. See dojo/data/api/Write for API.
 			// kwArgs:
 			//		- kwArgs.global:
 			//		  This will cause the save to commit the dirty data for all
@@ -522,20 +522,20 @@ return declare("dojo.data.ObjectStore", [Evented],{
 		// Notification Support
 
 		onSet: function(){
-			//	summary:
-			// 		See dojo.data.api.Notification.onSet()			
+			// summary:
+			// 		See dojo/data/api/Notification.onSet()
 		},
 		onNew: function(){
-			//	summary:
-			// 		See dojo.data.api.Notification.onNew()
+			// summary:
+			// 		See dojo/data/api/Notification.onNew()
 		},
 		onDelete:	function(){
-			//	summary:
-			// 		See dojo.data.api.Notification.onDelete()			
+			// summary:
+			// 		See dojo/data/api/Notification.onDelete()
 		},
 		// an extra to get result sets
 		onFetch: function(results){
-			//	summary:
+			// summary:
 			// 		Called when a fetch occurs			
 		}
 

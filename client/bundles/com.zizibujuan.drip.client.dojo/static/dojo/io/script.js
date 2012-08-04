@@ -1,8 +1,8 @@
 define([
-	"../_base/connect", "../_base/kernel", "../_base/lang",
+	"../_base/connect", /*===== "../_base/declare", =====*/ "../_base/kernel", "../_base/lang",
 	"../sniff", "../_base/window","../_base/xhr",
 	"../dom", "../dom-construct", "../request/script"
-], function(connect, kernel, lang, has, win, xhr, dom, domConstruct, _script){
+], function(connect, /*===== declare, =====*/ kernel, lang, has, win, xhr, dom, domConstruct, _script){
 
 	// module:
 	//		dojo/io/script
@@ -10,11 +10,11 @@ define([
 	dojo.deprecated("dojo/io/script", "Use dojo/request/script.", "2.0");
 
 	/*=====
-	var __ioArgs = function(kwargs){
+	var __ioArgs = declare(kernel.__IoArgs, {
 		// summary:
 		//		All the properties described in the dojo.__ioArgs type, apply to this
 		//		type as well, EXCEPT "handleAs". It is not applicable to
-		//		dojo.io.script.get() calls, since it is implied by the usage of
+		//		dojo/io/script.get() calls, since it is implied by the usage of
 		//		"jsonp" (response will be a JSONP call returning JSON)
 		//		or the response is pure JavaScript defined in
 		//		the body of the script that was attached.
@@ -35,12 +35,7 @@ define([
 		//		The Document object for a child iframe. If this is passed in, the script
 		//		will be attached to that document. This can be helpful in some comet long-polling
 		//		scenarios with Firefox and Opera.
-		this.callbackParamName = callbackParamName;
-		this.jsonp = jsonp;
-		this.checkString = checkString;
-		this.frameDoc = frameDoc;
-	};
-	__ioArgs.prototype = new kernel.__IoArgs();
+	});
 	=====*/
 
 	var script = {
@@ -89,7 +84,7 @@ define([
 		remove: _script._remove,
 
 		_makeScriptDeferred: function(/*Object*/ args, /*Function?*/ cancel){
-			//summary:
+			// summary:
 			//		sets up a Deferred object for an IO request.
 			var dfd = xhr._ioSetArgs(args, cancel || this._deferredCancel, this._deferredOk, this._deferredError);
 
@@ -153,7 +148,8 @@ define([
 		_counter: 1,
 
 		_addDeadScript: function(/*Object*/ ioArgs){
-			//summary: sets up an entry in the deadScripts array.
+			// summary:
+			//		sets up an entry in the deadScripts array.
 			script._deadScripts.push({id: ioArgs.id, frameDoc: ioArgs.frameDoc});
 			//Being extra paranoid about leaks:
 			ioArgs.frameDoc = null;
@@ -200,7 +196,8 @@ define([
 		},
 
 		_resHandle: function(/*Deferred*/ dfd){
-			//summary: inflight function to handle a completed response.
+			// summary:
+			//		inflight function to handle a completed response.
 			if(script._ioCheck(dfd)){
 				dfd.callback(dfd);
 			}else{
@@ -211,7 +208,7 @@ define([
 		},
 
 		_canAttach: function(/*===== ioArgs =====*/ ){
-			//summary:
+			// summary:
 			//		A method that can be overridden by other modules
 			//		to control when the script attachment occurs.
 			// ioArgs: Object
@@ -219,7 +216,7 @@ define([
 		},
 
 		_jsonpCallback: function(/*JSON Object*/ json){
-			//summary:
+			// summary:
 			//		generic handler for jsonp callback. A pointer to this function
 			//		is used for all jsonp callbacks.  NOTE: the "this" in this
 			//		function will be the Deferred object that represents the script
@@ -242,7 +239,7 @@ define([
 		//		if it loads.
 	};
 	script.remove = function(id, frameDocument){
-		//summary:
+		// summary:
 		//		removes the script element with the given id, from the given frameDocument.
 		//		If no frameDocument is passed, the current document is used.
 	};

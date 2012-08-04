@@ -36,7 +36,7 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 	//		inside the BODY tag of a full HTML document.  It should not
 	//		contain the HTML, HEAD, or BODY tags.
 	//		For more advanced functionality with scripts and
-	//		stylesheets, see dojox.layout.ContentPane.  This widget may be
+	//		stylesheets, see dojox/layout/ContentPane.  This widget may be
 	//		used stand alone or as a base class for other widgets.
 	//		ContentPane is useful as a child of other layout containers
 	//		such as BorderContainer or TabContainer, but note that those
@@ -58,7 +58,7 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 	//		Changing href after creation doesn't have any effect; Use set('href', ...);
 	href: "",
 
-	// content: String || DomNode || NodeList || dijit._Widget
+	// content: String|DomNode|NodeList|dijit/_Widget
 	//		The innerHTML of the ContentPane.
 	//		Note that the initialization parameter / argument to set("content", ...)
 	//		can be a String, DomNode, Nodelist, or _Widget.
@@ -188,12 +188,36 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 
 	startup: function(){
 		// summary:
-		//		Call startup() on all children including non _Widget ones like dojo.dnd.Source objects
+		//		Call startup() on all children including non _Widget ones like dojo/dnd/Source objects
 
 		// This starts all the widgets
 		this.inherited(arguments);
 
-		// And this catches stuff like dojo.dnd.Source
+		// And this catches stuff like dojo/dnd/Source
+		if(this._contentSetter){
+			array.forEach(this._contentSetter.parseResults, function(obj){
+				if(!obj._started && !obj._destroyed && lang.isFunction(obj.startup)){
+					obj.startup();
+					obj._started = true;
+				}
+			}, this);
+		}
+	},
+
+	_startChildren: function(){
+		// summary:
+		//		Called when content is loaded.   Calls startup on each child widget.   Similar to ContentPane.startup()
+		//		itself, but avoids marking the ContentPane itself as "restarted" (see #15581).
+
+		// This starts all the widgets
+		array.forEach(this.getChildren(), function(obj){
+			if(!obj._started && !obj._destroyed && lang.isFunction(obj.startup)){
+				obj.startup();
+				obj._started = true;
+			}
+		});
+
+		// And this catches stuff like dojo/dnd/Source
 		if(this._contentSetter){
 			array.forEach(this._contentSetter.parseResults, function(obj){
 				if(!obj._started && !obj._destroyed && lang.isFunction(obj.startup)){
@@ -442,7 +466,7 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 				// All widgets will hit this branch
 				widget.destroyRecursive(preserveDom);
 			}else if(widget.destroy){
-				// Things like dojo.dnd.Source have destroy(), not destroyRecursive()
+				// Things like dojo/dnd/Source have destroy(), not destroyRecursive()
 				widget.destroy(preserveDom);
 			}
 			widget._destroyed = true;
@@ -456,7 +480,7 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 						// All widgets will hit this branch
 						widget.destroyRecursive(preserveDom);
 					}else if(widget.destroy){
-						// Things like dojo.dnd.Source have destroy(), not destroyRecursive()
+						// Things like dojo/dnd/Source have destroy(), not destroyRecursive()
 						widget.destroy(preserveDom);
 					}
 					widget._destroyed = true;
@@ -531,8 +555,7 @@ return declare("dijit.layout.ContentPane", [_Widget, _Container, _ContentPaneRes
 			if(!isFakeContent){
 				if(self._started){
 					// Startup each top level child widget (and they will start their children, recursively)
-					delete self._started;
-					self.startup();
+					self._startChildren();
 					
 					// Call resize() on each of my child layout widgets,
 					// or resize() on my single child layout widget...

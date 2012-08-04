@@ -56,26 +56,25 @@ var Cache = function(masterStore, cachingStore, options){
 lang.setObject("dojo.store.Cache", Cache);
 
 /*=====
- var __CacheArgs = function(kwargs){
-	 // summary:
-	 //		These are additional options for how caching is handled.
-	 // isLoaded: Function?
-	 //		This is a function that will be called for each item in a query response to determine
-	 //		if it is cacheable. If isLoaded returns true, the item will be cached, otherwise it
-	 //		will not be cached. If isLoaded is not provided, all items will be cached.
-	 this.isLoaded = isLoaded;
- };
+var __CacheArgs = {
+	// summary:
+	//		These are additional options for how caching is handled.
+	// isLoaded: Function?
+	//		This is a function that will be called for each item in a query response to determine
+	//		if it is cacheable. If isLoaded returns true, the item will be cached, otherwise it
+	//		will not be cached. If isLoaded is not provided, all items will be cached.
+};
 
- Cache = declare(Store, {
+Cache = declare(Store, {
 	// summary:
 	//		The Cache store wrapper takes a master store and a caching store,
 	//		caches data from the master into the caching store for faster
 	//		lookup. Normally one would use a memory store for the caching
 	//		store and a server store like JsonRest for the master store.
 	// example:
-	//	|	var master = new dojo.store.Memory(data);
-	//	|	var cacher = new dojo.store.Memory();
-	//	|	var store = new dojo.store.Cache(master, cacher);
+	//	|	var master = new Memory(data);
+	//	|	var cacher = new Memory();
+	//	|	var store = new Cache(master, cacher);
 	//
 	constructor: function(masterStore, cachingStore, options){
 		// masterStore:

@@ -69,7 +69,7 @@ define([
 			this.inherited(arguments);
 
 			// Events specific to Calendar, not used in CalendarLite
-			this.connect(this.domNode, "onkeypress", "_onKeyPress");
+			this.connect(this.domNode, "onkeydown", "_onKeyDown");
 			this.connect(this.dateRowsNode, "onmouseover", "_onDayMouseOver");
 			this.connect(this.dateRowsNode, "onmouseout", "_onDayMouseOut");
 			this.connect(this.dateRowsNode, "onmousedown", "_onDayMouseDown");
@@ -83,9 +83,14 @@ define([
 			//		protected
 
 			// move to selected month, bounding by the number of days in the month
-			// (ex: dec 31 --> jan 28, not jan 31)
-			this._setCurrentFocusAttr(this.dateModule.add(this.currentFocus, "month",
-				newMonth - this.currentFocus.getMonth()));
+			// (ex: jan 31 --> feb 28, not feb 31)
+			var date  = new this.dateClassObj(this.currentFocus);
+			date.setDate(1);
+			date.setMonth(newMonth);
+			var daysInMonth = this.dateModule.getDaysInMonth(date);
+			var currentDate = this.currentFocus.getDate();
+			date.setDate(Math.min(currentDate, daysInMonth));
+			this._setCurrentFocusAttr(date);
 		},
 
 		_onDayMouseOver: function(/*Event*/ evt){
@@ -147,18 +152,18 @@ define([
 			// summary:
 			//		Provides keyboard navigation of calendar.
 			// description:
-			//		Called from _onKeyPress() to handle keypress on a stand alone Calendar,
-			//		and also from `dijit.form._DateTimeTextBox` to pass a keypress event
-			//		from the `dijit.form.DateTextBox` to be handled in this widget
+			//		Called from _onKeyDown() to handle keypress on a stand alone Calendar,
+			//		and also from `dijit/form/_DateTimeTextBox` to pass a keydown event
+			//		from the `dijit/form/DateTextBox` to be handled in this widget
 			// returns:
 			//		False if the key was recognized as a navigation key,
-			//		to indicate that the event was handled by Calendar and shouldn't be propogated
+			//		to indicate that the event was handled by Calendar and shouldn't be propagated
 			// tags:
 			//		protected
 			var increment = -1,
 				interval,
 				newValue = this.currentFocus;
-			switch(evt.charOrCode){
+			switch(evt.keyCode){
 				case keys.RIGHT_ARROW:
 					increment = 1;
 					//fallthrough...
@@ -189,7 +194,7 @@ define([
 					newValue.setDate(1);
 					break;
 				case keys.ENTER:
-				case " ":
+				case keys.SPACE:
 					this.set("value", this.currentFocus);
 					break;
 				default:
@@ -205,7 +210,7 @@ define([
 			return false;
 		},
 
-		_onKeyPress: function(/*Event*/ evt){
+		_onKeyDown: function(/*Event*/ evt){
 			// summary:
 			//		For handling keypress events on a stand alone calendar
 			if(!this.handleKey(evt)){
@@ -217,7 +222,7 @@ define([
 			// summary:
 			//		Deprecated.   Notification that a date cell was selected.  It may be the same as the previous value.
 			// description:
-			//		Formerly used by `dijit.form._DateTimeTextBox` (and thus `dijit.form.DateTextBox`)
+			//		Formerly used by `dijit/form/_DateTimeTextBox` (and thus `dijit/form/DateTextBox`)
 			//		to get notification when the user has clicked a date.  Now onExecute() (above) is used.
 			// tags:
 			//		protected

@@ -32,8 +32,8 @@ define([
 			// tags:
 			//		public
 			// filter: (_ConditionExpr|null)?
-			//		null: clear filter definition
-			//		undefined: it's getter
+			//		- null: clear filter definition
+			//		- undefined: it's getter
 			// returns:
 			//		A filter definition if it's getter.
 		},
@@ -220,7 +220,7 @@ define([
 			//		Implement _StoreLayer._fetch
 			// tags:
 			//		private callback
-			// filterRequest: dojo.data.api.Request
+			// filterRequest: dojo/data/api/Request
 			//		The actual request used in store.fetch.
 			//		This function is called recursively to fill the result store items
 			//		until the user specified item count is reached. Only in recursive calls,

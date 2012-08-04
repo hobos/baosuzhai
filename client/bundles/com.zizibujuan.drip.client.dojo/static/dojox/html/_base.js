@@ -9,8 +9,9 @@ define([
 	"dojo/_base/sniff",
 	"dojo/_base/url",
 	"dojo/_base/xhr",
+	"dojo/when",
 	"dojo/_base/window"
-], function(declare, Deferred, domConstruct, htmlUtil, kernel, lang, ready, has, _Url, xhrUtil, windowUtil){
+], function(declare, Deferred, domConstruct, htmlUtil, kernel, lang, ready, has, _Url, xhrUtil, when, windowUtil){
 
 /*
 	Status: don't know where this will all live exactly
@@ -116,6 +117,11 @@ define([
 		// if cssUrl is set it will adjust paths accordingly
 		styles.attributes = [];
 
+		cont = cont.replace(/<[!][-][-](.|\s)*?[-][-]>/g,
+			function(comment){
+				return comment.replace(/<(\/?)style\b/ig,"&lt;$1Style").replace(/<(\/?)link\b/ig,"&lt;$1Link").replace(/@import "/ig,"@ import \"");
+			}
+		);
 		return cont.replace(/(?:<style([^>]*)>([\s\S]*?)<\/style>|<link\s+(?=[^>]*rel=['"]?stylesheet)([^>]*?href=(['"])([^>]*?)\4[^>\/]*)\/?>)/gi,
 			function(ignore, styleAttr, cssText, linkAttr, delim, href){
 				// trim attribute
@@ -342,7 +348,9 @@ define([
 				d = new Deferred();
 			ready(lang.hitch(this, function(){
 				superClassOnEndMethod.apply(this, args);
-				this.parseDeferred.then(function(){ d.resolve(); })
+
+				// If parser ran (parseContent == true), wait for it to finish, otherwise call d.resolve() immediately
+				when(this.parseDeferred, function(){ d.resolve(); });
 			}));
 
 			// Return a promise that resolves after the ready() call completes, and after the parser finishes running.

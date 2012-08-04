@@ -28,7 +28,7 @@ return declare("dijit.TitlePane", [ContentPane, _TemplatedMixin, _CssStateMixin]
 	// description:
 	//		An accessible container with a title Heading, and a content
 	//		section that slides open and closed. TitlePane is an extension to
-	//		`dijit.layout.ContentPane`, providing all the useful content-control aspects from it.
+	//		`dijit/layout/ContentPane`, providing all the useful content-control aspects from it.
 	//
 	// example:
 	//	|	// load a TitlePane from remote file:
@@ -230,12 +230,12 @@ return declare("dijit.TitlePane", [ContentPane, _TemplatedMixin, _CssStateMixin]
 		// tags:
 		//		private
 
-		if(e.charOrCode == keys.ENTER || e.charOrCode == ' '){
+		if(e.keyCode == keys.ENTER || e.keyCode == keys.SPACE){
 			if(this.toggleable){
 				this.toggle();
+				event.stop(e);
 			}
-			event.stop(e);
-		}else if(e.charOrCode == keys.DOWN_ARROW && this.open){
+		}else if(e.keyCode == keys.DOWN_ARROW && this.open){
 			this.containerNode.focus();
 			e.preventDefault();
 		}

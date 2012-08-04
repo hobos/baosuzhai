@@ -26,7 +26,6 @@ dependencies = {
 				"dijit.dijit-all"
 			]
 		},
-/*
 		// Here are the various demos with promotion:
 		{
 			name: "../demos/editor/layer.js",
@@ -315,7 +314,7 @@ dependencies = {
 			dependencies: [
 				"demos.calendar.src"
 			]
-		},*/
+		},
 		{
 			name: "../demos/todoApp/src.js",
 			dependencies: [
@@ -338,6 +337,7 @@ dependencies = {
 				"dojox/mobile/SimpleDialog",
 				"dojox/mobile/DatePicker",
 				"dojox/mobile/Opener",
+				"dojox/mobile/SpinWheelDatePicker",
 				"dojo/date/stamp",
 				"dojox/app/widgets/Container",
 				"dojo/store/Memory",
@@ -347,6 +347,7 @@ dependencies = {
 				"dojox/mvc/EditStoreRefListController",
 				"dojox/mvc/Repeat",
 				"dojox/mvc/Group",
+				"dojox/mvc/WidgetList",
 				"dojox/mvc/Output",
 				"dojox/mvc/at",
 				"dojox/app/main",

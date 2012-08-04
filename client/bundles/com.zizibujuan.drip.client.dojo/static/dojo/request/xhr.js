@@ -1,11 +1,10 @@
 define([
-	'require',
 	'../errors/RequestError',
 	'./watch',
 	'./handlers',
 	'./util',
 	'../has'
-], function(require, RequestError, watch, handlers, util, has){
+], function(RequestError, watch, handlers, util, has){
 	has.add('native-xhr', function(){
 		// if true, the environment has a native XHR implementation
 		return typeof XMLHttpRequest !== 'undefined';
@@ -129,14 +128,12 @@ define([
 	function xhr(/*String*/ url, /*Object?*/ options, /*Boolean?*/ returnDeferred){
 		// summary:
 		//		Sends an HTTP request with the given URL and options.
-		// description:
-		//		Sends an HTTP request with the given URL.
 		// url:
 		//		URL to request
 		var response = util.parseArgs(
 			url,
 			util.deepCreate(defaultOptions, options),
-			has('native-formdata') && options.data && options.data instanceof FormData
+			has('native-formdata') && options && options.data && options.data instanceof FormData
 		);
 		url = response.url;
 		options = response.options;
@@ -205,10 +202,9 @@ define([
 				_xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			}
 
-			try{
-				var notify = require('./notify');
-				notify.send(response);
-			}catch(e){}
+			if(util.notify){
+				util.notify.emit('send', response, dfd.promise.cancel);
+			}
 			_xhr.send(data);
 		}catch(e){
 			dfd.reject(e);

@@ -51,7 +51,7 @@ define([
 
 	var getDoc = function(){ return win.doc; };
 	// NOTE(alex): the spec is idiotic. CSS queries should ALWAYS be case-sensitive, but nooooooo
-	var cssCaseBug = ((has("webkit")||has("mozilla")) && ((getDoc().compatMode) == "BackCompat"));
+	var cssCaseBug = (getDoc().compatMode) == "BackCompat";
 
 	////////////////////////////////////////////////////////////////////////
 	// Global utilities
@@ -247,8 +247,7 @@ define([
 				//	but not:
 				//		thinger > div.howdy[type=thinger]
 				//	the indidual components of the previous query would be
-				//	split into 3 parts that would be represented a structure
-				//	like:
+				//	split into 3 parts that would be represented a structure like:
 				//		[
 				//			{
 				//				query: "thinger",

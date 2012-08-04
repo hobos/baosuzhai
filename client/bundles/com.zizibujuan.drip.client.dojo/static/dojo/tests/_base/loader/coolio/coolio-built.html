@@ -18,17 +18,20 @@
 					location:"../coolioBuilt/dojox",
 				},{
 					name:"cdojo",
-					location:"../coolioBuilt/dojo",
-					packageMap:{dojo:"cdojo", dijit:"cdijit"}
+					location:"../coolioBuilt/dojo"
 				},{
 					name:"cdijit",
-					location:"../coolioBuilt/dijit",
-					packageMap:{dojo:"cdojo", dijit:"cdijit"}
+					location:"../coolioBuilt/dijit"
 			    },{
 					name:"coolio",
-					location:"../coolioBuilt/coolio",
-					packageMap:{dojo:"cdojo", dijit:"cdijit"}
+					location:"../coolioBuilt/coolio"
 				}],
+				map:{
+					cdojo:{dojo:"cdojo", dijit:"cdijit"},
+					cdijit:{dojo:"cdojo", dijit:"cdijit"},
+					coolio:{dojo:"cdojo", dijit:"cdijit"}
+				},
+				deps:["dojo", "cdojo"]
 			};
 		</script>
 		<script type="text/javascript" src="../coolioBuilt/dojo/dojo.js"></script>
@@ -36,6 +39,7 @@
 			var coolioCalendarMid = /legacy/.test(location.search) ? "coolio/calendar" : "coolio/calendar-amd";
 			require(["dojo/parser", coolioCalendarMid, "dojo/ready", "dijit/Calendar"], function(parser, calendar, ready){
 				ready(function(){
+					// dojo/main loaded the parser...
 					parser.parse();
 					calendar("c1");
 					console.log("total load time: " + ((new Date()).getTime() - startTime) / 1000 + "s");

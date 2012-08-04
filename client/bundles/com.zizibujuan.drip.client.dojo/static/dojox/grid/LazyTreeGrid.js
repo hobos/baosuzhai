@@ -342,19 +342,21 @@ var LazyTreeGrid = declare("dojox.grid.LazyTreeGrid", TreeGrid, {
 	//		and dojox.grid.TreeGrid also apply here
 	//
 	//		LazyTreeGrid does not support summary row/items aggregate due to the lazy-loading rationale.
+
 	_layoutClass: _LazyTreeLayout,
 	_size: 0,
-	// treeModel: dijit.tree.ForestStoreModel | dojox.grid.LazyTreeGridStoreModel
+
+	// treeModel: dijit/tree/.ForestStoreModel|dojox/grid/LazyTreeGridStoreModel
 	//		A tree store model object.
 	treeModel: null,
+
 	// defaultState: Object
 	//		Used to restore the state of LazyTreeGrid.
 	//		This object should ONLY be obtained from `LazyTreeGrid.getState()`.
 	defaultState: null,
+
 	// colSpans: Object
-	//		a json object that defines column span of each level rows
-	//
-	//		attributes:
+	//		A json object that defines column span of each level rows.  Attributes:
 	//
 	//		- 0/1/..: which level need to colspan
 	//		- start: start column index of colspan

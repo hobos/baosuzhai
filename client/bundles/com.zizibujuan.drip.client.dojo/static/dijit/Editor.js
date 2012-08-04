@@ -46,7 +46,7 @@ define([
 		//		the options available in the toolbar.  Content generation may vary across
 		//		browsers, and clipboard operations may have different results, to name
 		//		a few limitations.  Note: this widget should not be used with the HTML
-		//		&lt;TEXTAREA&gt; tag -- see dijit._editor.RichText for details.
+		//		&lt;TEXTAREA&gt; tag -- see dijit/_editor/RichText for details.
 
 		// plugins: [const] Object[]
 		//		A list of plugin names (as strings) or instances (as objects)
@@ -188,14 +188,18 @@ define([
 					}
 				}
 				if(!o.plugin){
-					// TODO: remove lang.getObject() call in 2.0
-					var pc = args.ctor || lang.getObject(args.name) || require(args.name);
-					if(pc){
-						o.plugin = new pc(args);
+					try{
+						// TODO: remove lang.getObject() call in 2.0
+						var pc = args.ctor || lang.getObject(args.name) || require(args.name);
+						if(pc){
+							o.plugin = new pc(args);
+						}
+					}catch(e){
+						throw new Error(this.id + ": cannot find plugin [" + args.name + "]");
 					}
 				}
 				if(!o.plugin){
-					throw new Error(this.id + ': cannot find plugin', plugin);
+					throw new Error(this.id + ": cannot find plugin [" + args.name + "]");
 				}
 				plugin=o.plugin;
 			}
@@ -214,7 +218,7 @@ define([
 
 		resize: function(size){
 			// summary:
-			//		Resize the editor to the specified size, see `dijit.layout._LayoutWidget.resize`
+			//		Resize the editor to the specified size, see `dijit/layout/_LayoutWidget.resize()`
 			if(size){
 				// we've been given a height/width for the entire editor (toolbar + contents), calls layout()
 				// to split the allocated size between the toolbar and the contents
@@ -229,7 +233,7 @@ define([
 		},
 		layout: function(){
 			// summary:
-			//		Called from `dijit.layout._LayoutWidget.resize`.  This shouldn't be called directly
+			//		Called from `dijit/layout/_LayoutWidget.resize()`.  This shouldn't be called directly
 			// tags:
 			//		protected
 

@@ -1,6 +1,6 @@
 define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/loader" /* dojo._getText */,
 	    "dojo/_base/xhr","./_base", "dojox/xml/DomParser", "dojox/html/metrics","./matrix"],
-  function (lang,declare,arr,loader,xhr,gfx,xmlDomParser,HtmlMetrics,Matrix){
+function (lang,declare,arr,loader,xhr,gfx,xmlDomParser,HtmlMetrics,Matrix){
 	var _getText = function(url){
 		var result;
 		xhr.get({url:url, sync:true, load:function(text){ // Note synchronous!
@@ -8,15 +8,41 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 		}});
 		return result;
 	};
-	 
 
-	/*=====
-	dojox.gfx.VectorText = {
+	 lang.getObject("dojox.gfx.VectorText", true);
+
+	 lang.mixin(gfx, {
+		  vectorFontFitting: {
+			  NONE: 0,	//		render text according to passed size.
+			  FLOW: 1,		//		render text based on the passed width and size
+			  FIT: 2			//		render text based on a passed viewbox.
+		  },
+		  defaultVectorText: {
+			  type:"vectortext", x:0, y:0, width: null, height: null,
+			  text: "", align: "start", decoration: "none", fitting: 0,	//		vectorFontFitting.NONE
+			  leading: 1.5	//		in ems.
+		  },
+		  defaultVectorFont: {
+			  type:"vectorfont", size: "10pt", family: null
+		  },
+		  _vectorFontCache: {},
+		  _svgFontCache: {},
+		  getVectorFont: function(/* String */url){
+			  if(gfx._vectorFontCache[url]){
+				  return gfx._vectorFontCache[url];
+			  }
+			  return new gfx.VectorFont(url);
+		  }
+	 });
+
+	// TODO: Make up your mind.   Module is called VectorText but it's creating and returning a global called VectorFont
+
+	return declare("dojox.gfx.VectorFont", null, {
 		// summary:
-		//		An implementation of the SVG Font 1.1 spec, using dojox.gfx.
+		//		An implementation of the SVG Font 1.1 spec, using dojox/gfx.
 		//
 		//		Basic interface:
-		//	|	var f = new dojox.gfx.Font(url|string);
+		//	|	var f = new gfx.Font(url|string);
 		//	|	surface||group.createVectorText(text)
 		//	|	.setFill(fill)
 		//	|	.setStroke(stroke)
@@ -25,7 +51,7 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 		//		The arguments passed to createVectorText are the same as you would
 		//		pass to surface||group.createText; the difference is that this
 		//		is entirely renderer-agnostic, and the return value is a subclass
-		//		of dojox.gfx.Group.
+		//		of dojox/gfx.Group.
 		//
 		//		Note also that the "defaultText" object is slightly different:
 		//		{ type:"vectortext", x:0, y:0, width:null, height: null,
@@ -38,36 +64,7 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 		//		by the font object itself.
 		//
 		//		Note that this will only render IF and WHEN you set the font.
-	};
-	=====*/
 
-	lang.getObject("dojox.gfx.VectorText", true);
-	
-	lang.mixin(gfx, {
-		vectorFontFitting: {
-			NONE: 0,	//		render text according to passed size.
-			FLOW: 1,		//		render text based on the passed width and size
-			FIT: 2			//		render text based on a passed viewbox.
-		},
-		defaultVectorText: {
-			type:"vectortext", x:0, y:0, width: null, height: null,
-			text: "", align: "start", decoration: "none", fitting: 0,	//		vectorFontFitting.NONE
-			leading: 1.5	//		in ems.
-		},
-		defaultVectorFont: {
-			type:"vectorfont", size: "10pt", family: null
-		},
-		_vectorFontCache: {},
-		_svgFontCache: {},
-		getVectorFont: function(/* String */url){
-			if(gfx._vectorFontCache[url]){
-				return gfx._vectorFontCache[url];
-			}
-			return new gfx.VectorFont(url);
-		}
-	});
-
-	return declare("dojox.gfx.VectorFont", null, {  // EARLY RETURN
 		_entityRe: /&(quot|apos|lt|gt|amp|#x[^;]+|#\d+);/g,
 		_decodeEntitySequence: function(str){
 			//		unescape the unicode sequences
@@ -304,7 +301,7 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 				url.toString()
 			);
 			this.onLoad(this);
-			return this;	//		dojox.gfx.VectorFont
+			return this;	//		dojox/gfx.VectorFont
 		},
 		initialized: function(){
 			// summary:
@@ -530,12 +527,16 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			return (scale||1) * (this.viewbox.height+this.descent);	//		Float
 		},
 
-		draw: function(/* dojox.gfx.Container */group, /* dojox.gfx.__TextArgs */textArgs, /* dojox.gfx.__FontArgs */fontArgs, /* dojox.gfx.__FillArgs */fillArgs, /* dojox.gfx.__StrokeArgs? */strokeArgs){
+		draw: function(
+				/* dojox/gfx.Container */group,
+				/* dojox/gfx.Text */ textArgs,
+				/* dojox/gfx.Font */fontArgs,
+				/* dojox/gfx.Fill */fillArgs,
+				/* dojox/gfx.Stroke */strokeArgs){
 			// summary:
 			//		based on the passed parameters, draw the given text using paths
 			//		defined by this font.
-			//
-			//		description:
+			// description:
 			//		The main method of a VectorFont, draw() will take a text fragment
 			//		and render it in a set of groups and paths based on the parameters
 			//		passed.
@@ -551,12 +552,11 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			//		Resulting GFX structure
 			//		-----------------------
 			//
-			//		The result of this function is a set of gfx objects in the following
-			//		structure:
+			//		The result of this function is a set of gfx objects in the following structure:
 			//
-			//	|	dojox.gfx.Group 			//		the parent group generated by this function
-			//	|	+	dojox.gfx.Group[]		//		a group generated for each line of text
-			//	|		+	dojox.gfx.Path[]	//		each glyph/character in the text
+			//	|	gfx.Group 			//		the parent group generated by this function
+			//	|	+	gfx.Group[]		//		a group generated for each line of text
+			//	|		+	gfx.Path[]	//		each glyph/character in the text
 			//
 			//		Scaling transformations (i.e. making the generated text the correct size)
 			//		are always applied to the parent Group that is generated (i.e. the top
@@ -567,8 +567,8 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			//		you will need to reapply the scaling transformation as the *last* transform,
 			//		like so:
 			//
-			//	|	textGroup.setTransform(new dojox.gfx.Matrix2D([
-			//	|		dojox.gfx.matrix.translate({ dx: dx, dy: dy }),
+			//	|	textGroup.setTransform(new matrix.Matrix2D([
+			//	|		matrix.translate({ dx: dx, dy: dy }),
 			//	|		textGroup.getTransform()
 			//	|	]));
 			//
@@ -585,7 +585,7 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			//		- Fitting operations (i.e. find a best fit to a given rectangle)
 			//
 			//		To enable either, pass a `fitting` property along with the textArgs object.
-			//		The possible values are contained in the dojox.gfx.vectorFontFitting enum
+			//		The possible values are contained in the dojox/gfx.vectorFontFitting enum
 			//		(NONE, FLOW, FIT).
 			//
 			//		`Flow fitting`
@@ -613,6 +613,7 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			//		Always make sure that you are legally allowed to use any fonts that you
 			//		convert to SVG format; we claim no responsibility for any licensing
 			//		infractions that may be caused by the use of this code.
+			// returns: dojox/gfx.Group
 			if(!this.initialized()){
 				throw new Error("dojox.gfx.VectorFont.draw(): we have not been initialized yet.");
 			}
@@ -714,15 +715,15 @@ define(["dojo/_base/lang","dojo/_base/declare","dojo/_base/array", "dojo/_base/l
 			g.setTransform(Matrix.scale(scale));
 
 			//		return the overall group
-			return g;	//		dojox.gfx.Group
+			return g;	//		dojox/gfx.Group
 		},
 
 		//		events
 		onLoadBegin: function(/* String */url){ },
-		onLoad: function(/* dojox.gfx.VectorFont */font){ }
+		onLoad: function(/* dojox/gfx/VectorText */font){ }
 	});
 
-	//		TODO: dojox.gfx integration
+	//		TODO: dojox/gfx integration
 /*
 
 	//		Inherit from Group but attach Text properties to it.

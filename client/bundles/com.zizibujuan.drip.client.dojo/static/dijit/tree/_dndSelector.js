@@ -18,8 +18,8 @@ define([
 
 	return declare("dijit.tree._dndSelector", _dndContainer, {
 		// summary:
-		//		This is a base class for `dijit.tree.dndSource` , and isn't meant to be used directly.
-		//		It's based on `dojo.dnd.Selector`.
+		//		This is a base class for `dijit/tree/dndSource` , and isn't meant to be used directly.
+		//		It's based on `dojo/dnd/Selector`.
 		// tags:
 		//		protected
 
@@ -38,14 +38,6 @@ define([
 
 			this.selection={};
 			this.anchor = null;
-
-			if(this.tree.showRoot){
-				this.tree.domNode.setAttribute("aria-multiselectable", !this.singular);
-			}else{
-				// TODO: this will fail in a race condition sometimes, this.tree.rootNode might not exist yet.
-				// Do not fix with a setTimeout().
-				// this.tree.rootNode.containerNode.setAttribute("aria-multiselectable", !this.singular);
-			}
 
 			if(!this.cookieName && this.tree.id){
 				this.cookieName = this.tree.id + "SaveSelectedCookie";
@@ -335,7 +327,7 @@ define([
 		getItem: function(/*String*/ key){
 			// summary:
 			//		Returns the dojo/dnd/Container._Item (representing a dragged node) by it's key (id).
-			//		Called by dojo.dnd.Source.checkAcceptance().
+			//		Called by dojo/dnd/Source.checkAcceptance().
 			// tags:
 			//		protected
 
@@ -349,7 +341,7 @@ define([
 		forInSelectedItems: function(/*Function*/ f, /*Object?*/ o){
 			// summary:
 			//		Iterates over selected items;
-			//		see `dojo.dnd.Container.forInItems()` for details
+			//		see `dojo/dnd/Container.forInItems()` for details
 			o = o || kernel.global;
 			for(var id in this.selection){
 				// console.log("selected item id: " + id);

@@ -135,15 +135,16 @@ dojo.declare("dojox.widget._RollingListPane",
 			}
 		}
 	},
-	
+
 	_onShow: function(){
 		// summary:
 		//		checks that the store is loaded
+		this.inherited(arguments);
 		if((this.store || this.items) && ((this.refreshOnShow && this.domNode) || (!this.isLoaded && this.domNode))){
 			this.refresh();
 		}
 	},
-	
+
 	_load: function(){
 		// summary:
 		//		sets the "loading" message and then kicks off a query asyncronously
@@ -220,8 +221,8 @@ dojo.declare("dojox.widget._RollingListPane",
 	
 	_onSetItem: function(/* item */ item,
 					/* attribute-name-string */ attribute,
-					/* object | array */ oldValue,
-					/* object | array */ newValue){
+					/* Object|Array */ oldValue,
+					/* Object|Array */ newValue){
 		// summary:
 		//		called when an item in the store has changed
 		if(this._hasItem(item)){
@@ -450,7 +451,7 @@ dojo.declare("dojox.widget._RollingListGroupPane",
 			},
 			_moveToPopup: function(/*Event*/ evt){
 				if(this.focusedChild && !this.focusedChild.disabled){
-					this.focusedChild._onClick(evt);
+					this.onItemClick(this.focusedChild, evt);
 				}
 			}
 		}, this.menuNode);
@@ -1032,10 +1033,10 @@ dojo.declare("dojox.widget.RollingList",
 				if(!widgetItem._started){
 					var c = widgetItem.connect(widgetItem, "startup", function(){
 						this.disconnect(c);
-						dojo.style(this.arrowWrapper, "display", "");
+						dojo.style(this.arrowWrapper, "visibility", "");
 					});
 				}else{
-					dojo.style(widgetItem.arrowWrapper, "display", "");
+					dojo.style(widgetItem.arrowWrapper, "visibility", "");
 				}
 			}else{
 				widgetItem = this.getMenuItemForItem(item, parentPane, null);
@@ -1084,7 +1085,7 @@ dojo.declare("dojox.widget.RollingList",
 		}
 	},
 	
-	_setStore: function(/* dojo.data.api.Read */ store){
+	_setStore: function(/* dojo/data/api/Read */ store){
 		// summary:
 		//		sets the store for this widget */
 		if(store === this.store && this._started){ return; }
@@ -1160,11 +1161,11 @@ dojo.declare("dojox.widget.RollingList",
 		// summary:
 		//		handle the key for the given event - called by dropdown
 		//		widgets
-		if(e.charOrCode == dojo.keys.DOWN_ARROW){
+		if(e.keyCode == dojo.keys.DOWN_ARROW){
 			delete this._savedFocus;
 			this.focus();
 			return false;
-		}else if(e.charOrCode == dojo.keys.ESCAPE){
+		}else if(e.keyCode == dojo.keys.ESCAPE){
 			this._onCancel();
 			return false;
 		}

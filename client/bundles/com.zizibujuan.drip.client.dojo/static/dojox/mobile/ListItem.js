@@ -6,26 +6,22 @@ define([
 	"dojo/dom-construct",
 	"dojo/dom-style",
 	"dijit/registry",
+	"dijit/_WidgetBase",
 	"./iconUtils",
 	"./_ItemBase",
 	"./ProgressIndicator"
-], function(array, declare, lang, domClass, domConstruct, domStyle, registry, iconUtils, ItemBase, ProgressIndicator){
+], function(array, declare, lang, domClass, domConstruct, domStyle, registry, WidgetBase, iconUtils, ItemBase, ProgressIndicator){
 
 	// module:
 	//		dojox/mobile/ListItem
 
-	lang.extend(dijit._WidgetBase, {
-		layout: "",
-		preventTouch: false
-	});
-
-	return declare("dojox.mobile.ListItem", ItemBase, {
+	var ListItem = declare("dojox.mobile.ListItem", ItemBase, {
 		// summary:
 		//		An item of either RoundRectList or EdgeToEdgeList.
 		// description:
 		//		ListItem represents an item of either RoundRectList or
-		//		EdgeToEdgeList. There are three ways to move to a different
-		//		view: moveTo, href, and url. You can choose only one of them.
+		//		EdgeToEdgeList. There are three ways to move to a different view:
+		//		moveTo, href, and url. You can choose only one of them.
 		//
 		//		A child DOM node (or widget) can have the layout attribute,
 		//		whose value is "left", "right", or "center". Such nodes will be
@@ -469,4 +465,23 @@ define([
 			domClass.toggle(this.domNode, this._selClass, selected);
 		}
 	});
+	
+	ListItem.ChildWidgetProperties = {
+		// summary:
+		//		These properties can be specified for the children of a dojox/mobile/ListItem.
+
+		// layout: String
+		//		Specifies the position of the ListItem child ("left", "center" or "right").
+		layout: "",
+		// preventTouch: Boolean
+		//		Disables touch events on the ListItem child.
+		preventTouch: false
+	};
+	
+	// Since any widget can be specified as a ListItem child, mix ChildWidgetProperties
+	// into the base widget class.  (This is a hack, but it's effective.)
+	// This is for the benefit of the parser.   Remove for 2.0.  Also, hide from doc viewer.
+	lang.extend(WidgetBase, /*===== {} || =====*/ ListItem.ChildWidgetProperties);
+
+	return ListItem;
 });

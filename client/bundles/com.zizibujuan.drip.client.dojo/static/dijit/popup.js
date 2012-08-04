@@ -21,13 +21,9 @@ define([
 
 	// module:
 	//		dijit/popup
-	// summary:
-	//		Used to show drop downs (ex: the select list of a ComboBox)
-	//		or popups (ex: right-click context menus)
-
 
 	/*=====
-	var __OpenArgs = function(){
+	var __OpenArgs = {
 		// popup: Widget
 		//		widget to display
 		// parent: Widget
@@ -46,7 +42,7 @@ define([
 		//	|	{ "BL": "TL", "TL": "BL" }
 		//		where BL means "bottom left" and "TL" means "top left", etc.
 		//
-		//		dijit.popup.open() tries to position the popup according to each specified position, in order,
+		//		dijit/popup.open() tries to position the popup according to each specified position, in order,
 		//		until the popup appears fully within the viewport.
 		//
 		//		The default value is ["below", "above"]
@@ -57,7 +53,7 @@ define([
 		//		fit in the viewport, then it tries, in order, the bottom-right corner, the top left corner,
 		//		and the top-right corner.
 		// onCancel: Function
-		//		callback when user has canceled the popup by
+		//		callback when user has canceled the popup by:
 		//
 		//		1. hitting ESC or
 		//		2. by using the popup widget's proprietary cancel mechanism (like a cancel button in a dialog);
@@ -68,18 +64,7 @@ define([
 		//		callback when user "executed" on the popup/sub-popup by selecting a menu choice, etc. (top menu only)
 		// padding: place.__Position
 		//		adding a buffer around the opening position. This is only useful when around is not set.
-		this.popup = popup;
-		this.parent = parent;
-		this.around = around;
-		this.x = x;
-		this.y = y;
-		this.orient = orient;
-		this.onCancel = onCancel;
-		this.onClose = onClose;
-		this.onExecute = onExecute;
-		this.padding = padding;
 	};
-
 	=====*/
 
 	function destroyWrapper(){
@@ -198,7 +183,7 @@ define([
 			//		opening the widget as a dropdown
 			//		|		popup.open({parent: this, popup: menuWidget, around: this.domNode, onClose: function(){...}});
 			//
-			//		Note that whatever widget called dijit.popup.open() should also listen to its own _onBlur callback
+			//		Note that whatever widget called dijit/popup.open() should also listen to its own _onBlur callback
 			//		(fired from _base/focus.js) to know that focus has moved somewhere else and thus the popup should be closed.
 
 			var stack = this._stack,

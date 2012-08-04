@@ -20,7 +20,7 @@ var
 
 
 	changeVersion = function(/*String*/version, /*String*/fileContents){
-		//summary:
+		// summary:
 		//		Changes the version number for dojo. Input should be the fileContents
 		//		of a file that contains the version number.
 
@@ -35,8 +35,8 @@ var
 		// Do the final version replacement.
 		if(/package/.test(filename)){
 			fileContents = fileContents.replace(
-				/['"]version['"]\s*\:\s*['"][\w\.\-]+?["']/,
-				'"version":"' + version + '"'
+				/['"](version|dojo|dijit)['"]\s*\:\s*['"][\w\.\-]+?["']/g,
+				'"$1":"' + version + '"'
 			);
 		}else{
 			fileContents = fileContents.replace(

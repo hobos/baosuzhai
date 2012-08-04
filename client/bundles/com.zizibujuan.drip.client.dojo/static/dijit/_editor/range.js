@@ -30,7 +30,7 @@ dijit.range.getIndex = function(/*DomNode*/node, /*DomNode*/parent){
 			}
 		}
 		//if(i>=pnode.childNodes.length){
-			//dojo.debug("Error finding index of a node in dijit.range.getIndex");
+			//dojo.debug("Error finding index of a node in dijit/range.getIndex()");
 		//}
 		ret.unshift(i);
 		retR.unshift(i - pnode.childNodes.length);
@@ -52,7 +52,7 @@ dijit.range.getIndex = function(/*DomNode*/node, /*DomNode*/parent){
 			n = n.nextSibling;
 		}
 	}
-//	dojo.profile.end("dijit.range.getIndex");
+//	dojo.profile.end("dijit/range.getIndex()");
 	return {o: ret, r:retR};
 };
 
@@ -393,6 +393,11 @@ if(!window.getSelection){
 				}else{
 					atmrange.moveToElementText(container.parentNode);
 					atmrange.collapse(true);
+
+					// Correct internal cursor position
+					// http://bugs.dojotoolkit.org/ticket/15578
+					atmrange.move('character', 1);
+					atmrange.move('character', -1);
 				}
 
 				offset += len;

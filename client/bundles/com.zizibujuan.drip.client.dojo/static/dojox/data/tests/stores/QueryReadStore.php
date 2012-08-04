@@ -67,44 +67,48 @@ $allItems = array(
 	array('id'=>61, 'name'=>"Special chars !\"$%&/()=? <a >#'+*-_.:,; <", 'label'=>"Special chars !\"$%&/()=? <a >#'+*-_.:,;<", 'abbreviation'=>":-)", 'capital'=>'/dev/null'),
 );
 
-$q = "";
+
+// Query.   Null means no query at all (return all records), whereas any string, even the empty string,
+// is a filter.
+$q = null;
 if (array_key_exists("q", $_REQUEST)) {
 	$q = $_REQUEST['q'];
 }else if (array_key_exists("name", $_REQUEST)) {
 	$q = $_REQUEST['name'];
 }
 
-if (strlen($q) && $q[strlen($q)-1]=="*") {
+// Support wildcard search like "a*" to find all elements beginning with a, or "*" to find all elements
+// (same as no query at all)
+if ($q === "*") {
+	$q = null;	// treat it the same as no query at all
+}else if ($q && strlen($q) && $q[strlen($q)-1]=="*") {
 	$q = substr($q, 0, strlen($q)-1);
+	$wildcard = true;
 }
+
 $ret = array();
 foreach ($allItems as $item) {
 	$foundPos = -1;
-	$foundWord = false;
-	if ($q) {
-		$foundPos = strpos(strtolower($item['name']), strtolower($q));
-		$foundWord = $foundPos===0;
-		if (!$foundWord) {
-			$foundPos = strpos(strtolower($item['name']), ' '.strtolower($q));
-			if ($foundPos!==false) {
-				$foundPos += 1; // It was found, so subtract the offset the space occupied.
-				$foundWord = true;
-			}
+
+	// flag if item matches the query or not
+	$matches = true;
+
+	// If there's a query, run it, and set $matches if item matches.
+	// Allow query for empty string too, that's why it has the explicit test for null.
+	if ($q !== null) {
+		if($wildcard){
+			// query like "a*", check if item starts with "a"
+			$foundPos = strpos(strtolower($item['name']), strtolower($q));
+			$matches = $foundPos===0;
+		}else{
+			// query like "alabama", check if item matches query string exactly
+			$matches = strtolower($item['name']) == strtolower($q);
 		}
 	}
-	if (!$q || $foundWord) {
-		// Put a span around the searched characters to highlight them.
-		$resultItem = $item;
-		// Currently we dont need custom highlighting, its implemented in the client too.
-		//if ($foundWord) {
-		//	$resultItem['highlightedLabel'] = substr($item['name'], 0, $foundPos) .
-		//		'<span class="searchResult">' .
-		//		substr($item['name'], $foundPos, strlen($q)) . '</span>' .
-		//		substr($item['name'], $foundPos+strlen($q));
-		//} else {
-		//	$resultItem['highlightedLabel'] = $item['name'];
-		//}
-		$ret[] = $resultItem;
+
+	if ($matches) {
+		// Add item to result list
+		$ret[] = $item;
 	}
 }
 

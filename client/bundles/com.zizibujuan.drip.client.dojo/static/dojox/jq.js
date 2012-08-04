@@ -58,8 +58,10 @@ dojo.query differences that cause some tests to fail:
 */
 
 (function(){
-	//Enable io topic publishing
+	//Enable io topic publishing.   But don't mask the original definition of ioPublish from the doc parser.
+	/*===== var ioPublish = dojo.config.ioPublish; =====*/
 	dojo.config.ioPublish = true;
+	/*===== dojo.config.ioPublish = ioPublish; =====*/
 
 	//Support stuff for toDom
 	var selfClosedTags = "|img|meta|hr|br|input|";
@@ -438,11 +440,12 @@ dojo.query differences that cause some tests to fail:
 	}
 	
 	function jqMix(obj, props){
-		//summary: an attempt at a mixin that follows
-		//jquery's .extend rules. Seems odd. Not sure how
-		//to resolve this with dojo.mixin and what the use
-		//cases are for the jquery version.
-		//Copying some code from dojo._mixin.
+		// summary:
+		//		an attempt at a mixin that follows
+		//		jquery's .extend rules. Seems odd. Not sure how
+		//		to resolve this with dojo.mixin and what the use
+		//		cases are for the jquery version.
+		//		Copying some code from dojo._mixin.
 		if(obj == props){
 			return obj;
 		}
@@ -693,8 +696,11 @@ dojo.query differences that cause some tests to fail:
 	}
 
 	function iframeDoc(/*DOMNode*/iframeNode){
-		//summary: Returns the document object associated with the iframe DOM Node argument.
+		// summary:
+		//		Returns the document object associated with the iframe DOM Node argument.
+
 		//Taken from dojo.io.iframe.doc(). Needed for contents() function below.
+
 		var doc = iframeNode.contentDocument || // W3
 			(
 				(
@@ -840,7 +846,9 @@ dojo.query differences that cause some tests to fail:
 	}
 
 	function getDimensions(/*DOMNode*/node, /*String*/type, /*Boolean*/usePadding, /*Boolean*/useBorder, /*Boolean*/useMargin){
-		//summary: sums up the different parts of the width/height based on arguments.
+		// summary:
+		//		sums up the different parts of the width/height based on arguments.
+
 		//If hidden, temporarily show it, do measurements then close.
 		var rehide = false;
 		if((rehide = node.style.display == "none")){
@@ -891,7 +899,9 @@ dojo.query differences that cause some tests to fail:
 	var currentEvtData;
 
 	function getNonNamespacedName(/*String*/evtName){
-		//summary: gets name of the event before the first ".".
+		// summary:
+		//		gets name of the event before the first ".".
+
 		//The $$ stuff is special ids used to create unique names
 		//for bound functions that did not have a unique namespace name.
 		evtName = evtName.split("$$")[0];
@@ -903,7 +913,9 @@ dojo.query differences that cause some tests to fail:
 	}
 
 	function domConnect(/*DOMNode*/node, /*String*/evtName){
-		//summary: handles creating the connection with a real DOM event.
+		// summary:
+		//		handles creating the connection with a real DOM event.
+
 		//This work should only be done one time per evName type.
 		//If the event if an ajax event, use dojo.subscribe instead.
 		if(evtName.indexOf("ajax") == 0){
@@ -963,10 +975,11 @@ dojo.query differences that cause some tests to fail:
 	});
 
 	function makeTriggerData(data, type){
-		//summary: makes sure that the data array is copied
-		//and has an event as the first arg. If this function generates
-		//a fake event (known by the data[0]._isFake property being true)
-		//then the data[0].target needs to be set by the consumer of this function.
+		// summary:
+		//		makes sure that the data array is copied
+		//		and has an event as the first arg. If this function generates
+		//		a fake event (known by the data[0]._isFake property being true)
+		//		then the data[0].target needs to be set by the consumer of this function.
 		
 		data = data || [];
 		data = [].concat(data);
@@ -985,7 +998,8 @@ dojo.query differences that cause some tests to fail:
 	var triggerHandlersCalled = false;
 
 	function triggerHandlers(/*DOMNode*/node, /*Array*/data, /*Function?*/extraFunc){
-		//summary: handles the actual callbacks to the handlers.
+		// summary:
+		//		handles the actual callbacks to the handlers.
 		
 		//Indicate triggerHandlers was called.
 		triggerHandlersCalled = true;
@@ -1411,7 +1425,7 @@ dojo.query differences that cause some tests to fail:
 		if(dojo.isString(speed)){
 			if(speed == "slow"){
 				speed = 700;
-			}else if(speed = "fast"){
+			}else if(speed == "fast"){
 				speed = 300;
 			}else{
 				//Everything else is considered normal speed.

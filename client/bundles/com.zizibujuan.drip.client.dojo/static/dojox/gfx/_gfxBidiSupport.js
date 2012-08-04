@@ -1,7 +1,14 @@
 define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base/html", "dojo/_base/array",
 		"./utils", "./shape", "dojox/string/BidiEngine"], 
-  function(g, lang, has, dom, html, arr, utils, shapeLib, BidiEngine){
+function(g, lang, has, dom, html, arr, utils, shapeLib, BidiEngine){
 	lang.getObject("dojox.gfx._gfxBidiSupport", true);
+
+	/*=====
+	// Prevent changes here from masking the definitions in _base.js from the doc parser
+	var origG = g;
+	g = {};
+	=====*/
+
 	switch (g.renderer){
 		case 'vml':
 			g.isVml = true;
@@ -27,6 +34,8 @@ define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base
 		RLM : '\u200f',
 		RLE : '\u202B'
 	};
+
+	/*===== g = origG; =====*/
 
 	// the object that performs text transformations.
 	var bidiEngine = new BidiEngine();
@@ -75,7 +84,7 @@ define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base
 	
 	lang.extend(g.Text, {  
 		// summary:
-		//		Overrides some of dojox.gfx.Text properties, and adds some
+		//		Overrides some of dojox/gfx.Text properties, and adds some
 		//		for bidi support.
 		
 		// textDir: String
@@ -327,7 +336,7 @@ define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base
 			textDir = validateTextDir(args[0]);
 		}
 		group.setTextDir(textDir ? textDir : this.textDir);
-		return group;	// dojox.gfx.Group				
+		return group;	// dojox/gfx.Group
 	};
 
 	// In creation of Group there's a need to update it's textDir,
@@ -358,7 +367,12 @@ define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base
 	extendMethod(g.Group,"createText", textDirPreprocess, null);
 	extendMethod(g.Group,"createTextPath", textDirPreprocess, null);
 
-	g.createSurface = function(parentNode, width, height, textDir) {        
+	/*=====
+	// don't mask definition of original createSurface() function from doc parser
+	g = {};
+	=====*/
+
+	g.createSurface = function(parentNode, width, height, textDir) {
 		var s = g[g.renderer].createSurface(parentNode, width, height);
 		var tDir = validateTextDir(textDir);
 		
@@ -379,6 +393,7 @@ define(["./_base", "dojo/_base/lang","dojo/_base/sniff", "dojo/dom", "dojo/_base
 		
 		return s;
 	};
+	/*===== g = origG; =====*/
 
 	// some helper functions
 	

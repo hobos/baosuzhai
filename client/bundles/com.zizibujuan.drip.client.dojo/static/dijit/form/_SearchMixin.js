@@ -17,7 +17,8 @@ define([
 
 	return declare("dijit.form._SearchMixin", null, {
 		// summary:
-		//		A mixin that implements the base functionality to search a store based upon user-entered text such as with `dijit.form.ComboBox`/`dijit.form.FilteringSelect`
+		//		A mixin that implements the base functionality to search a store based upon user-entered text such as
+		//		with `dijit/form/ComboBox` or `dijit/form/FilteringSelect`
 		// tags:
 		//		protected
 
@@ -26,7 +27,7 @@ define([
 		//		Specifies maximum number of search results to return per query
 		pageSize: Infinity,
 
-		// store: [const] dojo.store.api.Store
+		// store: [const] dojo/store/api/Store
 		//		Reference to data provider object used by this ComboBox.
 		//		The store must accept an object hash of properties for its query. See `query` and `queryExpr` for details.
 		store: null,
@@ -92,11 +93,9 @@ define([
 			}
 		},
 
-		_onInput: function(/*Event*/ evt){
+		_processInput: function(/*Event*/ evt){
 			// summary:
 			//		Handles input (keyboard/paste) events
-			this.inherited(arguments);
-
 			if(this.disabled || this.readOnly){ return; }
 			var key = evt.charOrCode;
 
@@ -231,8 +230,8 @@ define([
 				// remove this branch for 2.0
 				q = qs;
 			}else{
-				// Query on searchAttr is a regex for benefit of dojo.store.Memory,
-				// but with a toString() method to help dojo.store.JsonRest.
+				// Query on searchAttr is a regex for benefit of dojo/store/Memory,
+				// but with a toString() method to help dojo/store/JsonRest.
 				// Search string like "Co*" converted to regex like /^Co.*$/i.
 				q = filter.patternToRegExp(qs, this.ignoreCase);
 				q.toString = function(){ return qs; };

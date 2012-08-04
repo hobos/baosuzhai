@@ -63,7 +63,7 @@ define([
 			//		(To left if there's no space on the right, or if rtl == true)
 			// innerHTML: String
 			//		Contents of the tooltip
-			// aroundNode: DomNode || place.__Rectangle
+			// aroundNode: DomNode|dijit/place.__Rectangle
 			//		Specifies that tooltip should be next to this node / area
 			// position: String[]?
 			//		List of positions to try to position tooltip (ex: ["right", "above"])
@@ -84,8 +84,11 @@ define([
 				return;
 			}
 			this.containerNode.innerHTML=innerHTML;
-			
-			this.set("textDir", textDir);
+
+			if(textDir){
+				this.set("textDir", textDir);
+			}
+
 			this.containerNode.align = rtl? "right" : "left"; //fix the text alignment
 
 			var pos = place.around(this.domNode, aroundNode,
@@ -245,21 +248,22 @@ define([
 		    //		set('textDir', value)
 		    // tags:
 		    //		private
-	
-            this._set("textDir", typeof textDir != 'undefined'? textDir : "");
+
+			this._set("textDir", textDir);
+
 			if (textDir == "auto"){
 				this._setAutoTextDir(this.containerNode);
 			}else{
 				this.containerNode.dir = this.textDir;
 			}
-        }
+		}
 	});
 
 	dijit.showTooltip = function(innerHTML, aroundNode, position, rtl, textDir){
 		// summary:
 		//		Static method to display tooltip w/specified contents in specified position.
-		//		See description of dijit.Tooltip.defaultPosition for details on position parameter.
-		//		If position is not specified then dijit.Tooltip.defaultPosition is used.
+		//		See description of dijit/Tooltip.defaultPosition for details on position parameter.
+		//		If position is not specified then dijit/Tooltip.defaultPosition is used.
 		// innerHTML: String
 		//		Contents of the tooltip
 		// aroundNode: place.__Rectangle
@@ -311,7 +315,7 @@ define([
 		connectId: [],
 
 		// position: String[]
-		//		See description of `dijit.Tooltip.defaultPosition` for details on position parameter.
+		//		See description of `dijit/Tooltip.defaultPosition` for details on position parameter.
 		position: [],
 
 		// selector: String?
@@ -362,7 +366,7 @@ define([
 			this._set("connectId", newId);
 		},
 
-		addTarget: function(/*DOMNODE || String*/ node){
+		addTarget: function(/*OomNode|String*/ node){
 			// summary:
 			//		Attach tooltip to specified node if it's not already connected
 
@@ -374,7 +378,7 @@ define([
 			}
 		},
 
-		removeTarget: function(/*DomNode || String*/ node){
+		removeTarget: function(/*DomNode|String*/ node){
 			// summary:
 			//		Detach tooltip from specified node
 
@@ -428,10 +432,6 @@ define([
 			//		events on the target node, hiding the tooltip.
 			// tags:
 			//		private
-
-			// keep a tooltip open if the associated element still has focus (even though the
-			// mouse moved away)
-			if(this._focus){ return; }
 
 			if(this._showTimer){
 				this._showTimer.remove();
@@ -510,28 +510,31 @@ define([
 	Tooltip.show = dijit.showTooltip;		// export function through module return value
 	Tooltip.hide = dijit.hideTooltip;		// export function through module return value
 
-	// dijit.Tooltip.defaultPosition: String[]
-	//		This variable controls the position of tooltips, if the position is not specified to
-	//		the Tooltip widget or *TextBox widget itself.  It's an array of strings with the values
-	//		possible for `dijit/place::around()`.   The recommended values are:
-	//
-	//		- before-centered: centers tooltip to the left of the anchor node/widget, or to the right
-	//		  in the case of RTL scripts like Hebrew and Arabic
-	//		- after-centered: centers tooltip to the right of the anchor node/widget, or to the left
-	//		  in the case of RTL scripts like Hebrew and Arabic
-	//		- above-centered: tooltip is centered above anchor node
-	//		- below-centered: tooltip is centered above anchor node
-	//
-	//		The list is positions is tried, in order, until a position is found where the tooltip fits
-	//		within the viewport.
-	//
-	//		Be careful setting this parameter.  A value of "above-centered" may work fine until the user scrolls
-	//		the screen so that there's no room above the target node.   Nodes with drop downs, like
-	//		DropDownButton or FilteringSelect, are especially problematic, in that you need to be sure
-	//		that the drop down and tooltip don't overlap, even when the viewport is scrolled so that there
-	//		is only room below (or above) the target node, but not both.
 	Tooltip.defaultPosition = ["after-centered", "before-centered"];
 
-
+	/*=====
+	lang.mixin(Tooltip, {
+		 // defaultPosition: String[]
+		 //		This variable controls the position of tooltips, if the position is not specified to
+		 //		the Tooltip widget or *TextBox widget itself.  It's an array of strings with the values
+		 //		possible for `dijit/place.around()`.   The recommended values are:
+		 //
+		 //		- before-centered: centers tooltip to the left of the anchor node/widget, or to the right
+		 //		  in the case of RTL scripts like Hebrew and Arabic
+		 //		- after-centered: centers tooltip to the right of the anchor node/widget, or to the left
+		 //		  in the case of RTL scripts like Hebrew and Arabic
+		 //		- above-centered: tooltip is centered above anchor node
+		 //		- below-centered: tooltip is centered above anchor node
+		 //
+		 //		The list is positions is tried, in order, until a position is found where the tooltip fits
+		 //		within the viewport.
+		 //
+		 //		Be careful setting this parameter.  A value of "above-centered" may work fine until the user scrolls
+		 //		the screen so that there's no room above the target node.   Nodes with drop downs, like
+		 //		DropDownButton or FilteringSelect, are especially problematic, in that you need to be sure
+		 //		that the drop down and tooltip don't overlap, even when the viewport is scrolled so that there
+		 //		is only room below (or above) the target node, but not both.
+	 });
+	=====*/
 	return Tooltip;
 });

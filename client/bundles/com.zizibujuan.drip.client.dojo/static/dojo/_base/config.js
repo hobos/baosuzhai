@@ -84,9 +84,9 @@ return {
 	modulePaths: {},
 
 	// addOnLoad: Function|Array
-	//		Adds a callback via dojo.addOnLoad. Useful when Dojo is added after
+	//		Adds a callback via dojo/ready. Useful when Dojo is added after
 	//		the page loads and djConfig.afterOnLoad is true. Supports the same
-	//		arguments as dojo.addOnLoad. When using a function reference, use
+	//		arguments as dojo/ready. When using a function reference, use
 	//		`djConfig.addOnLoad = function(){};`. For object with function name use
 	//		`djConfig.addOnLoad = [myObject, "functionName"];` and for object with
 	//		function reference use
@@ -108,8 +108,8 @@ return {
 	defaultDuration: 200,
 
 	// dojoBlankHtmlUrl: String
-	//		Used by some modules to configure an empty iframe. Used by dojo.io.iframe and
-	//		dojo.back, and dijit popup support in IE where an iframe is needed to make sure native
+	//		Used by some modules to configure an empty iframe. Used by dojo/io/iframe and
+	//		dojo/back, and dijit/popup support in IE where an iframe is needed to make sure native
 	//		controls do not bleed through the popups. Normally this configuration variable
 	//		does not need to be set, except when using cross-domain/CDN Dojo builds.
 	//		Save dojo/resources/blank.html to your domain and set `djConfig.dojoBlankHtmlUrl`
@@ -118,7 +118,7 @@ return {
 
 	// ioPublish: Boolean?
 	//		Set this to true to enable publishing of topics for the different phases of
-	//		IO operations. Publishing is done via dojo.publish. See dojo.__IoPublish for a list
+	//		IO operations. Publishing is done via dojo/topic.publish(). See dojo/main.__IoPublish for a list
 	//		of topics that are published.
 	ioPublish: false,
 
@@ -131,7 +131,33 @@ return {
 	// transparentColor: Array
 	//		Array containing the r, g, b components used as transparent color in dojo.Color;
 	//		if undefined, [255,255,255] (white) will be used.
-	transparentColor: undefined
+	transparentColor: undefined,
+	
+	// deps: Function|Array
+	//		Defines dependencies to be used before the loader has been loaded.
+	//		When provided, they cause the loader to execute require(deps, callback) 
+	//		once it has finished loading. Should be used with callback.
+	deps: undefined,
+	
+	// callback: Function|Array
+	//		Defines a callback to be used when dependencies are defined before 
+	//		the loader has been loaded. When provided, they cause the loader to 
+	//		execute require(deps, callback) once it has finished loading. 
+	//		Should be used with deps.
+	callback: undefined,
+	
+	// deferredInstrumentation: Boolean
+	//		Whether deferred instrumentation should be loaded or included
+	//		in builds.
+	deferredInstrumentation: true,
+
+	// useDeferredInstrumentation: Boolean|String
+	//		Whether the deferred instrumentation should be used.
+	//
+	//		* `"report-rejections"`: report each rejection as it occurs.
+	//		* `true` or `1` or `"report-unhandled-rejections"`: wait 1 second
+	//			in an attempt to detect unhandled rejections.
+	useDeferredInstrumentation: "report-unhandled-rejections"
 };
 =====*/
 

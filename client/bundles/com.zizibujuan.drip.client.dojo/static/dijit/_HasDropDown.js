@@ -7,16 +7,16 @@ define([
 	"dojo/dom-class", // domClass.add domClass.contains domClass.remove
 	"dojo/dom-geometry", // domGeometry.marginBox domGeometry.position
 	"dojo/dom-style", // domStyle.set
-	"dojo/sniff",	// has("ios")
+	"dojo/has",	// has("touch")
 	"dojo/keys", // keys.DOWN_ARROW keys.ENTER keys.ESCAPE
 	"dojo/_base/lang", // lang.hitch lang.isFunction
-	"dojo/touch",
+	"dojo/on",
 	"dojo/window", // winUtils.getBox
 	"./registry",	// registry.byNode()
 	"./focus",
 	"./popup",
 	"./_FocusMixin"
-], function(declare, Deferred, event,dom, domAttr, domClass, domGeometry, domStyle, has, keys, lang, touch,
+], function(declare, Deferred, event,dom, domAttr, domClass, domGeometry, domStyle, has, keys, lang, on,
 			winUtils, registry, focus, popup, _FocusMixin){
 
 
@@ -106,7 +106,7 @@ define([
 			//		3. user defined onMouseDown handler fires
 			e.preventDefault();
 
-			this._docHandler = this.connect(this.ownerDocument, touch.release, "_onDropDownMouseUp");
+			this._docHandler = this.connect(this.ownerDocument, "mouseup", "_onDropDownMouseUp");
 
 			this.toggleDropDown();
 		},
@@ -184,11 +184,12 @@ define([
 		},
 
 		_onDropDownClick: function(/*Event*/ e){
-			if(has("ios") && !this._justGotMouseUp){
-				// This branch fires on iPhone for ComboBox, because the button node is an <input> and doesn't
-				// generate touchstart/touchend events.   Pretend we just got a mouse down / mouse up.
-				// The if(has("ios") is necessary since IE and desktop safari get spurious onclick events
-				// when there are nested tables (specifically, clicking on a table that holds a dijit.form.Select,
+			if(has("touch") && !this._justGotMouseUp){
+				// If there was no preceding mousedown/mouseup (like on android), then simulate them to
+				// toggle the drop down.
+				//
+				// The if(has("touch") is necessary since IE and desktop safari get spurious onclick events
+				// when there are nested tables (specifically, clicking on a table that holds a dijit/form/Select,
 				// but not on the Select itself, causes an onclick event on the Select)
 				this._onDropDownMouseDown(e);
 				this._onDropDownMouseUp(e);
@@ -221,14 +222,16 @@ define([
 
 		postCreate: function(){
 			// summary:
-			//		set up nodes and connect our mouse and keypress events
+			//		set up nodes and connect our mouse and keyboard events
 
 			this.inherited(arguments);
 
-			this.connect(this._buttonNode, touch.press, "_onDropDownMouseDown");
-			this.connect(this._buttonNode, "onclick", "_onDropDownClick");
-			this.connect(this.focusNode, "onkeypress", "_onKey");
-			this.connect(this.focusNode, "onkeyup", "_onKeyUp");
+			this.own(
+				on(this._buttonNode, "mousedown", lang.hitch(this, "_onDropDownMouseDown")),
+				on(this._buttonNode, "click", lang.hitch(this, "_onDropDownClick")),
+				on(this.focusNode, "keydown", lang.hitch(this, "_onKey")),
+				on(this.focusNode, "keyup", lang.hitch(this, "_onKeyUp"))
+			);
 		},
 
 		destroy: function(){
@@ -248,7 +251,6 @@ define([
 			//		Callback when the user presses a key while focused on the button node
 
 			if(this.disabled || this.readOnly){ return; }
-
 			var d = this.dropDown, target = e.target;
 			if(d && this._opened && d.handleKey){
 				if(d.handleKey(e) === false){
@@ -257,12 +259,12 @@ define([
 					return;
 				}
 			}
-			if(d && this._opened && e.charOrCode == keys.ESCAPE){
+			if(d && this._opened && e.keyCode == keys.ESCAPE){
 				this.closeDropDown();
 				event.stop(e);
 			}else if(!this._opened &&
-					(e.charOrCode == keys.DOWN_ARROW ||
-						( (e.charOrCode == keys.ENTER || e.charOrCode == " ") &&
+					(e.keyCode == keys.DOWN_ARROW ||
+						( (e.keyCode == keys.ENTER || e.keyCode == dojo.keys.SPACE) &&
 						  //ignore enter and space if the event is for a text input
 						  ((target.tagName || "").toLowerCase() !== 'input' ||
 						     (target.type && target.type.toLowerCase() !== 'text'))))){
@@ -367,7 +369,7 @@ define([
 			//		Opens the dropdown for this widget.   To be called only when this.dropDown
 			//		has been created and is ready to display (ie, it's data is loaded).
 			// returns:
-			//		return value of dijit.popup.open()
+			//		return value of dijit/popup.open()
 			// tags:
 			//		protected
 
@@ -378,7 +380,7 @@ define([
 
 			// Prepare our popup's height and honor maxHeight if it exists.
 
-			// TODO: isn't maxHeight dependent on the return value from dijit.popup.open(),
+			// TODO: isn't maxHeight dependent on the return value from dijit/popup.open(),
 			// ie, dependent on how much space is available (BK)
 
 			if(!this._preparedNode){
@@ -477,7 +479,8 @@ define([
 			domAttr.set(this._popupStateNode, "popupActive", "true");
 			domClass.add(this._popupStateNode, "dijitHasDropDownOpen");
 			this._set("_opened", true);	// use set() because _CssStateMixin is watching
-
+			this.domNode.setAttribute("aria-expanded", "true");
+			
 			return retVal;
 		},
 
@@ -494,6 +497,7 @@ define([
 				delete this._focusDropDownTimer;
 			}
 			if(this._opened){
+				this.domNode.setAttribute("aria-expanded", "false");
 				if(focus){ this.focus(); }
 				popup.close(this.dropDown);
 				this._opened = false;

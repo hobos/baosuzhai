@@ -33,12 +33,20 @@ var seqPromise;
 aspect.before(doh, "_runFixture", function(){
 	// At the start of each new test fixture, clear any leftover queued actions from the previous test fixture.
 	// This will happen when the previous test throws an error, or times out.
-	if(seqPromise && !seqPromise.isFulfilled()){
-		seqPromise.cancel();
-	}
+	var _seqPromise = seqPromise;
+	// need setTimeout to avoid false error; seqPromise from passing test is not fulfilled until after this execution trace finishes!
+	// really we should not have both `seqPromise` here and `var d = new doh.Deferred()` in the test
+	setTimeout(function(){
+		if(_seqPromise && !_seqPromise.isFulfilled()){
+			_seqPromise.cancel(new Error("new test starting, cancelling pending & in-progress queued events from previous test")); 
+		}
+	},0);
 	seqPromise = new Deferred();
 	seqPromise.resolve(true);
 });
+
+// Previous mouse position (from most recent mouseMoveTo() command)
+var lastMouse = {x: 5, y: 5};
 
 // For 2.0, remove code to set doh.robot global.
 var robot = doh.robot = {
@@ -142,6 +150,7 @@ var robot = doh.robot = {
 	},
 
 	_mouseMove: function(/*Number*/ x, /*Number*/ y, /*Boolean*/ absolute, /*Integer?*/ duration){
+		// This function is no longer used, but left for back-compat
 		if(absolute){
 			var scroll = {y: (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
 			x: (window.pageXOffset || geom.fixIeBiDiScrollLeft(document.documentElement.scrollLeft) || document.body.scrollLeft || 0)};
@@ -188,7 +197,8 @@ var robot = doh.robot = {
 		//		Types a string of characters in order, or types a dojo.keys.* constant.
 		// description:
 		//		Types a string of characters in order, or types a dojo.keys.* constant.
-		//		Example: robot.typeKeys("dijit.ed", 500);
+		// example:
+		// |	robot.typeKeys("dijit.ed", 500);
 		// chars:
 		//		String of characters to type, or a dojo.keys.* constant
 		// delay:
@@ -220,7 +230,8 @@ var robot = doh.robot = {
 		//		Types a key combination, like SHIFT-TAB.
 		// description:
 		//		Types a key combination, like SHIFT-TAB.
-		//		Example: to press shift-tab immediately, call robot.keyPress(dojo.keys.TAB, 0, {shift: true})
+		// example:
+		//		to press shift-tab immediately, call robot.keyPress(dojo.keys.TAB, 0, {shift: true})
 		// charOrCode:
 		//		char/JS keyCode/dojo.keys.* constant for the key you want to press
 		// delay:
@@ -268,7 +279,8 @@ var robot = doh.robot = {
 		//		Holds down a single key, like SHIFT or 'a'.
 		// description:
 		//		Holds down a single key, like SHIFT or 'a'.
-		//		Example: to hold down the 'a' key immediately, call robot.keyDown('a')
+		// example:
+		//		to hold down the 'a' key immediately, call robot.keyDown('a')
 		// charOrCode:
 		//		char/JS keyCode/dojo.keys.* constant for the key you want to hold down
 		//		Warning: holding down a shifted key, like 'A', can have unpredictable results.
@@ -291,7 +303,8 @@ var robot = doh.robot = {
 		//		Releases a single key, like SHIFT or 'a'.
 		// description:
 		//		Releases a single key, like SHIFT or 'a'.
-		//		Example: to release the 'a' key immediately, call robot.keyUp('a')
+		// example:
+		//		to release the 'a' key immediately, call robot.keyUp('a')
 		// charOrCode:
 		//		char/JS keyCode/dojo.keys.* constant for the key you want to release
 		//		Warning: releasing a shifted key, like 'A', can have unpredictable results.
@@ -357,6 +370,70 @@ var robot = doh.robot = {
 		}, delay);
 	},
 
+	mouseMoveTo: function(/*Object*/ point, /*Integer?*/ delay, /*Integer?*/ duration, /*Boolean*/ absolute){
+		// summary:
+		//		Move the mouse from the current position to the specified point.
+		//		Delays reading contents point until queued command starts running.
+		//		See mouseMove() for details.
+		// point: Object
+		//		x, y position relative to viewport, or if absolute == true, to document
+
+		this._assertRobot();
+		duration = duration||100;
+
+		// Calculate number of mouse movements we will do, based on specified duration.
+		// IE6-8 timers have a granularity of 15ms, so only do one mouse move every 15ms
+		var steps = duration<=1 ? 1 : // duration==1 -> user wants to jump the mouse
+			(duration/15)|1; // |1 to ensure an odd # of intermediate steps for sensible interpolation
+		var stepDuration = Math.floor(duration/steps);
+
+		// Starting and ending points of the mouse movement.
+		var start, end;
+
+		this.sequence(function(){
+			// This runs right before we start moving the mouse.   At this time (but not before), point is guaranteed
+			// to be filled w/the correct data.   So set start and end points for the movement of the mouse.
+			start = lastMouse;
+			if(absolute){
+				// Adjust end to be relative to viewport
+				var scroll = {y: (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
+					x: (window.pageXOffset || geom.fixIeBiDiScrollLeft(document.documentElement.scrollLeft) || document.body.scrollLeft || 0)};
+				end = { y: point.y - scroll.y, x: point.x - scroll.x };
+			}else{
+				end = point;
+			}
+			//console.log("mouseMoveTo() start, going from (", lastMouse.x, lastMouse.y, "), (", end.x, end.y, "), delay = " +
+			//	delay + ", duration = " + duration);
+		}, delay || 0);
+
+		// Function to positions the mouse along the line from start to end at the idx'th position (from 0 .. steps)
+		function step(idx){
+			function easeInOutQuad(/*Number*/ t, /*Number*/ b, /*Number*/ c, /*Number*/ d){
+				t /= d / 2;
+				if(t < 1)
+					return Math.round(c / 2 * t * t + b);
+				t--;
+				return Math.round(-c / 2 * (t * (t - 2) - 1) + b);
+			}
+
+			var x = idx == steps ? end.x : easeInOutQuad(idx, start.x, end.x - start.x, steps),
+				y = idx == steps ? end.y : easeInOutQuad(idx, start.y, end.y - start.y, steps);
+
+			// If same position as the last time, don't bother calling java robot.
+			if(x == lastMouse.x && y == lastMouse.y){ return true; }
+
+			_robot.moveMouse(isSecure(), Number(x), Number(y), Number(0), Number(1));
+			lastMouse = {x: x, y: y};
+		}
+
+		// Schedule mouse moves from beginning to end of line.
+		// Start from t=1 because there's no need to move the mouse to where it already is
+		for (var t = 1; t <= steps; t++){
+			// Use lang.partial() to lock in value of t before the t++
+			this.sequence(lang.partial(step, t), 0, stepDuration);
+		}
+	},
+
 	mouseMove: function(/*Number*/ x, /*Number*/ y, /*Integer?*/ delay, /*Integer?*/ duration, /*Boolean*/ absolute){
 		// summary:
 		//		Moves the mouse to the specified x,y offset relative to the viewport.
@@ -379,11 +456,7 @@ var robot = doh.robot = {
 		//		If false, then mouseMove expects that the x,y will be relative to the window. (clientX/Y)
 		//		If true, then mouseMove expects that the x,y will be absolute. (pageX/Y)
 
-		this._assertRobot();
-		duration = duration||100;
-		this.sequence(function(){
-			robot._mouseMove(x, y, absolute, duration);
-		}, delay, duration);
+		this.mouseMoveTo({x: x, y: y}, delay, duration, absolute);
 	},
 
 	mouseRelease: function(/*Object*/ buttons, /*Integer?*/ delay){
@@ -429,8 +502,8 @@ var robot = doh.robot = {
 		//		Delay, in milliseconds, to wait before firing.
 		//		The delay is a delta with respect to the previous automation call.
 		//		For example, the following code ends after 600ms:
-		// |		robot.mouseClick({left: true}, 100) // first call; wait 100ms
-		// |		robot.typeKeys("dij", 500) // 500ms AFTER previous call; 600ms in all
+		//			robot.mouseClick({left: true}, 100) // first call; wait 100ms
+		//			robot.typeKeys("dij", 500) // 500ms AFTER previous call; 600ms in all
 		// duration:
 		//		Approximate time Robot will spend moving the mouse
 		//		By default, the Robot will wheel the mouse as fast as possible.

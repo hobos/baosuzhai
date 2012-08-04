@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>dijit.form.Select test</title>
@@ -142,10 +142,6 @@
 				data: dojo.clone(vals)
 			}));
 
-			function wrapLabel(expected){
-				return ("<span class=\"dijitReset dijitInline dijitSelectLabel dijitValidationTextBoxLabel\">" + expected + "</span>").toLowerCase().replace(/ */g, "");
-			}
-
 			dojo.ready(function(){
 				dojo.connect(s1, "onChange", function(val){
 					console.log("First Select Changed to " + val);
@@ -243,16 +239,16 @@
 						// the change is reflected in the Select widget
 						function test_changeSelected(t){
 							t.is("AL", s11.value);
-							t.is(wrapLabel("Alabama"), s11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""));
+							t.t(/<span.*>Alabama<\/span>/i.test(s11.containerNode.innerHTML));
 							s11.set("value", "AK");
 							t.is("AK", s11.value);
-							t.is(wrapLabel("Alaska"), s11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""));
+							t.t(/<span.*>Alaska<\/span>/i.test(s11.containerNode.innerHTML));
 							var d = new doh.Deferred();
 							writeStore.fetchItemByIdentity({
 								identity: "AK",
 								onItem: d.getTestCallback(function(item){
 									writeStore.setValue(item, "label", "North Pole");
-									t.is(wrapLabel("North Pole"), s11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""), "select displayed value updated");
+									t.t(/<span.*>North Pole<\/span>/i.test(s11.containerNode.innerHTML), "select displayed value updated");
 								})
 							});
 							return d;
@@ -327,15 +323,15 @@
 						// the change is reflected in the Select widget
 						function test_changeSelected(t){
 							t.is("AL", ds11.value);
-							t.is(wrapLabel("Alabama"), ds11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""));
+							t.t(/<span.*>Alabama<\/span>/i.test(ds11.containerNode.innerHTML));
 							ds11.set("value", "AK");
 							t.is("AK", ds11.value);
-							t.is(wrapLabel("Alaska"), ds11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""));
+							t.t(/<span.*>Alaska<\/span>/i.test(ds11.containerNode.innerHTML));
 
 							var item = memoryStore3.get("AK");
 							item.label = "North Pole";
 							memoryStore3.put(item);
-							t.is(wrapLabel("North Pole"), ds11.containerNode.innerHTML.toLowerCase().replace(/ */g, ""), "select displayed value updated");
+							t.t(/<span.*>North Pole<\/span>/i.test(ds11.containerNode.innerHTML), "select displayed value updated");
 						},
 
 						// Test that a delete of the non-selected item will remove that item from the Select's
@@ -564,7 +560,7 @@
 			});
 		</script>
 	</head>
-	<body class="claro">
+	<body class="claro" role="main">
 		<h1 class="testTitle">Test: dijit.form.Select</h1>
 
 		<p>
@@ -896,60 +892,60 @@
 				onclick="dijit.byId('dlg2').show();">show two select dialog</button>
 		<br>
 		<fieldset class="area">
-			<h3>Rendering tests</h3>
+			<legend>Rendering tests</legend>
 			<fieldset class="area">
-				<h3>unstyled widget</h3>
+				<legend>unstyled widget</legend>
 				<fieldset class="area">
-					normal<br>
+					<legend>normal</legend>
 					<select id="r1" data-dojo-type="dijit/form/Select">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					disabled<br>
+					<legend>disabled</legend>
 					<select id="r2" data-dojo-type="dijit/form/Select" disabled>
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					error<br>
+					<legend>error</legend>
 					<select id="r3" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					hover<br>
+					<legend>hover</legend>
 					<select id="r4" data-dojo-type="dijit/form/Select" class="dijitHover dijitSelectHover">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					focused<br>
+					<legend>focused</legend>
 					<select id="r5" data-dojo-type="dijit/form/Select" class="dijitFocused dijitSelectFocused">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					RTL<br>
+					<legend>RTL</legend>
 					<select id="r6" data-dojo-type="dijit/form/Select" dir="rtl">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					RTL error<br>
+					<legend>RTL error</legend>
 					<select id="r7" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" dir="rtl" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					styled option<br>
+					<legend>styled option</legend>
 					<span id="r8" data-dojo-type="dijit/form/Select">
 						<span data-dojo-value="1"><span style="font-size:200%;color:pink;">Large</span></span>
 						<span data-dojo-value="2">2</span>
@@ -958,58 +954,58 @@
 			</fieldset>
 			<br>
 			<fieldset class="area">
-				<h3>width:60px;font-family:Arial;font-size:150%;border:2px blue;padding:5px;color:red</h3>
+				<legend>width:60px;font-family:Arial;font-size:150%;border:2px blue;padding:5px;color:red</legend>
 				<fieldset class="area customStyled">
-					normal<br>
+					<legend>normal</legend>
 					<select id="cs1" data-dojo-type="dijit/form/Select" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					disabled<br>
+					<legend>disabled</legend>
 					<select id="cs2" data-dojo-type="dijit/form/Select" style="color:red;width:60px;" disabled>
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					error<br>
+					<legend>error</legend>
 					<select id="cs3" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" style="color:red;width:60px;" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					hover<br>
+					<legend>hover</legend>
 					<select id="cs4" data-dojo-type="dijit/form/Select" class="dijitHover dijitSelectHover" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					focused<br>
+					<legend>focused</legend>
 					<select id="cs5" data-dojo-type="dijit/form/Select" class="dijitFocused dijitSelectFocused" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					RTL<br>
+					<legend>RTL</legend>
 					<select id="cs6" data-dojo-type="dijit/form/Select" dir="rtl" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					RTL error<br>
+					<legend>RTL error</legend>
 					<select id="cs7" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" style="color:red;width:60px;" dir="rtl" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					styled option<br>
+					<legend>styled option</legend>
 					<span id="cs8" data-dojo-type="dijit/form/Select" style="color:red;width:120px;">
 						<span data-dojo-value="1"><span style="font-size:200%;color:pink;">Large</span></span>
 						<span data-dojo-value="2">2</span>
@@ -1018,58 +1014,58 @@
 			</fieldset>
 			<br>
 			<fieldset class="area dj_a11y">
-				<h3>a11y, unstyled</h3>
+				<legend>a11y, unstyled</legend>
 				<fieldset class="area">
-					normal<br>
+					<legend>normal</legend>
 					<select id="a1" data-dojo-type="dijit/form/Select">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					disabled<br>
+					<legend>disabled</legend>
 					<select id="a2" data-dojo-type="dijit/form/Select" disabled>
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					error<br>
+					<legend>error</legend>
 					<select id="a3" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					hover<br>
+					<legend>hover</legend>
 					<select id="a4" data-dojo-type="dijit/form/Select" class="dijitHover dijitSelectHover">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					focused<br>
+					<legend>focused</legend>
 					<select id="a5" data-dojo-type="dijit/form/Select" class="dijitFocused dijitSelectFocused">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					RTL<br>
+					<legend>RTL</legend>
 					<select id="a6" data-dojo-type="dijit/form/Select" dir="rtl">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					RTL error<br>
+					<legend>RTL error</legend>
 					<select id="a7" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" dir="rtl" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area">
-					styled option<br>
+					<legend>styled option</legend>
 					<span id="a8" data-dojo-type="dijit/form/Select">
 						<span data-dojo-value="1"><span style="font-size:200%;color:pink;">Large</span></span>
 						<span data-dojo-value="2">2</span>
@@ -1078,58 +1074,58 @@
 			</fieldset>
 			<br>
 			<fieldset class="area dj_a11y">
-				<h3>a11y styled</h3>
+				<legend>a11y styled</legend>
 				<fieldset class="area customStyled">
-					normal<br>
+					<legend>normal</legend>
 					<select id="acs1" data-dojo-type="dijit/form/Select" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					disabled<br>
+					<legend>disabled</legend>
 					<select id="acs2" data-dojo-type="dijit/form/Select" style="color:red;width:60px;" disabled>
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					error<br>
+					<legend>error</legend>
 					<select id="acs3" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" style="color:red;width:60px;" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					hover<br>
+					<legend>hover</legend>
 					<select id="acs4" data-dojo-type="dijit/form/Select" class="dijitHover dijitSelectHover" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					focused<br>
+					<legend>focused</legend>
 					<select id="acs5" data-dojo-type="dijit/form/Select" class="dijitFocused dijitSelectFocused" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					RTL<br>
+					<legend>RTL</legend>
 					<select id="acs6" data-dojo-type="dijit/form/Select" dir="rtl" style="color:red;width:60px;">
 						<option data-dojo-value="1">1</option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					RTL error<br>
+					<legend>RTL error</legend>
 					<select id="acs7" data-dojo-type="dijit/form/Select" class="dijitError dijitSelectError dijitValidationTextBoxError" style="color:red;width:60px;" dir="rtl" data-dojo-props="required:true">
 						<option data-dojo-value=""></option>
 						<option data-dojo-value="2">2</option>
 					</select>
 				</fieldset>
 				<fieldset class="area customStyled">
-					styled option<br>
+					<legend>styled option</legend>
 					<span id="acs8" data-dojo-type="dijit/form/Select" style="color:red;width:120px;">
 						<span data-dojo-value="1"><span style="font-size:200%;color:pink;">Large</span></span>
 						<span data-dojo-value="2">2</span>
