@@ -10,7 +10,7 @@ Import-Package: com.zizibujuan.drip.server.service,
  com.zizibujuan.drip.server.util.io,
  com.zizibujuan.drip.server.util.servlet,
  org.osgi.framework;version="1.3.0",
- org.slf4j;version="1.6.6"
+ org.slf4j;version="1.6.4"
 Bundle-ActivationPolicy: lazy
 Require-Bundle: javax.servlet;bundle-version="3.0.0"
 Service-Component: OSGI-INF/*.xml

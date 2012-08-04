@@ -4,5 +4,5 @@ Bundle-Name: server.logback.config
 Bundle-SymbolicName: com.zizibujuan.drip.server.logback.config
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: zizibujuan.com
-Fragment-Host: ch.qos.logback.classic;bundle-version="1.0.6"
+Fragment-Host: ch.qos.logback.classic;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
