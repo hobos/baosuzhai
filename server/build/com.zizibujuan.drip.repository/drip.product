@@ -13,10 +13,32 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
    <plugins>
+      <plugin id="ch.qos.logback.classic"/>
+      <plugin id="ch.qos.logback.core"/>
+      <plugin id="com.zizibujuan.dbaccess.mysql"/>
       <plugin id="com.zizibujuan.drip.client.core"/>
       <plugin id="com.zizibujuan.drip.client.dojo"/>
       <plugin id="com.zizibujuan.drip.server.configurator"/>
+      <plugin id="com.zizibujuan.drip.server.dao"/>
+      <plugin id="com.zizibujuan.drip.server.dao.mysql"/>
+      <plugin id="com.zizibujuan.drip.server.exception"/>
+      <plugin id="com.zizibujuan.drip.server.logback.config" fragment="true"/>
+      <plugin id="com.zizibujuan.drip.server.service"/>
+      <plugin id="com.zizibujuan.drip.server.service.impl"/>
+      <plugin id="com.zizibujuan.drip.server.servlet"/>
+      <plugin id="com.zizibujuan.drip.server.util"/>
+      <plugin id="com.zizibujuan.jdbc.mysql"/>
       <plugin id="javax.servlet"/>
       <plugin id="org.apache.commons.logging"/>
       <plugin id="org.apache.felix.gogo.command"/>
@@ -41,6 +63,8 @@
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.eclipse.osgi.util"/>
+      <plugin id="osgi.enterprise"/>
+      <plugin id="slf4j.api"/>
    </plugins>
 
    <features>
@@ -48,9 +72,20 @@
    </features>
 
    <configurations>
+      <plugin id="ch.qos.logback.classic" autoStart="true" startLevel="0" />
+      <plugin id="ch.qos.logback.core" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.dbaccess.mysql" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.client.core" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.client.dojo" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.server.configurator" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.dao" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.dao.mysql" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.exception" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.service" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.service.impl" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.servlet" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.server.util" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.jdbc.mysql" autoStart="true" startLevel="0" />
       <plugin id="javax.servlet" autoStart="true" startLevel="0" />
       <plugin id="org.apache.commons.logging" autoStart="true" startLevel="0" />
       <plugin id="org.apache.felix.gogo.command" autoStart="true" startLevel="0" />
@@ -75,6 +110,8 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.osgi.services" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.osgi.util" autoStart="true" startLevel="0" />
+      <plugin id="osgi.enterprise" autoStart="true" startLevel="0" />
+      <plugin id="slf4j.api" autoStart="true" startLevel="0" />
    </configurations>
 
 </product>

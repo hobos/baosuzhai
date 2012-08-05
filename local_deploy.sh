@@ -20,7 +20,7 @@ echo 更新最新的代码
 git pull
 
 echo 执行自动化构建
-mvn clean install
+mvn clean install -Pdev
 
 popd
 
