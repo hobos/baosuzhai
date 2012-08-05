@@ -52,6 +52,9 @@ then
         runningPID=`cat $serverHome$projectName/current.pid`
         echo 删除进程$runningPID
         kill -15 $runningPID
+	# 启动drip时，也会产生一个java进程，如果不删除该进程，则jetty服务器中的内容一直被缓存
+ 	let "runningPID += 1"
+        kill -15 $runningPID
         rm $serverHome$projectName/current.pid
 	echo 删除旧的部署文件
 	rm -rf $serverHome$projectName
