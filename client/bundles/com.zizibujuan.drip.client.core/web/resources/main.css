@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+#header {
+	background: #ededed;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	font-size: 13px;
+	box-shadow: 0 2px 2px #999;
+	height: 35px;
+}
+
+.wrapper {
+	width: 920px;
+	margin: 0 auto;
+}
+
+.top-nav {
+	float: right;
+	height:35px;
+}
+
+.top-nav ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.top-nav a {
+	text-decoration: none
+}
+
+.top-nav li {
+	float:left;
+	margin: 0 0 0 15px;
+	line-height: 35px;
+}
+
+.top-logo {
+	float: left;
+	line-height: 35px;
+	color: green;
+	font-size: 20px
+}
+
+
+
+
+a:link {
+ color: black;
+}
+a:visited {
+ color: black;
+}
+a:hover {
+ color: green;
+}
+a:active {
+ color: green;  
+}

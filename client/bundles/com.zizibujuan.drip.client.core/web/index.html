@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <link type="text/css" rel="stylesheet" href="/dijit/themes/claro/claro.css" />
 <link type="text/css" rel="stylesheet" href="/dojo/resources/dojo.css" />
+<link type="text/css" rel="stylesheet" href="/resources/main.css" />
 <title>抱素小书屋 首页</title>
 <script type="text/javascript" 
 	data-dojo-config="
@@ -17,8 +18,21 @@ require(["dojo/parser","Exercise","dojo/domReady!"]);
 </script>
 </head>
 <body class="claro" style="">
+	<div id="header">
+		<div class="wrapper" style="display: block;">
+			<div class="top-logo">
+				孜孜不倦<!-- TODO：添加超链接和样式 -->
+			</div>
+			<div class="top-nav">
+				<ul>
+					<li><a href="/signup">注册</a></li>
+					<li><a href="/login">登录</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<!-- 容器 -->
-	<div>
+	<div style="margin-top: 60px">
 		<div data-dojo-type="Exercise"></div>
 	</div>
 </body>
