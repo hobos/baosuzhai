@@ -58,12 +58,12 @@
             alias="/"
             class="org.eclipse.jetty.servlets.GzipFilter">
       </filter>
-      <!--
+      
       <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.RestHtmlFilter">
       </filter>
-      -->
+      
        <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.WelcomeFileFilter">

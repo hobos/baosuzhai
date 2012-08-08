@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zizibujuan.drip.server.util.servlet.RequestUtil;
-import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
 
 /**
  * 为了使用rest风格的资源连接，所有请求html页面，都不使用html后缀，而是后台自动解析。 只要请求非ajax请求，没有后缀的就加上html。
@@ -22,7 +21,10 @@ import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
  */
 public class RestHtmlFilter implements Filter {
 
-	private static final String HTML_EXTENSION = ".html";
+	private static final String ROOT_WEB = "/drip";
+	private static final String LIST_HTML = "/list.html";
+	private static final String NEW_PATHINFO = "/new";
+	private static final String HTML = ".html";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -38,36 +40,22 @@ public class RestHtmlFilter implements Filter {
 		System.out.println("PathInfo:"+httpRequest.getPathInfo());
 		System.out.println("ContextPath:"+httpRequest.getContextPath());
 		
-		
-		
-		if (!RequestUtil.isAjax(httpRequest)) {
-			String servletPath = httpRequest.getServletPath();
-			String pathInfo = httpRequest.getPathInfo();
-			
-			if(pathInfo == null){
-				pathInfo = "";
+		// 因为约定rest名与文件夹名相同，所以servletPath中存储的通常是servlet的别名。
+		String servletPath = httpRequest.getServletPath();
+		if(!servletPath.equals("")){
+			if (!RequestUtil.isAjax(httpRequest)) {
+				String pathInfo = httpRequest.getPathInfo();
+				if(pathInfo == null || pathInfo.equals("/")){			
+					//FIXME:暂时支持一级路径。即把所有的list的html容器都放在根目录下
+					String fileName = ROOT_WEB + servletPath + LIST_HTML;
+					httpRequest.getRequestDispatcher(fileName).forward(httpRequest, httpResponse);
+					return;
+				}else if(pathInfo.equals(NEW_PATHINFO)){
+					String fileName = ROOT_WEB + servletPath + pathInfo + HTML;
+					httpRequest.getRequestDispatcher(fileName).forward(httpRequest, httpResponse);
+					return;
+				}
 			}
-			if(pathInfo.endsWith("/")){
-				pathInfo = pathInfo.substring(0, pathInfo.length()-1);
-			}
-			
-
-			String fileName = servletPath + pathInfo + HTML_EXTENSION;
-			String fileNamea = httpRequest.getServletContext().getRealPath("");
-			ResponseUtil.toHTMLFile(httpRequest, httpResponse, "/exercises.html");
-			
-			
-			if(pathInfo.lastIndexOf(".")>-1){
-				chain.doFilter(req, resp);
-				return;
-			}
-			
-//			String fileName = servletPath + pathInfo + HTML_EXTENSION;
-//			String fileNamea = httpRequest.getServletContext().getRealPath(fileName);
-//			ResponseUtil.toHTMLFile(httpRequest, httpResponse, "/exercises.html");
-			
-			
-			return;
 		}
 		chain.doFilter(req, resp);
 	}

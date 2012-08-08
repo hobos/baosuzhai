@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class WelcomeFileFilter implements Filter {
 
-	private static final String WELCOME_FILE_NAME = "exercises.html"; //"index.html";//$NON-NLS-1$
+	private static final String WELCOME_FILE_NAME = "exercises"; //"index.html";//$NON-NLS-1$
 	private final List<String> includes = new ArrayList<String>();
 	private final List<String> excludes = new ArrayList<String>();
 	
