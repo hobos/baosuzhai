@@ -1,10 +1,14 @@
 package com.zizibujuan.drip.server.util.servlet;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONUtil;
 
@@ -79,5 +83,21 @@ public abstract class ResponseUtil {
 		resp.setHeader("Cache-Control", "no-store"); //$NON-NLS-1$ //$NON-NLS-2$
 		resp.setContentType(HttpConstants.CONTENT_TYPE_HTML);
 		resp.getWriter().print(html);
+	}
+
+	public static void toHTMLFile(HttpServletRequest req,
+			HttpServletResponse resp, String fileName) throws IOException {
+		
+		InputStream io = req.getServletContext().getResourceAsStream(fileName);
+		if(io == null){
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}else{
+			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.setHeader("Cache-Control", "no-cache"); //$NON-NLS-1$ //$NON-NLS-2$
+			resp.setHeader("Cache-Control", "no-store"); //$NON-NLS-1$ //$NON-NLS-2$
+			resp.setContentType(HttpConstants.CONTENT_TYPE_HTML);
+			IOUtils.copy(io, resp.getOutputStream());
+		}
+		
 	}
 }
