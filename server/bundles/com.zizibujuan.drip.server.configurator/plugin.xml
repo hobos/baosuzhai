@@ -54,10 +54,7 @@
 
    <extension
          point="org.eclipse.equinox.http.registry.filters">
-      <filter
-            alias="/"
-            class="org.eclipse.jetty.servlets.GzipFilter">
-      </filter>
+
       
       <filter
             alias="/"
@@ -71,6 +68,11 @@
                name="includes"
                value="/">
          </init-param>
+      </filter>
+      
+      <filter
+            alias="/"
+            class="org.eclipse.jetty.servlets.GzipFilter">
       </filter>
    </extension>
 </plugin>

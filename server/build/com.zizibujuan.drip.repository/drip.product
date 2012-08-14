@@ -3,15 +3,19 @@
 
 <product name="drip.product" uid="com.zizibujuan.drip.product" id="com.zizibujuan.drip.product" application="com.zizibujuan.drip.application" version="0.0.1.qualifier" useFeatures="true" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
       <programArgs>-consoleLog -console</programArgs>
       <vmArgs>-Declipse.ignoreApp=true -Dosgi.noShutdown=true
--Dorg.osgi.service.http.port=8088</vmArgs>
+-Dorg.osgi.service.http.port=80</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
+
+   <windowImages/>
+
 
    <launcher>
       <solaris/>
@@ -20,8 +24,10 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="ch.qos.logback.classic"/>

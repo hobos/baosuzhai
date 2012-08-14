@@ -1,2 +1,5 @@
 1.将dojo以自模块的方式导入
 2.
+
+修改端口号：
+-Dorg.osgi.service.http.port=8088
