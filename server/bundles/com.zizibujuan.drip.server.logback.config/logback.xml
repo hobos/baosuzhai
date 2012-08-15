@@ -6,12 +6,29 @@
       <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
     </layout>
   </appender>
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logFile.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
 
   <!-- Prints information on locating and reading the server configuration file -->
   <logger name="com.zizibujuan.drip.server.servlet" level="DEBUG"/>
-
+  <logger name="com.zizibujuan.drip.server.dao.mysql" level="DEBUG"/>
+  <logger name="com.zizibujuan.drip.server.service.impl" level="DEBUG"/>
+  <logger name="com.zizibujuan.drip.server.configurator" level="DEBUG"/>
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
   </root>
 </configuration>

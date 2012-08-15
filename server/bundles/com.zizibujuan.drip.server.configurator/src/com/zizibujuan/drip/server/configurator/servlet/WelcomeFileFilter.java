@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 指向欢迎页面的过滤器。
  * 使用org.eclipse.orion.server.configurator中的WelcomeFileFilter.java 谢谢。
@@ -24,6 +27,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 public class WelcomeFileFilter implements Filter {
 
+	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
+	
 	private static final String WELCOME_FILE_NAME = "exercises"; //"index.html";//$NON-NLS-1$
 	private final List<String> includes = new ArrayList<String>();
 	private final List<String> excludes = new ArrayList<String>();
@@ -54,6 +59,7 @@ public class WelcomeFileFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
 		final String requestPath = httpRequest.getServletPath() + (httpRequest.getPathInfo() == null ? "" : httpRequest.getPathInfo()); //$NON-NLS-1$
+		logger.info("跳转到WelcomeFileFilter中，请求路径为:"+requestPath);
 		if (requestPath.endsWith("/") && isIncluded(requestPath) && !isExcluded(requestPath)) { //$NON-NLS-1$
 			response = new HttpServletResponseWrapper((HttpServletResponse) response) {
 
@@ -102,7 +108,7 @@ public class WelcomeFileFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		// do nothing
 
 	}
 
