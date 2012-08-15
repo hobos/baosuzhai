@@ -60,6 +60,7 @@ public class WelcomeFileFilter implements Filter {
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
 		final String requestPath = httpRequest.getServletPath() + (httpRequest.getPathInfo() == null ? "" : httpRequest.getPathInfo()); //$NON-NLS-1$
 		logger.info("跳转到WelcomeFileFilter中，请求路径为:"+requestPath);
+		System.out.println("跳转到WelcomeFileFilter中，请求路径为:"+requestPath);
 		if (requestPath.endsWith("/") && isIncluded(requestPath) && !isExcluded(requestPath)) { //$NON-NLS-1$
 			response = new HttpServletResponseWrapper((HttpServletResponse) response) {
 
