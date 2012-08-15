@@ -66,7 +66,7 @@ public class WelcomeFileFilter implements Filter {
 			response = new HttpServletResponseWrapper((HttpServletResponse) response) {
 
 				private boolean handleWelcomeFile(int sc) {
-					System.out.println("状态码为："+sc);
+					System.out.println("handleWelcomeFile中状态码为："+sc);
 					if (sc == SC_NOT_FOUND || sc == SC_FORBIDDEN) {
 						try {
 							System.out.println("跳转到欢迎页面:"+requestPath + WELCOME_FILE_NAME);
@@ -98,6 +98,8 @@ public class WelcomeFileFilter implements Filter {
 				}
 			};
 		}
+		HttpServletResponse resp = (HttpServletResponse) response;
+		System.out.println("状态码为："+resp.getStatus());
 		chain.doFilter(request, response);
 
 	}
