@@ -29,7 +29,7 @@ public class WelcomeFileFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
 	
-	private static final String WELCOME_FILE_NAME = "index.html";//"exercises"; ////$NON-NLS-1$
+	private static final String WELCOME_FILE_NAME ="exercises"; // "index.html"//$NON-NLS-1$
 	private final List<String> includes = new ArrayList<String>();
 	private final List<String> excludes = new ArrayList<String>();
 	
@@ -81,21 +81,32 @@ public class WelcomeFileFilter implements Filter {
 					return false;
 				}
 
+				@Override
 				public void sendError(int sc) throws IOException {
 					if (!handleWelcomeFile(sc)) {
 						super.sendError(sc);
 					}
 				}
 
+				@Override
 				public void sendError(int sc, String msg) throws IOException {
 					if (!handleWelcomeFile(sc)) {
 						super.sendError(sc, msg);
 					}
 				}
-
+				
+				@Override
 				public void setStatus(int sc) {
 					if (!handleWelcomeFile(sc)) {
 						super.setStatus(sc);
+					}
+				}
+
+				@Override
+				@Deprecated
+				public void setStatus(int sc, String sm) {
+					if (!handleWelcomeFile(sc)) {
+						super.setStatus(sc, sm);
 					}
 				}
 			};
