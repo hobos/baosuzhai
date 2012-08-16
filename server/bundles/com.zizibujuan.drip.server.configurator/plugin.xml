@@ -64,10 +64,6 @@
        <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.WelcomeFileFilter">
-         <init-param
-               name="includes"
-               value="/">
-         </init-param>
       </filter>
       
       <filter
