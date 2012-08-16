@@ -36,9 +36,9 @@ public class RestHtmlFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) req;
 		HttpServletResponse httpResponse = (HttpServletResponse) resp;
-		System.out.println("ServletPath:"+httpRequest.getServletPath());
-		System.out.println("PathInfo:"+httpRequest.getPathInfo());
-		System.out.println("ContextPath:"+httpRequest.getContextPath());
+		System.out.println("ServletPath:'"+httpRequest.getServletPath()+"'");
+		System.out.println("PathInfo:'"+httpRequest.getPathInfo()+"'");
+		System.out.println("ContextPath:'"+httpRequest.getContextPath()+"'");
 		
 		// 因为约定rest名与文件夹名相同，所以servletPath中存储的通常是servlet的别名。
 		String servletPath = httpRequest.getServletPath();

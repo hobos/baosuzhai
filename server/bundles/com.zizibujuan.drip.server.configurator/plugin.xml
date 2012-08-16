@@ -55,12 +55,12 @@
    <extension
          point="org.eclipse.equinox.http.registry.filters">
 
-      
+      <!--
       <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.RestHtmlFilter">
       </filter>
-      
+      -->
        <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.WelcomeFileFilter">

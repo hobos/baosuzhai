@@ -29,7 +29,7 @@ public class WelcomeFileFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
 	
-	private static final String WELCOME_FILE_NAME = "exercises"; //"index.html";//$NON-NLS-1$
+	private static final String WELCOME_FILE_NAME = "index.html";//"exercises"; ////$NON-NLS-1$
 	private final List<String> includes = new ArrayList<String>();
 	private final List<String> excludes = new ArrayList<String>();
 	
@@ -67,6 +67,8 @@ public class WelcomeFileFilter implements Filter {
 
 				private boolean handleWelcomeFile(int sc) {
 					System.out.println("handleWelcomeFile中状态码为："+sc);
+					// FIXME:不知什么原因，在生产服务器上状态码，直接输入域名时状态码一直为200
+					// 分明就没有对应的资源，为什么会返回200呢？
 					if (sc == SC_NOT_FOUND || sc == SC_FORBIDDEN) {
 						try {
 							System.out.println("跳转到欢迎页面:"+requestPath + WELCOME_FILE_NAME);
