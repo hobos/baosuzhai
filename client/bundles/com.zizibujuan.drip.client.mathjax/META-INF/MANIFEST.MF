@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: mathjax
+Bundle-SymbolicName: com.zizibujuan.drip.client.mathjax
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: mathjax.org

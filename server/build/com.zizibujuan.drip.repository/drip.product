@@ -3,7 +3,6 @@
 
 <product name="drip.product" uid="com.zizibujuan.drip.product" id="com.zizibujuan.drip.product" application="com.zizibujuan.drip.application" version="0.0.1.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -16,7 +15,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -24,10 +22,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="ch.qos.logback.classic"/>
@@ -35,6 +31,7 @@
       <plugin id="com.zizibujuan.dbaccess.mysql"/>
       <plugin id="com.zizibujuan.drip.client.core"/>
       <plugin id="com.zizibujuan.drip.client.dojo"/>
+      <plugin id="com.zizibujuan.drip.client.mathjax"/>
       <plugin id="com.zizibujuan.drip.server.configurator"/>
       <plugin id="com.zizibujuan.drip.server.dao"/>
       <plugin id="com.zizibujuan.drip.server.dao.mysql"/>
@@ -83,6 +80,7 @@
       <plugin id="com.zizibujuan.dbaccess.mysql" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.client.core" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.client.dojo" autoStart="true" startLevel="0" />
+      <plugin id="com.zizibujuan.drip.client.mathjax" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.server.configurator" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.server.dao" autoStart="true" startLevel="0" />
       <plugin id="com.zizibujuan.drip.server.dao.mysql" autoStart="true" startLevel="0" />

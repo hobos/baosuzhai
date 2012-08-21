@@ -19,5 +19,6 @@ server/bundles/com.zizibujuan.drip.server.logback.config/target
 
 client/bundles/com.zizibujuan.drip.client.core/target
 client/bundles/com.zizibujuan.drip.client.dojo/target
+client/bundles/com.zizibujuan.drip.client.mathjax/target
 
 server/build/com.zizibujuan.drip.repository/target
