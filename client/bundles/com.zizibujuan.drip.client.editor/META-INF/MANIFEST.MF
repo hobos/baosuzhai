@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: client.editor
+Bundle-SymbolicName: com.zizibujuan.drip.client.editor
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: zizibujuan.com

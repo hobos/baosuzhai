@@ -38,6 +38,10 @@
 	               path="/web">
 	         </resource-mapping>
 	         <resource-mapping
+	               bundle="com.zizibujuan.drip.client.editor"
+	               path="/static">
+	         </resource-mapping>
+	         <resource-mapping
 	               bundle="com.zizibujuan.drip.client.dojo"
 	               path="/static">
 	         </resource-mapping>
