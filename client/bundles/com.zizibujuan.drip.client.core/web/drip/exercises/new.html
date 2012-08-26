@@ -17,6 +17,7 @@ require(["dojo/ready",
          "dijit/registry",
          "dojo/parser",
          "dijit/form/Button",
+         "drip/Editor",
          "dojo/domReady!"],function(
         		 ready,
         		 registry){
@@ -56,11 +57,7 @@ require(["dojo/ready",
 			<!-- TODO：将这些style提取到样式文件中 -->
 			<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
 				<div style="padding-top: 5px; padding-bottom: 10px" data-dojo-attach-point="divContent">
-					<div id="editor">
-						<math>
-							<mi>x</mi>
-						</math>
-					</div>
+					<div data-dojo-type="drip/Editor"></div>
 				</div>
 			</div>
 		</div></div>
