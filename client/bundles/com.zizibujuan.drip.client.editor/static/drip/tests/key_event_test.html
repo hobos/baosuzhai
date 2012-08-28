@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试Text Event/Keyboard Event/Composition Event</title>
+<script type="text/javascript" data-dojo-config="async:true,parseOnLoad:true,isDebug:true" 
+	src="/dojo/dojo.js"></script>
+</head>
+
+<body>
+
+<input id="inputFlag" type="button" value="支持TextEvent时，输入的文本显示在textarea中"></input>
+<input id="btnInputCount" type="button" value="input事件执行次数清零"></input>
+<!--<input id="simulateInput" type="button" value="往textarea中输入a"></input>-->
+<br/>
+<textarea id="text"></textarea>
+<script type="text/javascript">
+require(["dojo/dom"],function(dom){
+	var text = document.getElementById("text");
+	var btnInputFlag = document.getElementById("inputFlag");
+//	var btnSimulateInput = document.getElementById("simulateInput");
+	var btnInputCount = document.getElementById("btnInputCount");
+	var notInput = false;
+	
+	var inputCount = 0;
+
+	btnInputFlag.addEventListener("click",function(e){
+		if(notInput==false){
+			notInput=true;
+			this.value="支持TextEvent时，输入的文本不会显示在textarea中";
+		}else{
+			notInput=false;
+			this.value="支持TextEvent时，输入的文本显示在textarea中";
+		}
+	},false);
+
+//	btnSimulateInput.addEventListener("click",function(e){
+//		simulateEvent.triggerTextEvent(text,"a");
+//	},false);
+
+	btnInputCount.addEventListener("click",function(e){inputCount=0;},false);
+	//Text Event firefox不支持,chrome支持
+	text.addEventListener("textInput",function(e){
+		console.log(e.type,e.data,"textarea.value=='"+this.value+"'",e);
+		//阻止将值输入文本框中
+		if(notInput){
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	},false);
+	
+	text.addEventListener("textinput",function(e){
+		console.log(e.type,e.data,"textarea.value=='"+this.value+"'",e);
+		//阻止将值输入文本框中
+		if(notInput){
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	},false);
+
+	function logKeyboardEvent(keyboardEvent){
+		var e = keyboardEvent;
+		console.log(e.type,e.keyCode,e.charCode,"textarea.value=='"+text.value+"'",e);
+	}
+
+	function logCompositionEvent(compositionEvent){
+		var e = compositionEvent;
+		console.log(e.type,e.data,"textarea.value=='"+text.value+"'",e);
+	}
+
+	function logUIEvent(uiEvent){
+		var e = uiEvent;
+		console.log(e.type,"textarea.value=='"+text.value+"'",e);
+
+	}
+	//Keyboard Event
+	text.addEventListener("keydown",function(e){
+		logKeyboardEvent(e);
+	},false);
+
+	text.addEventListener("keypress",function(e){
+		logKeyboardEvent(e);
+	},false);
+
+	text.addEventListener("keyup",function(e){
+		logKeyboardEvent(e);
+	},false);
+
+	//XUL Event
+	text.addEventListener("input",function(e){
+		inputCount++;
+		//console.log(e.constructor==UIEvent);
+		console.log(e.type,"textarea.value=='"+this.value+"'","第"+inputCount+"次执行",e);
+		var self = this;
+		//e.stopPropagation();
+		//e.preventDefault();
+		//setTimeout(function(){inputCount++;console.log(e.type,"textarea.value=='"+self.value+"'","第"+inputCount+"次执行",e);},0);
+	},false);
+
+	//Composition Event
+	text.addEventListener("compositionstart",function(e){
+		logCompositionEvent(e);
+	},false);
+
+	text.addEventListener("compositionupdate",function(e){
+		logCompositionEvent(e);
+	},false);
+
+	text.addEventListener("compositionend",function(e){
+		logCompositionEvent(e);
+	},false);
+
+	text.addEventListener("text",function(e){
+		setTimeout(function(){
+			logUIEvent(e);
+		},0);
+	},false);
+});
+</script>
+
+<div style="border:solid 1px red;min-height:30px" contenteditable="true"></div>
+</body>
+
+</html>

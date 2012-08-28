@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试鼠标事件</title>
+<script type="text/javascript" data-dojo-config="async:true,parseOnLoad:true,isDebug:true" 
+	src="dojo/dojo.js"></script>
+</head>
+<body>
+<div id="mouse" style="border:solid 1px red; height:300px;width:300px">点击我<div id="inner">内部</div></div>
+<script type="text/javascript">
+var mouseTarget = document.getElementById("mouse");
+var inner = document.getElementById("inner");
+function log(e){
+	console.log(e.type,e.clientX,e.clientY,e);
+}
+mouseTarget.addEventListener("mousemove",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("mouseover",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("mouseenter",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("mouseout",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("mouseleave",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("mousedown",function(e){
+	log(e);
+	e.stopPropagation();
+        e.preventDefault();
+
+},false);
+
+mouseTarget.addEventListener("mouseup",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("click",function(e){
+	log(e);
+},false);
+
+mouseTarget.addEventListener("dblclick",function(e){
+	log(e);
+},false);
+
+inner.addEventListener("mouseover",function(e){
+	log(e);
+},false);
+
+</script>
+</body>
+</html>
