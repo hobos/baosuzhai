@@ -6,8 +6,10 @@ define([
    '../node!http',
    '../node!https',
    '../node!url',
-   '../node!stream'
-], function(require, util, handlers, RequestTimeoutError, http, https, URL, stream){
+   '../node!stream'/*=====,
+	'../request',
+	'../_base/declare' =====*/
+], function(require, util, handlers, RequestTimeoutError, http, https, URL, stream/*=====, request, declare =====*/){
 	var Stream = stream.Stream,
 		undefined;
 
@@ -17,7 +19,7 @@ define([
 		data: undefined,
 		headers: {}
 	};
-	function request(url, options){
+	function node(url, options){
 		var response = util.parseArgs(url, util.deepCreate(defaultOptions, options), options && options.data instanceof Stream);
 		url = response.url;
 		options = response.options;
@@ -116,7 +118,74 @@ define([
 		return def.promise;
 	}
 
-	util.addCommonMethods(request);
+	/*=====
+	node = function(url, options){
+		// summary:
+		//		Sends a request using the included http or https interface from node.js
+		//		with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/node.__Options?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	node.__BaseOptions = declare(request.__BaseOptions, {
+		// data: String|Object|Stream?
+		//		Data to transfer. This is ignored for GET and DELETE
+		//		requests.
+		// headers: Object?
+		//		Headers to use for the request.
+		// user: String?
+		//		Username to use during the request.
+		// password: String?
+		//		Password to use during the request.
+	});
+	node.__MethodOptions = declare(null, {
+		// method: String?
+		//		The HTTP method to use to make the request. Must be
+		//		uppercase. Default is `"GET"`.
+	});
+	node.__Options = declare([node.__BaseOptions, node.__MethodOptions]);
 
-	return request;
+	node.get = function(url, options){
+		// summary:
+		//		Send an HTTP GET request using XMLHttpRequest with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/node.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	node.post = function(url, options){
+		// summary:
+		//		Send an HTTP POST request using XMLHttpRequest with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/node.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	node.put = function(url, options){
+		// summary:
+		//		Send an HTTP PUT request using XMLHttpRequest with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/node.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	node.del = function(url, options){
+		// summary:
+		//		Send an HTTP DELETE request using XMLHttpRequest with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/node.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	=====*/
+
+	util.addCommonMethods(node);
+
+	return node;
 });

@@ -4,7 +4,7 @@ define([
 	"dojo/cookie", // cookie
 	"dojo/_base/declare", // declare
 	"dojo/Deferred", // Deferred
-	"dojo/DeferredList", // DeferredList
+	"dojo/promise/all",
 	"dojo/dom", // dom.isDescendant
 	"dojo/dom-class", // domClass.add domClass.remove domClass.replace domClass.toggle
 	"dojo/dom-geometry", // domGeometry.setMarginBox domGeometry.position
@@ -32,7 +32,7 @@ define([
 	"./tree/TreeStoreModel",
 	"./tree/ForestStoreModel",
 	"./tree/_dndSelector"
-], function(array, connect, cookie, declare, Deferred, DeferredList,
+], function(array, connect, cookie, declare, Deferred, all,
 			dom, domClass, domGeometry, domStyle, event, createError, fxUtils, kernel, keys, lang, on, topic, touch, when,
 			focus, registry, manager, _Widget, _TemplatedMixin, _Container, _Contained, _CssStateMixin,
 			treeNodeTemplate, treeTemplate, TreeStoreModel, ForestStoreModel, _dndSelector){
@@ -40,11 +40,17 @@ define([
 // module:
 //		dijit/Tree
 
-// Back-compat shim
+// Back-compat shims, remove for 2.0
 Deferred = declare(Deferred, {
 	addCallback: function(callback){ this.then(callback); },
 	addErrback: function(errback){ this.then(null, errback); }
 });
+function makeAll(defs){
+	var d = new all(defs);
+	d.addCallback = function(callback){ d.then(callback); };
+	d.addErrback = function(errback){ d.then(null, errback); };
+	return d;
+}
 
 var TreeNode = declare(
 	"dijit._TreeNode",
@@ -359,16 +365,33 @@ var TreeNode = declare(
 					// If node is in selection then remove it.
 					tree.dndController.removeTreeNode(node);
 
-					// Deregister mapping from item id --> this node
-					var id = model.getIdentity(node.item),
-						ary = tree._itemNodesMap[id];
-					if(ary.length == 1){
-						delete tree._itemNodesMap[id];
-					}else{
-						var index = array.indexOf(ary, node);
-						if(index != -1){
-							ary.splice(index, 1);
+					// Deregister mapping from item id --> this node and its descendants
+					function remove(node){
+						var id = model.getIdentity(node.item),
+							ary = tree._itemNodesMap[id];
+						if(ary.length == 1){
+							delete tree._itemNodesMap[id];
+						}else{
+							var index = array.indexOf(ary, node);
+							if(index != -1){
+								ary.splice(index, 1);
+							}
 						}
+						array.forEach(node.getChildren(), remove);
+					}
+					remove(node);
+
+					// Remove any entries involving this node from cookie tracking expanded nodes
+					if(tree.persist){
+						var destroyedPath = array.map(node.getTreePath(), function(item){
+							return tree.model.getIdentity(item);
+						}).join("/");
+						for(var path in tree._openedNodes){
+							if(path.substr(0, destroyedPath.length) == destroyedPath){
+								delete tree._openedNodes[path];
+							}
+						}
+						tree._saveExpandedNodes();
 					}
 
 					// And finally we can destroy the node
@@ -456,9 +479,9 @@ var TreeNode = declare(
 			}
 		}
 
-		var def =  new DeferredList(defs);
+		var def = makeAll(defs);
 		this.tree._startPaint(def);		// to reset TreeNode widths after an item is added/removed from the Tree
-		return def;		// dojo/_base/Deferred
+		return def;		// dojo/promise/all
 	},
 
 	getTreePath: function(){
@@ -528,7 +551,7 @@ var TreeNode = declare(
 	_setTextDirAttr: function(textDir){
 		if(textDir &&((this.textDir != textDir) || !this._created)){
 			this._set("textDir", textDir);
-			this.applyTextDir(this.labelNode, this.labelNode.innerText || this.labelNode.textContent || "");
+			this.applyTextDir(this.labelNode);
 			array.forEach(this.getChildren(), function(childNode){
 				childNode.set("textDir", textDir);
 			}, this);
@@ -745,7 +768,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 		this.expandChildrenDeferred  = new Deferred();
 
 		// Deferred that fires when all pending operations complete.
-		this.pendingCommandsDeferred = this.expandChildrenDeferred;
+		this.pendingCommandsPromise = this.expandChildrenDeferred.promise;
 
 		this.inherited(arguments);
 	},
@@ -813,7 +836,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 
 		// onLoadDeferred should fire when all commands that are part of initialization have completed.
 		// It will include all the set("paths", ...) commands that happen during initialization.
-		this.onLoadDeferred = this.pendingCommandsDeferred;
+		this.onLoadDeferred = this.pendingCommandsPromise;
 				
 		this.onLoadDeferred.then(lang.hitch(this, "onLoad"));
 	},
@@ -935,7 +958,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 		//		WARNING: if model use multi-parented items or desired tree node isn't already loaded
 		//		behavior is undefined. Use set('paths', ...) instead.
 		var tree = this;
-		return this.pendingCommandsDeferred = this.pendingCommandsDeferred.then( lang.hitch(this, function(){
+		return this.pendingCommandsPromise = this.pendingCommandsPromise.always( lang.hitch(this, function(){
 			var identities = array.map(items, function(item){
 				return (!item || lang.isString(item)) ? item : tree.model.getIdentity(item);
 			});
@@ -969,11 +992,11 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 		var tree = this;
 
 		// Let any previous set("path", ...) commands complete before this one starts.
-		return this.pendingCommandsDeferred = this.pendingCommandsDeferred.then(function(){
+		return this.pendingCommandsPromise = this.pendingCommandsPromise.always(function(){
 			// We may need to wait for some nodes to expand, so setting
 			// each path will involve a Deferred. We bring those deferreds
-			// together with a DeferredList.
-			return new DeferredList(array.map(paths, function(path){
+			// together with a dojo/promise/all.
+			return makeAll(array.map(paths, function(path){
 				var d = new Deferred();
 
 				// normalize path to use identity
@@ -1010,11 +1033,8 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 		}
 
 		function setNodes(newNodes){
-			// After all expansion is finished, set the selection to
-			// the set of nodes successfully found.
-			tree.set("selectedNodes", array.map(
-				array.filter(newNodes,function(x){return x[0];}),
-				function(x){return x[1];}));
+			// After all expansion is finished, set the selection to last element from each path
+			tree.set("selectedNodes", newNodes);
 		}
 	},
 
@@ -1050,7 +1070,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 					defs = array.map(childBranches, expand);
 
 				// And when all those recursive calls finish, signal that I'm finished
-				new dojo.DeferredList(defs).then(function(){
+				makeAll(defs).then(function(){
 					def.resolve(true);
 				});
 			});
@@ -1081,7 +1101,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 
 			// And when all those recursive calls finish, collapse myself, unless I'm the invisible root node,
 			// in which case collapseAll() is finished
-			new dojo.DeferredList(defs).then(function(){
+			makeAll(defs).then(function(){
 				if(!node.isExpanded || (node == _this.rootNode && !_this.showRoot)){
 					def.resolve(true);
 				}else{
@@ -1755,6 +1775,7 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 			}
 		}
 	},
+
 	_state: function(node, expanded){
 		// summary:
 		//		Query or set expanded state for an node
@@ -1772,13 +1793,17 @@ var Tree = declare("dijit.Tree", [_Widget, _TemplatedMixin], {
 			}else{
 				delete this._openedNodes[path];
 			}
-			if(this.persist && this.cookieName){
-				var ary = [];
-				for(var id in this._openedNodes){
-					ary.push(id);
-				}
-				cookie(this.cookieName, ary.join(","), {expires:365});
+			this._saveExpandedNodes();
+		}
+	},
+
+	_saveExpandedNodes: function(){
+		if(this.persist && this.cookieName){
+			var ary = [];
+			for(var id in this._openedNodes){
+				ary.push(id);
 			}
+			cookie(this.cookieName, ary.join(","), {expires:365});
 		}
 	},
 

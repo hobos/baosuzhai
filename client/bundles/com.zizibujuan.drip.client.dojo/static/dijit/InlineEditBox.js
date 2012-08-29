@@ -1,4 +1,5 @@
 define([
+	"require",
 	"dojo/_base/array", // array.forEach
 	"dojo/_base/declare", // declare
 	"dojo/dom-attr", // domAttr.set domAttr.get
@@ -22,7 +23,8 @@ define([
 	"./form/TextBox",
 	"dojo/text!./templates/InlineEditBox.html",
 	"dojo/i18n!./nls/common"
-], function(array, declare, domAttr, domClass, domConstruct, domStyle, event, i18n, kernel, keys, lang, has, when, fm, _Widget, _TemplatedMixin, _WidgetsInTemplateMixin, _Container, Button, _TextBoxMixin, TextBox, template){
+], function(require, array, declare, domAttr, domClass, domConstruct, domStyle, event, i18n, kernel, keys, lang, has, when,
+			fm, _Widget, _TemplatedMixin, _WidgetsInTemplateMixin, _Container, Button, _TextBoxMixin, TextBox, template){
 
 	// module:
 	//		dijit/InlineEditBox
@@ -340,6 +342,7 @@ define([
 			// params: Object|null
 			//		Hash of initialization parameters for widget, including scalar values (like title, duration etc.)
 			//		and functions, typically callbacks like onClick.
+			//		The hash can contain any of the widget's properties, excluding read-only properties.
 			// srcNodeRef: DOMNode|String?
 			//		If a srcNodeRef (DOM node) is specified:
 			//
@@ -601,9 +604,7 @@ define([
 				}); // defer prevents browser freeze for long-running event handlers
 			}
 			// contextual (auto) text direction depends on the text value
-			if(this.textDir == "auto"){
-				this.applyTextDir(this.displayNode, this.displayNode.innerText);
-			}
+			this.applyTextDir(this.displayNode);
 		},
 
 		getValue: function(){
@@ -630,21 +631,6 @@ define([
 			this.defer("onCancel"); // defer prevents browser freeze for long-running event handlers
 
 			this._showText(focus);
-		},
-
-		_setTextDirAttr: function(/*String*/ textDir){
-			// summary:
-			//		Setter for textDir.
-			// description:
-			//		Users shouldn't call this function; they should be calling
-			//		set('textDir', value)
-			// tags:
-			//		private
-			if(!this._created || this.textDir != textDir){
-				this._set("textDir", textDir);
-				this.applyTextDir(this.displayNode, this.displayNode.innerText);
-				this.displayNode.align = this.dir == "rtl" ? "right" : "left"; //fix the text alignment
-			}
 		}
 	});
 

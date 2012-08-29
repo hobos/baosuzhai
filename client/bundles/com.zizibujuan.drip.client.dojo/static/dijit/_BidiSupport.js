@@ -44,13 +44,14 @@ define(["./_WidgetBase"], function(_WidgetBase){
 			return fdc ? ( fdc[0] <= 'z' ? "ltr" : "rtl" ) : this.dir ? this.dir : this.isLeftToRight() ? "ltr" : "rtl";
 		},
 
-		applyTextDir: function(/*Object*/ element, /*String*/ text){
+		applyTextDir: function(/*DOMNode*/ element, /*String?*/ text){
 			// summary:
-			//		Set element.dir according to this.textDir
+			//		Set element.dir according to this.textDir, assuming this.textDir has a value.
 			// element:
 			//		The text element to be set. Should have dir property.
 			// text:
-			//		Used in case this.textDir is "auto", for calculating the right transformation
+			//		If specified, and this.textDir is "auto", for calculating the right transformation
+			//		Otherwise text read from element.
 			// description:
 			//		If textDir is ltr or rtl returns the value.
 			//		If it's auto, calls to another function that responsible
@@ -58,12 +59,26 @@ define(["./_WidgetBase"], function(_WidgetBase){
 			// tags:
 			//		protected.
 
-			var textDir = this.textDir == "auto" ? this._checkContextual(text) : this.textDir;
-			// update only when there's a difference
-			if(element.dir != textDir){
-				element.dir = textDir;
+			if(this.textDir){
+				var textDir = this.textDir;
+				if(textDir == "auto"){
+					// convert "auto" to either "ltr" or "rtl"
+					if(typeof text === "undefined"){
+						// text not specified, get text from element
+						var tagName = element.tagName.toLowerCase();
+						text = (tagName == "input" || tagName == "textarea") ? element.value :
+							element.innerText || element.textContent || "";
+					}
+					textDir = this._checkContextual(text);
+				}
+
+				if(element.dir != textDir){
+					// set element's dir to match textDir, but not when textDir is null and not when it already matches
+					element.dir = textDir;
+				}
 			}
 		},
+
 		enforceTextDirWithUcc: function(option, text){
 			// summary:
 			//		Wraps by UCC (Unicode control characters) option's text according to this.textDir
@@ -73,13 +88,15 @@ define(["./_WidgetBase"], function(_WidgetBase){
 			//		The text to be wrapped.
 			// description:
 			//		There's a dir problem with some HTML elements. For some elements (e.g. `<option>`, `<select>`)
-			//		defining the dir in different direction then the GUI orientation, won't display correctly. 
+			//		defining the dir in different direction then the GUI orientation, won't display correctly.
 			//		FF 3.6 will change the alignment of the text in option - this doesn't follow the bidi standards (static text
 			//		should be aligned following GUI direction). IE8 and Opera11.10 completely ignore dir setting for `<option>`.
 			//		Therefore the only solution is to use UCC (Unicode  control characters) to display the text in correct orientation.
 			//		This function saves the original text value for later restoration if needed, for example if the textDir will change etc.
 			if(this.textDir){
-				option.originalText = text;
+				if(option){
+					option.originalText = text;
+				}
 				var dir = this.textDir == "auto" ? this._checkContextual(text) : this.textDir;
 				return (dir == "ltr" ? bidi_const.LRE : bidi_const.RLE ) + text + bidi_const.PDF;
 			}
@@ -98,6 +115,27 @@ define(["./_WidgetBase"], function(_WidgetBase){
 				delete origObj.originalText;
 			}
 			return origObj;
+		},
+
+		_setTextDirAttr: function(/*String*/ textDir){
+			// summary:
+			//		Setter for textDir.
+			// description:
+			//		Users shouldn't call this function; they should be calling
+			//		set('textDir', value)
+			if(!this._created || this.textDir != textDir){
+				this._set("textDir", textDir);
+				var node = null;
+				if(this.displayNode){
+					node = this.displayNode;
+					this.displayNode.align = this.dir == "rtl" ? "right" : "left";
+				}else{
+					node = this.textDirNode || this.focusNode || this.textbox;
+				}
+				if(node){
+					this.applyTextDir(node);
+				}
+			}
 		}
 	});
 

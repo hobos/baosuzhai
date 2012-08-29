@@ -282,7 +282,8 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		// params: Object|null
 		//		Hash of initialization parameters for widget, including scalar values (like title, duration etc.)
 		//		and functions, typically callbacks like onClick.
-		// srcNodeRef: DOMNode|String?
+	 	//		The hash can contain any of the widget's properties, excluding read-only properties.
+	 	// srcNodeRef: DOMNode|String?
 		//		If a srcNodeRef (DOM node) is specified:
 		//
 		//		- use srcNodeRef.innerHTML as my contents
@@ -312,6 +313,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		// params: Object|null
 		//		Hash of initialization parameters for widget, including scalar values (like title, duration etc.)
 		//		and functions, typically callbacks like onClick.
+		//		The hash can contain any of the widget's properties, excluding read-only properties.
 		// srcNodeRef: DOMNode|String?
 		//		If a srcNodeRef (DOM node) is specified:
 		//
@@ -548,8 +550,10 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		array.forEach(this._supportingWidgets, destroy);
 
 		// Destroy supporting widgets, but not child widgets under this.containerNode (for 2.0, destroy child widgets
-		// here too)
-		array.forEach(registry.findWidgets(this.domNode, this.containerNode), destroy);
+		// here too).   if() statement is to guard against exception if destroy() called multiple times (see #15815).
+		if(this.domNode){
+			array.forEach(registry.findWidgets(this.domNode, this.containerNode), destroy);
+		}
 
 		this.destroyRendering(preserveDom);
 		registry.remove(this.id);
@@ -1083,7 +1087,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 		//		originally used for setting element.dir according to this.textDir.
 		//		In this case does nothing.
 		// element: DOMNode
-		// text: String
+		// text: String?
 		// tags:
 		//		protected.
 	},

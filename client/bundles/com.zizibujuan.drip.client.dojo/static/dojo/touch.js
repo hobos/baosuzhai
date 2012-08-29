@@ -1,15 +1,24 @@
-define(["./_base/kernel", "./_base/lang", "./aspect", "./dom", "./on", "./has", "./mouse", "./ready", "./_base/window"],
-function(dojo, lang, aspect, dom, on, has, mouse, ready, win){
+define(["./_base/kernel", "./_base/lang", "./aspect", "./dom", "./on", "./has", "./mouse", "./domReady", "./_base/window"],
+function(dojo, lang, aspect, dom, on, has, mouse, domReady, win){
 
 	// module:
 	//		dojo/touch
 
 	var hasTouch = has("touch");
 
+	// TODO for 2.0: detection of IOS version should be moved from mobile/sniff to dojo/sniff
+	var ios4 = false;
+	if(has("ios")){
+		var ua = navigator.userAgent;
+		var v = ua.match(/OS ([\d_]+)/) ? RegExp.$1 : "1";
+		var os = parseFloat(v.replace(/_/, '.').replace(/_/g, ''));
+		ios4 = os < 5;
+	}
+
 	var touchmove, hoveredNode;
 
 	if(hasTouch){
-		ready(function(){
+		domReady(function(){
 			// Keep track of currently hovered node
 			hoveredNode = win.body();	// currently hovered node
 
@@ -33,23 +42,26 @@ function(dojo, lang, aspect, dom, on, has, mouse, ready, win){
 
 			// Fire synthetic touchover and touchout events on nodes since the browser won't do it natively.
 			on(win.doc, "touchmove", function(evt){
-				var oldNode = hoveredNode;
-				hoveredNode = win.doc.elementFromPoint(
-					evt.pageX - win.body().parentNode.scrollLeft,
-					evt.pageY - win.body().parentNode.scrollTop
+				var newNode = win.doc.elementFromPoint(
+					evt.pageX - (ios4 ? 0 : win.global.pageXOffset), // iOS 4 expects page coords
+					evt.pageY - (ios4 ? 0 : win.global.pageYOffset)
 				);
-				if(oldNode !== hoveredNode){
-					on.emit(oldNode, "dojotouchout", {
-						target: oldNode,
+				if(newNode && hoveredNode !== newNode){
+					// touch out on the old node
+					on.emit(hoveredNode, "dojotouchout", {
+						target: hoveredNode,
+						relatedTarget: newNode,
+						bubbles: true
+					});
+
+					// touchover on the new node
+					on.emit(newNode, "dojotouchover", {
+						target: newNode,
 						relatedTarget: hoveredNode,
 						bubbles: true
 					});
 
-					on.emit(hoveredNode, "dojotouchover", {
-						target: hoveredNode,
-						relatedTarget: oldNode,
-						bubbles: true
-					});
+					hoveredNode = newNode;
 				}
 			});
 		});

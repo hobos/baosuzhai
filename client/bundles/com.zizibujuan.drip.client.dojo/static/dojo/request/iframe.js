@@ -10,8 +10,10 @@ define([
 	'../has',
 	'../dom',
 	'../dom-construct',
-	'../_base/window'
-], function(module, require, watch, util, handlers, lang, ioQuery, query, has, dom, domConstruct, win){
+	'../_base/window'/*=====,
+	'../request',
+	'../_base/declare' =====*/
+], function(module, require, watch, util, handlers, lang, ioQuery, query, has, dom, domConstruct, win/*=====, request, declare =====*/){
 	var mid = module.id.replace(/[\/\.\-]/g, '_'),
 		onload = mid + '_onload';
 
@@ -263,7 +265,14 @@ define([
 				// otherwise we post a GET string by changing URL location for the
 				// iframe
 
-				var tmpUrl = response.url + (response.url.indexOf('?') > -1 ? '&' : '?') + ioQuery.objectToQuery(response.options.data);
+				var extra = '';
+				if(response.options.data){
+					extra = response.options.data;
+					if(typeof extra !== 'string'){
+						extra = ioQuery.objectToQuery(extra);
+					}
+				}
+				var tmpUrl = response.url + (response.url.indexOf('?') > -1 ? '&' : '?') + extra;
 				notify && notify.emit('send', response, dfd.promise.cancel);
 				iframe._notifyStart(response);
 				iframe.setSrc(iframe._frame, tmpUrl, true);
@@ -357,6 +366,51 @@ define([
 		return returnDeferred ? dfd : dfd.promise;
 	}
 
+	/*=====
+	iframe = function(url, options){
+		// summary:
+		//		Sends a request using an iframe element with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/iframe.__Options?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	iframe.__BaseOptions = declare(request.__BaseOptions, {
+		// form: DOMNode?
+		//		A form node to use to submit data to the server.
+		// data: String|Object?
+		//		Data to transfer. When making a GET request, this will
+		//		be converted to key=value parameters and appended to the
+		//		URL.
+	});
+	iframe.__MethodOptions = declare(null, {
+		// method: String?
+		//		The HTTP method to use to make the request. Must be
+		//		uppercase. Only `"GET"` and `"POST"` are accepted.
+		//		Default is `"POST"`.
+	});
+	iframe.__Options = declare([iframe.__BaseOptions, iframe.__MethodOptions]);
+
+	iframe.get = function(url, options){
+		// summary:
+		//		Send an HTTP GET request using an iframe element with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/iframe.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	iframe.post = function(url, options){
+		// summary:
+		//		Send an HTTP POST request using an iframe element with the given URL and options.
+		// url: String
+		//		URL to request
+		// options: dojo/request/iframe.__BaseOptions?
+		//		Options for the request.
+		// returns: dojo/request.__Promise
+	};
+	=====*/
 	iframe.create = create;
 	iframe.doc = doc;
 	iframe.setSrc = setSrc;

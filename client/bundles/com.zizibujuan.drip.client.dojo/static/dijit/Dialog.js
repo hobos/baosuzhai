@@ -61,10 +61,25 @@ define([
 		},
 
 		// Map widget attributes to DOMNode attributes.
-		_setTitleAttr: [
-			{ node: "titleNode", type: "innerHTML" },
-			{ node: "titleBar", type: "attribute" }
-		],
+		_setTitleAttr: function(/*String*/ title){
+			// Map to both the title bar innerHTML, plus the tooltip when you
+			// hover over the title bar.
+			this.titleNode.innerHTML = title;
+			if(this.textDir){
+				this.applyTextDir(this.titleNode);
+				if(this.enforceTextDirWithUcc){
+					title = this.enforceTextDirWithUcc(null, title);
+				}
+			}
+			this.titleBar.title = title;
+		},
+
+		_setTextDirAttr: function(textDir){
+			if(this._created && this.textDir != textDir){
+				this.textDir = textDir;
+				this.set("title", this.titleNode.innerHTML);			
+			}
+		},
 
 		// open: [readonly] Boolean
 		//		True if Dialog is currently displayed on screen.
@@ -115,7 +130,7 @@ define([
 			this._set("draggable", val);
 		},
 
-		//aria-describedby: String
+		// aria-describedby: String
 		//		Allows the user to add an aria-describedby attribute onto the dialog.   The value should
 		//		be the id of the container element of text that describes the dialog purpose (usually
 		//		the first text in the dialog).
@@ -123,7 +138,7 @@ define([
 		//	|		<div id="intro">Introductory text</div>
 		//	|		<div>rest of dialog contents</div>
 		//	|	</div>
-		"aria-describedby":"",
+		"aria-describedby": "",
 
 		// maxRatio: Number
 		//		Maximum size to allow the dialog to expand to, relative to viewport size

@@ -23,93 +23,100 @@
 		require([
 			"dojo/_base/array",
 			"dojo/aspect",
+			"dojo/cookie",
 			"dojo/dom-class",
 			"dojo/on",
 			"dojo/ready",
 			"dojo/_base/window",
 			"dojo/store/Memory",
 			"dojo/store/Observable",
+			"dijit/registry",
 			"dijit/Tree",
 			"dijit/tree/ObjectStoreModel",
 			"dijit/tree/dndSource",
 			"doh/runner",
 			"dijit/tests/helpers"	// functions to help test
-		], function(array, aspect, domClass, on, ready, win, Memory, Observable,
-					Tree, ObjectStoreModel, dndSource, doh, helpers){
+		], function(array, aspect, cookie, domClass, on, ready, win, Memory, Observable,
+					registry, Tree, ObjectStoreModel, dndSource, doh, helpers){
+
+			var data = [
+				{ id: "earth", name:"The earth", type:"planet", population: "6 billion"},
+				{ id: "AF", name:"Africa", type:"continent", population:"900 million", area: "30,221,532 sq km",
+					timezone: "-1 UTC to +4 UTC", parent: "earth"},
+				{ id: "EG", name:"Egypt", type:"country", parent: "AF" },
+				{ id: "KE", name:"Kenya", type:"country", parent: "AF" },
+				{ id: "Nairobi", name:"Nairobi", type:"city", parent: "KE" },
+				{ id: "Mombasa", name:"Mombasa", type:"city", parent: "KE" },
+				{ id: "SD", name:"Sudan", type:"country", parent: "AF" },
+				{ id: "Khartoum", name:"Khartoum", type:"city", parent: "SD" },
+				{ id: "AS", name:"Asia", type:"continent", parent: "earth" },
+				{ id: "CN", name:"China", type:"country", parent: "AS" },
+				{ id: "IN", name:"India", type:"country", parent: "AS" },
+				{ id: "RU", name:"Russia", type:"country", parent: "AS" },
+				{ id: "MN", name:"Mongolia", type:"country", parent: "AS" },
+				{ id: "OC", name:"Oceania", type:"continent", population:"21 million", parent: "earth"},
+				{ id: "AU", name:"Australia", type:"country", population:"21 million", parent: "OC"},
+				{ id: "EU", name:"Europe", type:"continent", parent: "earth" },
+				{ id: "DE", name:"Germany", type:"country", parent: "EU" },
+				{ id: "FR", name:"France", type:"country", parent: "EU" },
+				{ id: "ES", name:"Spain", type:"country", parent: "EU" },
+				{ id: "IT", name:"Italy", type:"country", parent: "EU" },
+				{ id: "NA", name:"North America", type:"continent", parent: "earth" },
+				{ id: "MX", name:"Mexico", type:"country",  population:"108 million", area:"1,972,550 sq km",
+					parent: "NA" },
+				{ id: "Mexico City", name:"Mexico City", type:"city", population:"19 million", timezone:"-6 UTC", parent: "MX"},
+				{ id: "Guadalajara", name:"Guadalajara", type:"city", population:"4 million", timezone:"-6 UTC", parent: "MX" },
+				{ id: "CA", name:"Canada", type:"country",  population:"33 million", area:"9,984,670 sq km", parent: "NA" },
+				{ id: "Ottawa", name:"Ottawa", type:"city", population:"0.9 million", timezone:"-5 UTC", parent: "CA"},
+				{ id: "Toronto", name:"Toronto", type:"city", population:"2.5 million", timezone:"-5 UTC", parent: "CA" },
+				{ id: "US", name:"United States of America", type:"country", parent: "NA" },
+				{ id: "SA", name:"South America", type:"continent", parent: "earth" },
+				{ id: "BR", name:"Brazil", type:"country", population:"186 million", parent: "SA" },
+				{ id: "AR", name:"Argentina", type:"country", population:"40 million", parent: "SA" }
+			];
 
 			var myStore, myModel, myTree, myTree2;
 
 			// dijit.TreeNodes
 			var world, europe, asia, africa, kenya;
 
-			ready(function(){
-				doh.register("setup", function(){
-					// Create test store.
-					myStore = new Memory({
-						data: [
-							{ id: "earth", name:"The earth", type:"planet", population: "6 billion"},
-							{ id: "AF", name:"Africa", type:"continent", population:"900 million", area: "30,221,532 sq km",
-									timezone: "-1 UTC to +4 UTC", parent: "earth"},
-								{ id: "EG", name:"Egypt", type:"country", parent: "AF" },
-								{ id: "KE", name:"Kenya", type:"country", parent: "AF" },
-									{ id: "Nairobi", name:"Nairobi", type:"city", parent: "KE" },
-									{ id: "Mombasa", name:"Mombasa", type:"city", parent: "KE" },
-								{ id: "SD", name:"Sudan", type:"country", parent: "AF" },
-									{ id: "Khartoum", name:"Khartoum", type:"city", parent: "SD" },
-							{ id: "AS", name:"Asia", type:"continent", parent: "earth" },
-								{ id: "CN", name:"China", type:"country", parent: "AS" },
-								{ id: "IN", name:"India", type:"country", parent: "AS" },
-								{ id: "RU", name:"Russia", type:"country", parent: "AS" },
-								{ id: "MN", name:"Mongolia", type:"country", parent: "AS" },
-							{ id: "OC", name:"Oceania", type:"continent", population:"21 million", parent: "earth"},
-								{ id: "AU", name:"Australia", type:"country", population:"21 million", parent: "OC"},
-							{ id: "EU", name:"Europe", type:"continent", parent: "earth" },
-								{ id: "DE", name:"Germany", type:"country", parent: "EU" },
-								{ id: "FR", name:"France", type:"country", parent: "EU" },
-								{ id: "ES", name:"Spain", type:"country", parent: "EU" },
-								{ id: "IT", name:"Italy", type:"country", parent: "EU" },
-							{ id: "NA", name:"North America", type:"continent", parent: "earth" },
-								{ id: "MX", name:"Mexico", type:"country",  population:"108 million", area:"1,972,550 sq km",
-										parent: "NA" },
-									{ id: "Mexico City", name:"Mexico City", type:"city", population:"19 million", timezone:"-6 UTC", parent: "MX"},
-									{ id: "Guadalajara", name:"Guadalajara", type:"city", population:"4 million", timezone:"-6 UTC", parent: "MX" },
-								{ id: "CA", name:"Canada", type:"country",  population:"33 million", area:"9,984,670 sq km", parent: "NA" },
-									{ id: "Ottawa", name:"Ottawa", type:"city", population:"0.9 million", timezone:"-5 UTC", parent: "CA"},
-									{ id: "Toronto", name:"Toronto", type:"city", population:"2.5 million", timezone:"-5 UTC", parent: "CA" },
-								{ id: "US", name:"United States of America", type:"country", parent: "NA" },
-							{ id: "SA", name:"South America", type:"continent", parent: "earth" },
-								{ id: "BR", name:"Brazil", type:"country", population:"186 million", parent: "SA" },
-								{ id: "AR", name:"Argentina", type:"country", population:"40 million", parent: "SA" }
-						]
-					});
-
-					// Since dojo.store.Memory doesn't have various store methods we need, we have to add them manually
-					myStore.getChildren = function(object){
-						// Add a getChildren() method to store for the data model where
-						// children objects point to their parent (aka relational model)
-						return this.query({parent: this.getIdentity(object)});
-					};
-
-					aspect.around(myStore, "put", function(originalPut){
-						// To support DnD, the store must support put(child, {parent: parent}).
-						// Since our store is relational, that just amounts to setting child.parent
-						// to the parent"s id.
-						return function(obj, options){
-							if(options && options.parent){
-								obj.parent = options.parent.id;
-							}
-							return originalPut.call(myStore, obj, options);
-						}
-					});
-
-					// Wrap the store in Observable so that updates to the store are reflected
-					myStore = new Observable(myStore);
-					doh.t(myStore, "store created");
-
-					// Create the model
-					myModel = new ObjectStoreModel({store: myStore, query: {id: "earth"}});
-					doh.t(myModel, "model created");
+			// Function to create / reset the data store and model
+			function setup(){
+				// Create test store.
+				myStore = new Memory({
+					data: data
 				});
+
+				// Since dojo.store.Memory doesn't have various store methods we need, we have to add them manually
+				myStore.getChildren = function(object){
+					// Add a getChildren() method to store for the data model where
+					// children objects point to their parent (aka relational model)
+					return this.query({parent: this.getIdentity(object)});
+				};
+
+				aspect.around(myStore, "put", function(originalPut){
+					// To support DnD, the store must support put(child, {parent: parent}).
+					// Since our store is relational, that just amounts to setting child.parent
+					// to the parent"s id.
+					return function(obj, options){
+						if(options && options.parent){
+							obj.parent = options.parent.id;
+						}
+						return originalPut.call(myStore, obj, options);
+					}
+				});
+
+				// Wrap the store in Observable so that updates to the store are reflected
+				myStore = new Observable(myStore);
+				doh.t(myStore, "store created");
+
+				// Create the model
+				myModel = new ObjectStoreModel({store: myStore, query: {id: "earth"}});
+				doh.t(myModel, "model created");
+			}
+
+			ready(function(){
+				doh.register("setup", setup);
 
 				doh.register("basic", [
 					function create(){
@@ -465,8 +472,8 @@
 					function setPaths(){
 						var d = new doh.Deferred();
 
-						myTree2.set("paths", [["earth","AF","KE","Nairobi"],
-											  ["earth","NA","MX","Guadalajara"]]).then(d.getTestCallback(function(){
+						myTree2.set("paths", [["earth", "AF", "KE", "Nairobi"],
+											  ["earth", "NA", "MX", "Guadalajara"]]).then(d.getTestCallback(function(){
 								  var ids = dojo.map(myTree2.selectedItems, function(x){return myTree2.model.getIdentity(x);}).sort();
 								  doh.is(["Guadalajara", "Nairobi"], ids);
 							  }));
@@ -475,26 +482,30 @@
 					function setEmptyPath(){
 						var d = new doh.Deferred();
 
-						// this should fail because not even the root node is specified
+						// setting an empty path is interpreted as selecting nothing
 						myTree2.set("path", []).then(
-							function(){
-								d.errback("Should have gotten error trying to set path to null");
-							},
+							d.getTestCallback(function(){
+								doh.is(0, myTree2.get("selectedNodes").length, "no nodes selected");
+							}),
 							d.getTestCallback(function(e){
-								doh.t(e instanceof Tree.PathError, "got PathError");
+								throw e;
 							})
 						);
+
+						return d;
 					},
 					function setInvalidPath(){
 						var d = new doh.Deferred();
-						myTree2.set("path", ["earth","AF","KE","Narnia"]).then(
+						myTree2.set("path", ["earth", "AF", "KE", "Narnia"]).then(
 							function(){
-								d.errback("Should have gotten error trying to set path to null");
+								d.errback("Should have gotten error trying to set invalid path");
 							},
 							d.getTestCallback(function(e){
 								doh.t(e instanceof Tree.PathError, "got PathError");
 							})
 						);
+
+						return d;
 					}
 
 				]);
@@ -690,6 +701,185 @@
 									}));
 								}));
 							}));
+
+							return d;
+						}
+					}
+				]);
+
+				doh.register("persistence", [
+					// Reset the data to original values
+					setup,
+
+					function create(){
+						if(registry.byId("myTree")){
+							registry.byId("myTree").destroy();
+						}
+						cookie("myTreeSaveStateCookie", "");
+
+						myTree = new dijit.Tree({
+							id: "myTree",
+							model: myModel,
+							persist: true
+						}).placeAt(win.body());
+						doh.t(myTree, "tree created");
+
+						myTree.startup();
+
+						world = myTree.rootNode;
+
+						return myTree.onLoadDeferred;
+					},
+					{
+						name: "expand and contract",
+						timeout: 5000,
+						runTest: function(){
+
+							var d = new doh.Deferred();
+
+							na = world.getChildren()[4];
+							doh.is("North America", na.label, "North America node label");
+
+							// Click on North America to open it
+							on.emit(na.expandoNode, "click", {bubbles: true});
+
+							// Wait for animation to complete
+							setTimeout(d.getTestErrback(function(){
+								mx = na.getChildren()[0];
+								doh.is("Mexico", mx.label, "Mexico node label");
+
+								// Click on Mexico to open it
+								on.emit(mx.expandoNode, "click", {bubbles: true});
+
+								// Wait for animation to complete.
+								setTimeout(d.getTestErrback(function(){
+									// Click on North America again, to close it
+									on.emit(na.expandoNode, "click", {bubbles: true});
+									setTimeout(d.getTestCallback(function(){
+										// Wait for close animation to finish and then return success
+									}), 500);
+								}), 500);
+							}), 500);
+
+							return d;
+						}
+					},
+
+					{
+						name: "recreate tree",
+						timeout: 5000,
+						runTest: function(){
+							myTree.destroy();
+
+							myTree = new dijit.Tree({
+								id: "myTree",
+								model: myModel,
+								persist: true
+							}).placeAt(win.body());
+							doh.t(myTree, "tree created");
+
+							myTree.startup();
+
+							world = myTree.rootNode;
+
+							return myTree.onLoadDeferred;
+						}
+					},
+
+					{
+						name: "check tree state",
+						timeout: 5000,
+						runTest: function(){
+							var d = new doh.Deferred();
+
+							na = world.getChildren()[4];
+							doh.is("North America", na.label, "North America node label");
+
+							doh.f(na.isExpanded, "North America collapsed");
+
+							// Click on North America to open it
+							on.emit(na.expandoNode, "click", {bubbles: true});
+
+							setTimeout(d.getTestCallback(function(){
+								doh.t(na.isExpanded, "North America expanded");
+								mx = na.getChildren()[0];
+								doh.is("Mexico", mx.label, "Mexico node label");
+								doh.t(mx.isExpanded, "Mexico expanded");
+							}), 500);
+
+							return d;
+						}
+					}
+				]);
+
+				// Tests that TreeNodes that are destroyed don't linger in selection, etc.
+				doh.register("destroyed nodes", [
+					// Reset the data to original values
+					setup,
+
+					function create(){
+						cookie("myDeleteTreeSaveStateCookie", "");
+						myTree = new dijit.Tree({
+							id: "myDeleteTree",
+							model: myModel,
+							persist: true
+						}).placeAt(win.body());
+						doh.t(myTree, "tree created");
+
+						myTree.startup();
+						doh.is("earth", cookie("myDeleteTreeSaveStateCookie"), "initial persistence cookie just earth");
+					},
+
+					function removedFromSelection(){
+						var d = new doh.Deferred();
+						// Select Mexico city
+						myTree.set("path", ["earth", "NA", "MX", "Mexico City"]).then(d.getTestErrback(function(){
+							doh.is(1, myTree.get("paths").length, "one selected node");
+							var selectedNode = myTree.get("selectedNode");
+
+							// Ancestors of the selected node should be expanded, and that should be saved
+							// in the cookie
+							doh.is("earth,earth/NA,earth/NA/MX", cookie("myDeleteTreeSaveStateCookie"),
+									"Earth, North America, Mexico should be listed as expanded");
+
+							// Remove selection's ancestor
+							myStore.remove("NA");
+
+							// use setTimeout() to give Tree time to realize this isn't a drag & drop, but that
+							// the North America subtree was truly deleted
+							setTimeout(d.getTestCallback(function(){
+								doh.t(selectedNode._destroyed, "the selected node was destroyed (along with it's ancestor)");
+								doh.is(0, myTree.get("paths").length, "no selected nodes");
+								doh.is("earth", cookie("myDeleteTreeSaveStateCookie"),
+										"North America and Mexico should have been removed from list of expanded nodes")
+							}), 10)
+						}));
+						return d;
+					},
+
+					{
+						name: "reinsert deleted descendants",
+						timeout: 5000,
+						runTest: function(){
+							var d = new doh.Deferred();
+							myStore.put({ id: "NA", name:"North America", type:"continent", parent: "earth" });
+							myStore.put({ id: "MX", name:"Mexico", type:"country",  population:"108 million", area:"1,972,550 sq km",
+									parent: "NA" });
+							myStore.put({ id: "Mexico City", name:"Mexico City", type:"city", population:"19 million", timezone:"-6 UTC", parent: "MX"});
+							myStore.put({ id: "Guadalajara", name:"Guadalajara", type:"city", population:"4 million", timezone:"-6 UTC", parent: "MX" });
+
+							myTree.set("path", ["earth", "NA", "MX", "Mexico City"]).then(
+								d.getTestCallback(function(){
+									var node = myTree.get("selectedNode");
+									doh.isNot(null, node, "got a selected node");
+									doh.f(node._destroyed, "not destroyed");
+									doh.f(node.getParent()._destroyed, "parent not destroyed");
+									doh.f(node.getParent().getParent()._destroyed, "grandparent not destroyed");
+								}),
+								d.getTestErrback(function(err){
+									throw err;
+								})
+							);
 
 							return d;
 						}
