@@ -1,42 +1,54 @@
 define(["dojo/_base/declare",
-        "dojo/on",
+        "dojo/_base/lang",
         "dojo/_base/event",
         "dijit/_WidgetBase",
-        "dojo/dom-construct"],function(
+        "dojo/on",
+        "dojo/dom-construct",
+        "drip/Model",
+        "drip/View"],function(
         		 declare,
-        		 on,
+        		 lang,
         		 event,
         		 _WidgetBase,
-        		 domConstruct){
+        		 on,
+        		 domConstruct,
+        		 Model,
+        		 View){
 	
 	return declare("drip.Editor",[_WidgetBase],{
+		model : null,
+		view : null,
+		textarea : null,
 		
 		postCreate : function(){
-			// 创建一个文本框
-			var editorDiv = domConstruct.create("div",{style:{height:"100%"}}, this.domNode);
-			var textarea = domConstruct.create("textarea",null, this.domNode);
+			var textarea = this.textarea = domConstruct.create("textarea",null, this.domNode);
 			
-			on(editorDiv, "mousedown",function(e){
-				setTimeout(function() {
-					 textarea.focus();
-			    });
+			this.model = new Model();
+			this.view = new View({
+				model:this.model, 
+				parentNode : this.domNode,
+				textarea : this.textarea
 			});
 			
 			// chrome
-			on(textarea, "textInput", function(e){
-				var original = editorDiv.innerHTML;
-				editorDiv.innerHTML = original + e.data;
-				setTimeout(function() {
-					textarea.value = "";
-			    });
-			});
-			
+			on(textarea, "textInput", lang.hitch(this,this._onTextInput));
 			// firefox
 			on(textarea, "input", function(e){
-				console.log(e);
+				//console.log(e);
 			});
-		}
+		},
 		
+		_onTextInput :function(e){
+			var textarea = this.textarea;
+			var model = this.model;
+			
+			// 当model的内容发生变化时，View自动更新,所以这里不写View相关的代码
+			model.setData(e.data);
+			
+			setTimeout(function() {
+				textarea.value = "";
+		    });
+		}
 	});
 	
 });
