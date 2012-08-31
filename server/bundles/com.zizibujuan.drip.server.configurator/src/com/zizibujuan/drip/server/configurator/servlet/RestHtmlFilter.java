@@ -16,9 +16,11 @@ import com.zizibujuan.drip.server.util.servlet.RequestUtil;
 /**
  * 为了使用rest风格的资源连接，所有请求html页面，都不使用html后缀，而是后台自动解析。 只要请求非ajax请求，没有后缀的就加上html。
  * 暂时搁置，因为这种解决方案无法满足有子资源的情况，即显示一个访问某班某个学生的详情页面时，没有办法定位。
+ * 
  * @author jinzw
  * @since 0.0.1
  */
+// TODO：添加测试用例。
 public class RestHtmlFilter implements Filter {
 
 	private static final String ROOT_WEB = "/drip";
@@ -42,9 +44,10 @@ public class RestHtmlFilter implements Filter {
 		
 		// 因为约定rest名与文件夹名相同，所以servletPath中存储的通常是servlet的别名。
 		String servletPath = httpRequest.getServletPath();
-		if(!servletPath.equals("")){
-			if (!RequestUtil.isAjax(httpRequest)) {
-				String pathInfo = httpRequest.getPathInfo();
+		if(!RequestUtil.isAjax(httpRequest)){
+			String pathInfo = httpRequest.getPathInfo();
+			// servletPath可看作是资源名
+			if(isValidResource(servletPath)){
 				if(pathInfo == null || pathInfo.equals("/")){			
 					//FIXME:暂时支持一级路径。即把所有的list的html容器都放在根目录下
 					String fileName = ROOT_WEB + servletPath + LIST_HTML;
@@ -55,9 +58,21 @@ public class RestHtmlFilter implements Filter {
 					httpRequest.getRequestDispatcher(fileName).forward(httpRequest, httpResponse);
 					return;
 				}
+			}else{
+				// 放在根目录下的html文件
+				if(pathInfo !=null && !pathInfo.equals("/")&& pathInfo.indexOf(".")==-1){
+					String fileName = pathInfo + HTML;
+					httpRequest.getRequestDispatcher(fileName).forward(httpRequest, httpResponse);
+					return;
+				}
 			}
 		}
+		
 		chain.doFilter(req, resp);
+	}
+
+	private boolean isValidResource(String resourceName) {
+		return !resourceName.equals("");
 	}
 
 	@Override
