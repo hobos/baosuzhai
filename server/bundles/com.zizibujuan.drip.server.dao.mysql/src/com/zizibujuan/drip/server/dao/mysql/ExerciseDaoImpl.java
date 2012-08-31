@@ -20,5 +20,14 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	public List<Map<String, Object>> get() {
 		return DatabaseUtil.queryForList(getDataSource(), SQL_LIST_EXERCISE);
 	}
+	
+	private static final String SQL_INSERT_EXERCISE = 
+			"INSERT INTO DRIP_EXERCISE (CONTENT, CRT_TM, CRT_USER_ID) VALUES (?,now(),?)";
+	@Override
+	public int add(Map<String, Object> exerciseInfo) {
+		Object oContent = exerciseInfo.get("content");
+		String userId = "1"; // TODO:暂时的，支持用户后，获取当前用户标识。写成1，也是为了，以后批量替换。
+		return DatabaseUtil.insert(getDataSource(), SQL_INSERT_EXERCISE, oContent,userId);
+	}
 
 }

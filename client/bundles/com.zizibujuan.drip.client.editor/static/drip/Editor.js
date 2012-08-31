@@ -20,6 +20,14 @@ define(["dojo/_base/declare",
 		view : null,
 		textarea : null,
 		
+		// value: String
+		//		编辑器的值
+		value : "",
+		
+		_getValueAttr: function(value){
+			return this.model.getData();
+	    },
+		
 		postCreate : function(){
 			var textarea = this.textarea = domConstruct.create("textarea",null, this.domNode);
 			
@@ -37,6 +45,8 @@ define(["dojo/_base/declare",
 				//console.log(e);
 			});
 		},
+		
+		
 		
 		_onTextInput :function(e){
 			var textarea = this.textarea;

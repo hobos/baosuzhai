@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zizibujuan.drip.server.service.ExerciseService;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;
+import com.zizibujuan.drip.server.util.servlet.RequestUtil;
 import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
 
 /**
@@ -35,4 +36,16 @@ public class ExerciseServlet extends DripServlet{
 		super.doGet(req, resp);
 	}
 
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String pathInfo = req.getPathInfo();
+		if(pathInfo == null || pathInfo.equals(REST_SEPARATOR)){
+			Map<String,Object> exerciseInfo = RequestUtil.fromJsonObject(req);
+			// 如果保存成功，则返回一个成功的状态码
+			exerciseService.add(exerciseInfo);
+			return;
+		}
+		super.doPost(req, resp);
+	}
 }

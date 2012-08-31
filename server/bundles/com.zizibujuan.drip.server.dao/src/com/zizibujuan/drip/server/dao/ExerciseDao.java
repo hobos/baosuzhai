@@ -19,4 +19,15 @@ public interface ExerciseDao {
 	 * </pre>
 	 */
 	List<Map<String,Object>> get();
+
+	/**
+	 * 新增习题。<br/>
+	 * <pre>
+	 * 习题的数据格式为：
+	 * 		content ： 习题内容
+	 * </pre>
+	 * @param exerciseInfo 习题信息
+	 * @return 新增习题的标识
+	 */
+	int add(Map<String, Object> exerciseInfo);
 }

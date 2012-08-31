@@ -33,7 +33,7 @@ define(["dojo/_base/declare",
 		},
 		
 		_onChange : function(){
-			this.editorDiv.innerHTML = this.model.getData();
+			this.editorDiv.innerHTML = this.model.getHTML();
 		}
 		
 	});

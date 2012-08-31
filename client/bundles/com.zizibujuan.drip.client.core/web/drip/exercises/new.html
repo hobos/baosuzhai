@@ -14,15 +14,34 @@
 	src="/dojo/dojo.js"></script>
 <script type="text/javascript">
 require(["dojo/ready", 
+         "dojo/store/JsonRest",
          "dijit/registry",
          "dojo/parser",
          "dijit/form/Button",
          "drip/Editor",
          "dojo/domReady!"],function(
         		 ready,
+        		 JsonRest,
         		 registry){
 	ready(function(){
-
+		var jsonRest = new JsonRest({
+			 target:"/exercises/"
+		 });
+		var btnNewExercise = registry.byId("btnNewExercise");
+		var editor = registry.byId("editor");
+		btnNewExercise.on("click",function(e){
+			var content = editor.get("value");
+			var data = {content:content};
+			jsonRest.add(data).then(function(response){
+				// 保存成功
+				//		给出成功提示，然后一段时间后自动消失（使用固定的提示区域）
+				//		清空习题内容
+			},function(error){
+				// 保存失败
+				//		界面上保留习题内容
+				//		给出失败提示（成功与失败使用相同的提示区域）
+			});
+		});
 	});
 	
 });
@@ -57,7 +76,7 @@ require(["dojo/ready",
 				<!-- TODO：将这些style提取到样式文件中 -->
 				<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
 					<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-						<div data-dojo-type="drip/Editor" style="height:350px" data-dojo-props=""></div>
+						<div data-dojo-type="drip/Editor" style="height:350px" id="editor" data-dojo-props=""></div>
 					</div>
 				</div>
 			</div>

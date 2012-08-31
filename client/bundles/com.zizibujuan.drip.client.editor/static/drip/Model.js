@@ -49,8 +49,14 @@ define([ "dojo/_base/declare",
 			this.onChange(data);
 		},
 		
-		// 习题 line
+		// 获取xml文件的字符串值
 		getData : function(){
+			return xmlParser.innerXML(this.doc);
+		},
+		
+		// 习题 line 获取html格式的数据
+		//		展示页面时使用
+		getHTML : function(){
 			var xmlString = "";
 			var root = this.doc.documentElement;
 			var lines = root.childNodes;

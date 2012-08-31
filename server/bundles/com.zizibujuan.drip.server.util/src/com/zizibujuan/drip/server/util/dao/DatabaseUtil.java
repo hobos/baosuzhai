@@ -408,4 +408,38 @@ public abstract class DatabaseUtil {
 			}
 		}
 	}
+
+	/**
+	 * 新增记录，对mysql有效，因为getGeneratedKeys返回的正是自增列
+	 * @param ds
+	 * @param sql
+	 * @param inParams
+	 * @return 新增记录的标识。
+	 */
+	public static int insert(DataSource ds, String sql,  Object...inParams) {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rst = null;
+		int result = 0;
+		try {
+			con = ds.getConnection();
+			pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			con.setAutoCommit(false);
+			int len = inParams.length;
+			for(int i = 0; i < len; i++){
+				pst.setObject(i+1, inParams[i]);
+			}
+			pst.executeUpdate();
+			ResultSet rs = pst.getGeneratedKeys();    
+			rs.next();         
+			result = rs.getInt(1); 
+			con.commit();
+			return result;
+		}catch(SQLException e){
+			safeRollback(con);
+			throw new DataAccessException(e);
+		}finally{
+			safeClose(con, rst, pst);
+		}
+	}
 }
