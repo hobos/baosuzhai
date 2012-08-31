@@ -2,12 +2,14 @@ define([ "dojo/_base/declare",
          "dojo/_base/lang",
          "dojo/_base/array",
          "dojo/dom-construct",
-         "dojox/xml/parser"], function(
+         "dojox/xml/parser",
+         "drip/string"], function(
         		 declare,
         		 lang,
         		 array,
         		 domConstruct,
-        		 xmlParser) {
+        		 xmlParser,
+        		 dripString) {
 
 	return declare("drip.Model",null,{
 	
@@ -39,7 +41,7 @@ define([ "dojo/_base/declare",
 			var offset = this.position.offset;
 			
 			var oldText = this.position.node.textContent;
-			var newText = this._insertAtOffset(oldText, offset, data);
+			var newText = dripString.insertAtOffset(oldText, offset, data);
 			
 			this.position.offset += data.length;
 			node.textContent = newText;
@@ -61,14 +63,9 @@ define([ "dojo/_base/declare",
 		
 		onChange : function(data){
 			// 什么也不做，View在该方法执行完毕后，执行刷新操作
-		},
-		
-		// FIXME：放到相应的js文件中
-		_insertAtOffset : function(target, offset, source){
-			var len = target.length;
-			if(offset < 0 || len < offset) return target;		
-			return target.substring(0,offset)+source+target.substring(offset);
 		}
+		
+		
 	
 	});
 	
