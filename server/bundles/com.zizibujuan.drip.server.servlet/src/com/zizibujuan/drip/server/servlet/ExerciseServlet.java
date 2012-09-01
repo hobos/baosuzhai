@@ -15,7 +15,7 @@ import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
 
 /**
  * 习题
- * @author 金正伟
+ * @author jinzw
  * @since 0.0.1
  */
 public class ExerciseServlet extends DripServlet{
@@ -28,7 +28,7 @@ public class ExerciseServlet extends DripServlet{
 			throws ServletException, IOException {
 		String pathInfo = req.getPathInfo();
 		
-		if(pathInfo == null || pathInfo.equals(REST_SEPARATOR)){
+		if(isNullOrSeparator(pathInfo)){
 			List<Map<String,Object>> exercises = exerciseService.get();
 			ResponseUtil.toJSON(req, resp, exercises);
 			return;
@@ -40,7 +40,7 @@ public class ExerciseServlet extends DripServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String pathInfo = req.getPathInfo();
-		if(pathInfo == null || pathInfo.equals(REST_SEPARATOR)){
+		if(isNullOrSeparator(pathInfo)){
 			Map<String,Object> exerciseInfo = RequestUtil.fromJsonObject(req);
 			// 如果保存成功，则返回一个成功的状态码
 			exerciseService.add(exerciseInfo);

@@ -5,6 +5,7 @@ define(["dojo/_base/declare",
         "dijit/_TemplatedMixin",
         "dijit/_WidgetsInTemplateMixin",
         "dojo/store/JsonRest",
+        "drip/dataUtil",
         "dojo/text!/templates/ExerciseNode.html",
         "dojo/text!/templates/ExerciseList.html",
         "dojo/i18n!nls/common",
@@ -16,6 +17,7 @@ define(["dojo/_base/declare",
         		_TemplatedMixin,
         		_WidgetsInTemplateMixin,
         		JsonRest,
+        		dataUtil,
         		nodeTemplate,
         		listTemplate,
         		common){
@@ -29,7 +31,9 @@ define(["dojo/_base/declare",
 		 content:"",
 		 
 		 postCreate : function(){
-			 this.divContent.innerHTML = this.content;
+			 debugger;
+			 // 将自定义的xml字符串转换为html格式的字符串。
+			 this.divContent.innerHTML = dataUtil.xmlStringToHtml(this.content);
 			 this.buttonAnswer.set("label",common.buttonAnswer);
 			 
 			 this.buttonAnswer.on("click",lang.hitch(this, this._btnAnswerHandler));
@@ -56,6 +60,7 @@ define(["dojo/_base/declare",
 		 },
 		 
 		 _load : function(items){
+			 debugger;
 			 if(items.length == 0){
 				 // TODO：定制样式
 				 this.domNode.innerHTML = "没有习题做,yeah!";

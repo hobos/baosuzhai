@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zizibujuan.drip.server.service.ExerciseService;
+import com.zizibujuan.drip.server.service.UserService;
 
 /**
  * 服务容器，所有的服务实例都注入在这里，在servlet中需要引用服务时，统一通过该类调用。
@@ -49,5 +50,23 @@ public class ServiceHolder {
 
 	public ExerciseService getExerciseService() {
 		return this.exerciseService;
+	}
+
+	
+	private UserService userService;
+
+	public void setUserService(UserService userService) {
+		logger.info("注入UserService");
+		this.userService = userService;
+	}
+
+	public void unsetUserService(UserService userService) {
+		logger.info("注销UserService");
+		if (this.userService == userService) {
+			this.userService = null;
+		}
+	}
+	public UserService getUserService() {
+		return this.userService;
 	}
 }

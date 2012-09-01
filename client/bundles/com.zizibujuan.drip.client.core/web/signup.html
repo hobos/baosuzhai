@@ -2,9 +2,98 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>新用户注册</title>
+<link type="text/css" rel="stylesheet" href="/dijit/themes/claro/claro.css" />
+<link type="text/css" rel="stylesheet" href="/dojo/resources/dojo.css" />
+<link type="text/css" rel="stylesheet" href="/resources/main.css" />
+<title>新用户注册 · 孜孜不倦</title>
+<script type="text/javascript" 
+	data-dojo-config="
+		async:true,
+		parseOnLoad:true,
+		isDebug:true" 
+	src="/dojo/dojo.js"></script>
+<script type="text/javascript">
+require(["dojo/ready",
+         "dojo/dom-form",
+         "dojo/store/JsonRest",
+         "dijit/registry",
+         "dijit/form/Form",
+         "dijit/form/ValidationTextBox",
+         "dijit/form/Button",
+         "dojo/parser",
+         "dojo/domReady!"],function(
+        		 ready,
+        		 domForm,
+        		 JsonRest,
+        		 registry){
+	
+	ready(function(){
+		var btnSignup = registry.byId("btnSignup");
+		btnSignup.on("click", function(e){
+			// 注册用户
+			//		客户端校验
+			//		服务器端校验
+			//		服务器端注册
+			//		注册成功后，跳转到首页
+			//		注册失败后，留在原处，并给出错误信息。
+			var jsonRest = new JsonRest({
+				target : "/users/"
+			});
+			var widgetUserForm = registry.byId("userForm");
+			if(widgetUserForm.validate()){
+				var userInfo = domForm.toObject(widgetUserForm.domNode);
+				jsonRest.add(userInfo).then(function(response){
+					// 创建成功
+					if(response.status == "1"){
+						// 注册成功，且登录成功
+						//		跳转到个人专属的首页，但是也地址上还是使用根路径。
+						//		所以同样的欢迎页面，登录与不登录是不一样的。
+						window.location.href = "/"; 
+					}else if(response.status == "2"){
+						// 注册成功，但登录失败
+					}else{
+						
+					}
+				
+				},function(error){
+					// 创建失败	
+					console.log(error);
+				});
+			}
+			
+			// signup_check 对每个输入框单独的校验
+		});
+	});
+	
+});
+</script>
 </head>
-<body>
-
+<body class="claro">
+	<div data-dojo-type="dijit/form/Form" id="userForm">
+		<div>
+			<span>注册邮箱</span>
+			<div data-dojo-type="dijit/form/ValidationTextBox" 
+			data-dojo-props="'name':'email','required':true,'regExp':'[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}'"></div>
+		</div>
+		<div>
+			<span>登录密码</span>
+			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'password','type':'password','required':true"></div>
+		</div>
+		<div>
+			<span>确认密码</span>
+			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'repassword','type':'password','required':true"></div>
+		</div>
+		<div>
+			<span>真实姓名</span>
+			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'realName'"></div>		
+		</div>
+		<!-- TODO:未来版本中加
+		<div>
+			<span>验证码</span>
+			<div data-dojo-type="dijit/form/ValidationTextBox"></div>		
+		</div>
+		-->
+		<div data-dojo-type="dijit/form/Button" id="btnSignup">立即开通</div>
+	</div>
 </body>
 </html>

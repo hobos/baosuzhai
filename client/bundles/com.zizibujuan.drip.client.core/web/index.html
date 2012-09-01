@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link type="text/css" rel="stylesheet" href="/dijit/themes/claro/claro.css" />
+<link type="text/css" rel="stylesheet" href="/dojo/resources/dojo.css" />
+<link type="text/css" rel="stylesheet" href="/resources/main.css" />
+<title>孜孜不倦 · 全民学习</title>
+<script type="text/javascript" 
+	data-dojo-config="
+		async:true,
+		parseOnLoad:true,
+		isDebug:true" 
+	src="/dojo/dojo.js"></script>
+<script type="text/javascript">
+require(["dojo/ready",
+         "dijit/registry",
+         "dijit/form/Button",
+         "dijit/form/Form",
+         "dijit/form/ValidationTextBox",
+         "dijit/form/CheckBox",
+         "dojo/parser",
+         "dojo/domReady!"],function(
+        		 ready,
+        		 registry){
+	
+	ready(function(){
+		var btnToSignup = registry.byId("btnToSignup");
+		btnToSignup.on("click",function(e){
+			window.location.href = "/signup.html";
+		});
+	});
+	
+});
+</script>
+</head>
+<body class="claro">
+
+<div>
+	<div>
+		<!-- 立即注册 -->
+		<div data-dojo-type="dijit/form/Button" id="btnToSignup" style="font-size: 20px">立即注册</div>
+	</div>
+	<div>
+		<!-- 登录form -->
+		<div style="border:solid 1px black; width: 250px">
+			<div data-dojo-type="dijit/form/Form">
+				<div data-dojo-type="dijit/form/ValidationTextBox" style="margin-bottom: 10px;display: block" data-dojo-props="'placeholder':'邮箱/手机号/用户名'"></div>
+				<div data-dojo-type="dijit/form/ValidationTextBox" style="display: block" data-dojo-props="'type':'password','placeholder':'密码'"></div>
+				<div>
+					<div data-dojo-type="dijit/form/CheckBox" id="rememberMe"></div><label for="rememberMe">下次自动登录</label>
+					<span>忘记密码？</span>
+				</div>
+				<div data-dojo-type="dijit/form/Button">登录</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<!-- TODO: 使用其他帐号登录 -->
+	</div>
+</div>
+
+
+</body>
+</html>

@@ -3,13 +3,15 @@ define([ "dojo/_base/declare",
          "dojo/_base/array",
          "dojo/dom-construct",
          "dojox/xml/parser",
-         "drip/string"], function(
+         "drip/string",
+         "drip/dataUtil"], function(
         		 declare,
         		 lang,
         		 array,
         		 domConstruct,
         		 xmlParser,
-        		 dripString) {
+        		 dripString,
+        		 dataUtil) {
 
 	return declare("drip.Model",null,{
 	
@@ -57,21 +59,14 @@ define([ "dojo/_base/declare",
 		// 习题 line 获取html格式的数据
 		//		展示页面时使用
 		getHTML : function(){
-			var xmlString = "";
-			var root = this.doc.documentElement;
-			var lines = root.childNodes;
-			array.forEach(lines, function(line, index){
-				var lineString = "<div>"+line.textContent+"</div>";
-				xmlString += lineString;
-			});
-			return xmlString;
+			return dataUtil.xmlDocToHtml(this.doc);
 		},
+		
+		
 		
 		onChange : function(data){
 			// 什么也不做，View在该方法执行完毕后，执行刷新操作
 		}
-		
-		
 	
 	});
 	

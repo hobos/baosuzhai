@@ -25,7 +25,8 @@ public class WelcomeFileFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
 	
-	private static final String WELCOME_FILE_NAME = "index.html";//"exercises"; //$NON-NLS-1$
+	private static final String PUBLIC_WELCOME_FILE_NAME = "index.html";//"exercises"; //$NON-NLS-1$
+	private static final String PRIVATE_WELCOME_FILE_NAME = "myDashboard.html";//"exercises"; //$NON-NLS-1$
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -36,7 +37,14 @@ public class WelcomeFileFilter implements Filter {
 		System.out.println("跳转到WelcomeFileFilter中，请求路径为:'"+requestPath+"'");
 		if (requestPath.equals("/")) { //$NON-NLS-1$
 			System.out.println("初步满足跳转要求");
-			httpRequest.getRequestDispatcher(requestPath + WELCOME_FILE_NAME).forward(httpRequest, response);
+			String fileName = "";
+			if(httpRequest.getSession(false)==null){
+				fileName = requestPath + PUBLIC_WELCOME_FILE_NAME;
+			}else{
+				fileName = requestPath + PRIVATE_WELCOME_FILE_NAME;
+			}
+			httpRequest.getRequestDispatcher(fileName).forward(httpRequest, response);
+			
 			return;
 		}
 		HttpServletResponse resp = (HttpServletResponse) response;

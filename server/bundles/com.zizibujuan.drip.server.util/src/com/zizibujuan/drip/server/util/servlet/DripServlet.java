@@ -42,4 +42,9 @@ public class DripServlet extends HttpServlet {
 			out.append(header + ": " + req.getHeader(header) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
+	
+	// FIXME:对这个方法名不太满意，重命名
+	protected boolean isNullOrSeparator(String pathInfo) {
+		return pathInfo == null || pathInfo.equals(REST_SEPARATOR);
+	}
 }
