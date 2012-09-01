@@ -25,7 +25,7 @@ public class WelcomeFileFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
 	
-	private static final String WELCOME_FILE_NAME ="exercises"; // "index.html"//$NON-NLS-1$
+	private static final String WELCOME_FILE_NAME = "index.html";//"exercises"; //$NON-NLS-1$
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
