@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.zizibujuan.drip.server.service.UserService;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;

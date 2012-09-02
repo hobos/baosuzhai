@@ -31,6 +31,14 @@
             alias="/users"
             class="com.zizibujuan.drip.server.servlet.UserServlet">
       </servlet>
+            <servlet
+            alias="/session"
+            class="com.zizibujuan.drip.server.servlet.LoginServlet">
+      </servlet>
+      <servlet
+            alias="/logout"
+            class="com.zizibujuan.drip.server.servlet.LogoutServlet">
+      </servlet>
     </extension>
 
 	<extension
@@ -66,8 +74,6 @@
 
    <extension
          point="org.eclipse.equinox.http.registry.filters">
-
-      
       <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.RestHtmlFilter">

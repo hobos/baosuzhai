@@ -14,20 +14,42 @@
 	src="/dojo/dojo.js"></script>
 <script type="text/javascript">
 require(["dojo/ready",
+         "dojo/dom-form",
+         "dojo/store/JsonRest",
          "dijit/registry",
          "dijit/form/Button",
          "dijit/form/Form",
          "dijit/form/ValidationTextBox",
          "dijit/form/CheckBox",
+         "Exercise",
          "dojo/parser",
          "dojo/domReady!"],function(
         		 ready,
+        		 domForm,
+        		 JsonRest,
         		 registry){
 	
 	ready(function(){
 		var btnToSignup = registry.byId("btnToSignup");
 		btnToSignup.on("click",function(e){
 			window.location.href = "/signup";
+		});
+		
+		var btnLogin = registry.byId("btnLogin");
+		var loginForm = registry.byId("login_form");
+		var jsonRest = new JsonRest({
+			target : "/session/"
+		});
+		btnLogin.on("click",function(e){
+			if(loginForm.validate()){
+				var sessionInfo = domForm.toObject(loginForm.domNode);
+				// POST
+				jsonRest.add(sessionInfo).then(function(response){
+					
+				}, function(error){
+					
+				});
+			}
 		});
 	});
 	
@@ -36,30 +58,45 @@ require(["dojo/ready",
 </head>
 <body class="claro">
 
-<div>
-	<div>
-		<!-- 立即注册 -->
-		<div data-dojo-type="dijit/form/Button" id="btnToSignup" style="font-size: 20px">立即注册</div>
-	</div>
-	<div>
-		<!-- 登录form -->
-		<div style="border:solid 1px black; width: 250px">
-			<div data-dojo-type="dijit/form/Form">
-				<div data-dojo-type="dijit/form/ValidationTextBox" style="margin-bottom: 10px;display: block" data-dojo-props="'placeholder':'邮箱/手机号/用户名'"></div>
-				<div data-dojo-type="dijit/form/ValidationTextBox" style="display: block" data-dojo-props="'type':'password','placeholder':'密码'"></div>
-				<div>
-					<div data-dojo-type="dijit/form/CheckBox" id="rememberMe"></div><label for="rememberMe">下次自动登录</label>
-					<span>忘记密码？</span>
+<div style="padding-top:20px; margin:0 auto;width: 900px">
+	<div style="float:right; border: 1px solid #DDD; border-radius:5px;padding-top: 10px; padding-bottom: 10px">
+		<div style="text-align: center;">
+			<!-- 立即注册 -->
+			<div data-dojo-type="dijit/form/Button" id="btnToSignup" style="font-size: 20px;margin-bottom: 15px;">立即注册</div>
+		</div>
+		<div>
+			<!-- 登录form -->
+			<div style="width: 250px">
+				<div data-dojo-type="dijit/form/Form" id="login_form">
+					<div data-dojo-type="dijit/form/ValidationTextBox" 
+					style="margin-bottom: 10px;display: block;padding: 8px;width:233px" 
+					data-dojo-props="'placeholder':'邮箱/手机号/用户名','required':true,'name':'login'"></div>
+					<div data-dojo-type="dijit/form/ValidationTextBox" 
+					style="display: block;padding: 8px;width:233px" 
+					data-dojo-props="'type':'password','placeholder':'密码','required':true, 'name':'password'"></div>
+					<div style="padding-top: 3px; padding-bottom: 3px">
+						<div data-dojo-type="dijit/form/CheckBox" id="rememberMe"></div><label for="rememberMe">下次自动登录</label>
+						<span style="float: right"><a href="#">忘记密码？</a></span>
+					</div>
+					<div style="text-align: center;">
+						<div data-dojo-type="dijit/form/Button" style="font-size: 14px; margin-top: 10px;" id="btnLogin">登录</div>
+					</div>
 				</div>
-				<div data-dojo-type="dijit/form/Button">登录</div>
+			</div>
+		</div>
+		<div>
+			<div>
+				使用其他帐号登录
+			</div>
+			<div>
+				人人、QQ、weibo
 			</div>
 		</div>
 	</div>
-	<div>
-		<!-- TODO: 使用其他帐号登录 -->
+	<div style="border: 1px solid #DDD; border-radius:5px;float: left; width: 640px">
+		<div data-dojo-type="Exercise"></div>
 	</div>
 </div>
-
 
 </body>
 </html>
