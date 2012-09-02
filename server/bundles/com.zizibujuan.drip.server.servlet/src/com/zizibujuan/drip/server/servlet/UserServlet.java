@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.HashAttributeSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +13,7 @@ import com.zizibujuan.drip.server.service.UserService;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;
 import com.zizibujuan.drip.server.util.servlet.RequestUtil;
 import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
+import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
  * 用户
@@ -58,9 +58,8 @@ public class UserServlet extends DripServlet {
 				userInfo = userService.login(email, password);
 				if(userInfo != null){
 					// 如果登录成功，则跳转到用户专有首页
-					HttpSession httpSession = req.getSession();
-					httpSession.setMaxInactiveInterval(60*30);
-					httpSession.setAttribute("drip-user", userInfo.get("DBID"));
+					Object oUserId = userInfo.get("DBID");
+					UserSession.setUserId(req, oUserId);
 					// 返回到客户端，然后客户端跳转到首页
 					Map<String,Object> result = new HashMap<String, Object>();
 					result.put("status", "1");//1表示注册并且登录成功。

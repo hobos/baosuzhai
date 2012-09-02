@@ -12,6 +12,7 @@ import com.zizibujuan.drip.server.service.ExerciseService;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;
 import com.zizibujuan.drip.server.util.servlet.RequestUtil;
 import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
+import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
  * 习题
@@ -43,6 +44,7 @@ public class ExerciseServlet extends DripServlet{
 		if(isNullOrSeparator(pathInfo)){
 			Map<String,Object> exerciseInfo = RequestUtil.fromJsonObject(req);
 			// 如果保存成功，则返回一个成功的状态码
+			exerciseInfo.put("userId", UserSession.getUserId(req));
 			exerciseService.add(exerciseInfo);
 			return;
 		}

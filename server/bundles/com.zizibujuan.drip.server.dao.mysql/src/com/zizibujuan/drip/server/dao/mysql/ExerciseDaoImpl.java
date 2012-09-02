@@ -26,8 +26,8 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	@Override
 	public int add(Map<String, Object> exerciseInfo) {
 		Object oContent = exerciseInfo.get("content");
-		String userId = "1"; // TODO:暂时的，支持用户后，获取当前用户标识。写成1，也是为了，以后批量替换。
-		return DatabaseUtil.insert(getDataSource(), SQL_INSERT_EXERCISE, oContent,userId);
+		Object oUserId = exerciseInfo.get("userId");
+		return DatabaseUtil.insert(getDataSource(), SQL_INSERT_EXERCISE, oContent,oUserId);
 	}
 
 }
