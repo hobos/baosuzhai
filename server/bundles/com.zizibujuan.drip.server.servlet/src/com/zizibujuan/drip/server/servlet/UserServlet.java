@@ -1,7 +1,6 @@
 package com.zizibujuan.drip.server.servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -9,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.zizibujuan.drip.server.service.UserService;
+import com.zizibujuan.drip.server.servlet.command.LoginCommand;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;
 import com.zizibujuan.drip.server.util.servlet.RequestUtil;
-import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
-import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
  * 用户
@@ -51,24 +49,7 @@ public class UserServlet extends DripServlet {
 				// 通过校验之后再保存
 				userService.add(userInfo);
 				// 登录
-				String email = userInfo.get("email").toString();
-				String password = userInfo.get("password").toString();
-				
-				userInfo = userService.login(email, password);
-				if(userInfo != null){
-					// 如果登录成功，则跳转到用户专有首页
-					Object oUserId = userInfo.get("DBID");
-					UserSession.setUserId(req, oUserId);
-					// 返回到客户端，然后客户端跳转到首页
-					Map<String,Object> result = new HashMap<String, Object>();
-					result.put("status", "1");//1表示注册并且登录成功。
-					ResponseUtil.toJSON(req, resp, result);
-				}else{
-					// 登录失败
-					Map<String,Object> result = new HashMap<String, Object>();
-					result.put("status", "2");//2表示注册成功但是登录失败。
-					ResponseUtil.toJSON(req, resp, result);
-				}
+				LoginCommand.handleCommand(req, resp, userService, userInfo);
 			}else{
 				// 什么也不做
 			}

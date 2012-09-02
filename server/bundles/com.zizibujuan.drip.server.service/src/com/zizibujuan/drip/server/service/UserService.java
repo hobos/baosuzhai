@@ -25,7 +25,7 @@ public interface UserService {
 
 	/**
 	 * 用户登录
-	 * @param email 邮箱地址
+	 * @param email 邮箱地址 (未加密)
 	 * @param password 密码
 	 * @return 如果登录失败则返回null，否则返回用户信息
 	 */
