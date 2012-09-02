@@ -32,6 +32,7 @@ public class WelcomeFileFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+		final HttpServletResponse httpResponse = (HttpServletResponse)response;
 		final String requestPath = httpRequest.getServletPath() + (httpRequest.getPathInfo() == null ? "" : httpRequest.getPathInfo()); //$NON-NLS-1$
 		logger.info("跳转到WelcomeFileFilter中，请求路径为:"+requestPath);
 		System.out.println("跳转到WelcomeFileFilter中，请求路径为:'"+requestPath+"'");
@@ -43,6 +44,9 @@ public class WelcomeFileFilter implements Filter {
 			}else{
 				fileName = requestPath + PRIVATE_WELCOME_FILE_NAME;
 			}
+			httpResponse.setHeader("Cache-Control", "no-cache"); //$NON-NLS-1$ //$NON-NLS-2$
+			httpResponse.setHeader("Cache-Control", "no-store"); //$NON-NLS-1$ //$NON-NLS-2$
+			
 			httpRequest.getRequestDispatcher(fileName).forward(httpRequest, response);
 			
 			return;

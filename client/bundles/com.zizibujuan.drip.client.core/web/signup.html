@@ -43,6 +43,7 @@ require(["dojo/ready",
 			if(widgetUserForm.validate()){
 				var userInfo = domForm.toObject(widgetUserForm.domNode);
 				jsonRest.add(userInfo).then(function(response){
+					debugger;
 					// 创建成功
 					if(response.status == "1"){
 						// 注册成功，且登录成功

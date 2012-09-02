@@ -22,7 +22,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	public int add(Map<String, Object> userInfo) {
 		return DatabaseUtil.insert(getDataSource(), SQL_INSERT_USER, 
 				null,
-				userInfo.get("email"),
+				userInfo.get("login"),
 				userInfo.get("md5Password"),
 				userInfo.get("mobile"),
 				userInfo.get("realName"));

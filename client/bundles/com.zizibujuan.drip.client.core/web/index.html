@@ -45,7 +45,12 @@ require(["dojo/ready",
 				var sessionInfo = domForm.toObject(loginForm.domNode);
 				// POST
 				jsonRest.add(sessionInfo).then(function(response){
-					
+					if(response.status == "1"){
+						window.location = "/";
+					}else if(response.status == "2"){
+						// 登录失败
+						// TODO：放在error中，还是放在这里呢？
+					}
 				}, function(error){
 					
 				});

@@ -13,7 +13,7 @@ public interface UserDao {
 	 * 新增用户。
 	 * <pre>
 	 * 用户信息的格式为:
-	 * 		email: 注册邮箱
+	 * 		login: 注册邮箱
 	 * 		password: 登录密码(已加过密)
 	 * 		repassword: 确认密码
 	 * 		realName: 真实姓名
