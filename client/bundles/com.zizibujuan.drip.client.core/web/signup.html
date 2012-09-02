@@ -67,33 +67,53 @@ require(["dojo/ready",
 	
 });
 </script>
+
+<style type="text/css">
+.login_label{
+	font-size: 14px;font-weight: bold;
+}
+</style>
 </head>
 <body class="claro">
-	<div data-dojo-type="dijit/form/Form" id="userForm">
-		<div>
-			<span>注册邮箱</span>
-			<div data-dojo-type="dijit/form/ValidationTextBox" 
-			data-dojo-props="'name':'email','required':true,'regExp':'[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}'"></div>
+	<div style="width: 100%; padding-top: 80px">
+		<div data-dojo-type="dijit/form/Form" style="margin:0 auto;width: 400px" id="userForm">
+			<div>
+				<span class="login_label">注册邮箱</span>
+				<div data-dojo-type="dijit/form/ValidationTextBox" 
+				style = "padding: 8px; width: 290px;margin-bottom: 6px;margin-top: 6px"
+				data-dojo-props="'name':'email','required':true,'regExp':'[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}'"></div>
+			</div>
+			<!-- TODO：密码长度和强度 -->
+			<div>
+				<span class="login_label">登录密码</span>
+				<div data-dojo-type="dijit/form/ValidationTextBox" 
+				style = "padding: 8px; width: 290px;margin-bottom: 6px;margin-top: 6px"
+				data-dojo-props="'name':'password','type':'password','required':true"></div>
+			</div>
+			<!-- TODO：确认密码的比较 -->
+			<div>
+				<span class="login_label">确认密码</span>
+				<div data-dojo-type="dijit/form/ValidationTextBox" 
+				style = "padding: 8px; width: 290px;margin-bottom: 6px;margin-top: 6px"
+				data-dojo-props="'name':'repassword','type':'password','required':true"></div>
+			</div>
+			<div>
+				<span class="login_label">真实姓名</span>
+				<div data-dojo-type="dijit/form/ValidationTextBox" 
+				style = "padding: 8px; width: 290px;margin-bottom: 6px;margin-top: 6px"
+				data-dojo-props="'name':'realName','required':true"></div>		
+			</div>
+			<!-- TODO:未来版本中加
+			<div>
+				<span>验证码</span>
+				<div data-dojo-type="dijit/form/ValidationTextBox"></div>		
+			</div>
+			-->
+			<div>
+				<div data-dojo-type="dijit/form/Button" id="btnSignup" style="font-size: 20px">立即开通</div>
+			</div>
 		</div>
-		<div>
-			<span>登录密码</span>
-			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'password','type':'password','required':true"></div>
-		</div>
-		<div>
-			<span>确认密码</span>
-			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'repassword','type':'password','required':true"></div>
-		</div>
-		<div>
-			<span>真实姓名</span>
-			<div data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="'name':'realName'"></div>		
-		</div>
-		<!-- TODO:未来版本中加
-		<div>
-			<span>验证码</span>
-			<div data-dojo-type="dijit/form/ValidationTextBox"></div>		
-		</div>
-		-->
-		<div data-dojo-type="dijit/form/Button" id="btnSignup">立即开通</div>
 	</div>
+	
 </body>
 </html>
