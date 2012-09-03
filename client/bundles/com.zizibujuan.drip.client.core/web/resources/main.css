@@ -33,22 +33,6 @@ a:active {
 
 .top-nav {
 	float: right;
-	height: 35px;
-}
-
-.top-nav ul {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.top-nav a {
-	text-decoration: none
-}
-
-.top-nav li {
-	float: left;
-	margin: 0 0 0 15px;
 	line-height: 35px;
 }
 

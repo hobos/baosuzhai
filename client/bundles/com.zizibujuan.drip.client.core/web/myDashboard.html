@@ -2,16 +2,71 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>孜孜不倦</title>
+<link type="text/css" rel="stylesheet" href="/dijit/themes/claro/claro.css" />
+<link type="text/css" rel="stylesheet" href="/dojo/resources/dojo.css" />
+<link type="text/css" rel="stylesheet" href="/resources/main.css" />
+<title>个人首页 · 孜孜不倦</title>
+<script type="text/javascript" 
+	data-dojo-config="
+		async:true,
+		parseOnLoad:true,
+		isDebug:true" 
+	src="/dojo/dojo.js"></script>
+	
+<script type="text/javascript">
+require(["dojo/ready",
+         "dojo/dom",
+         "dijit/form/DropDownButton", 
+         "dijit/DropDownMenu", 
+         "dijit/MenuItem",
+         "dojo/parser",
+         "dojo/domReady!"],function(
+        		 ready,
+        		 dom,
+        		 DropDownButton,
+        		 DropDownMenu,
+        		 MenuItem){
+	ready(function(){
+		var menu = new DropDownMenu({ style: "display: none;"});
+        var menuSetting = new MenuItem({
+            label: "设置",
+            onClick: function(){ alert('设置'); }
+        });
+        menu.addChild(menuSetting);
+
+        var menuLogout = new MenuItem({
+            label: "注销",
+            onClick: function(){ alert('注销'); }
+        });
+        menu.addChild(menuLogout);
+
+        var button = new DropDownButton({
+            label: "{用户名}",
+            dropDown: menu
+        });
+        dom.byId("userMenu").appendChild(button.domNode);
+	});
+});
+</script>
 </head>
-<body>
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
-个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页个人首页
+<body  class="claro">
+	<div id="header">
+		<div class="wrapper" style="display: block;">
+			<div class="top-logo">
+				<a href="/">孜孜不倦</a>
+			</div>
+
+			<div class="top-nav">
+				<!-- 进入此页，用户必须已登录 -->
+				<div id="userMenu"></div>
+			</div>
+			
+			<div class="top-toolbar">
+				<!-- 这个区域的操作随着页面和用户权限的不同，动态改变 -->
+				<!-- 只有登录用户才可以进入该页面 -->
+				<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">保存</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
