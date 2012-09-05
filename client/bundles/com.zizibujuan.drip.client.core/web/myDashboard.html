@@ -16,6 +16,7 @@
 <script type="text/javascript">
 require(["dojo/ready",
          "dojo/dom",
+         "dojo/request/xhr",
          "dijit/form/DropDownButton", 
          "dijit/DropDownMenu", 
          "dijit/MenuItem",
@@ -23,20 +24,20 @@ require(["dojo/ready",
          "dojo/domReady!"],function(
         		 ready,
         		 dom,
+        		 xhr,
         		 DropDownButton,
         		 DropDownMenu,
         		 MenuItem){
+	
 	ready(function(){
 		var menu = new DropDownMenu({ style: "display: none;"});
         var menuSetting = new MenuItem({
-            label: "设置",
-            onClick: function(){ alert('设置'); }
+            label: "设置"
         });
         menu.addChild(menuSetting);
 
         var menuLogout = new MenuItem({
-            label: "注销",
-            onClick: function(){ alert('注销'); }
+            label: "注销"
         });
         menu.addChild(menuLogout);
 
@@ -45,7 +46,20 @@ require(["dojo/ready",
             dropDown: menu
         });
         dom.byId("userMenu").appendChild(button.domNode);
+        
+        menuSetting.on("click", function(e){
+        	window.location = "/settings";
+        });
+        
+        menuLogout.on("click", function(e){
+        	xhr("/logout/",{method:"POST", handleAs:"json"}).then(function(data){
+        		// window.location = "/"
+        	},function(error){
+        		window.location = "/";
+        	});
+        });
 	});
+	
 });
 </script>
 </head>

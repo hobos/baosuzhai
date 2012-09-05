@@ -26,7 +26,7 @@ public class LogoutServlet extends DripServlet {
 			req.getSession().invalidate();
 			// 注销之后，跳转到首页。
 			// FIXME：要是可以停留在当时的页面，但是显示适合该页面的不同内容，会不会更好些呢？
-			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.setStatus(HttpServletResponse.SC_FOUND);
 			return;
 		}
 		super.doPost(req, resp);

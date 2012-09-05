@@ -63,7 +63,26 @@ require(["dojo/ready",
 </head>
 <body class="claro">
 
-<div style="padding-top:20px; margin:0 auto;width: 900px">
+	<div id="header">
+		<div class="wrapper" style="display: block;">
+			<div class="top-logo">
+				<a href="/" title="去首页">孜孜不倦</a>
+			</div>
+
+			<div class="top-nav">
+				<!-- 进入此页，用户必须已登录 -->
+				<div id="userMenu"></div>
+			</div>
+			
+			<div class="top-toolbar">
+				<!-- 这个区域的操作随着页面和用户权限的不同，动态改变 -->
+				<!-- 只有登录用户才可以进入该页面 -->
+				
+			</div>
+		</div>
+	</div>
+	
+<div style="padding-top:45px; margin:0 auto;width: 900px">
 	<div style="float:right; border: 1px solid #DDD; border-radius:5px;padding-top: 10px; padding-bottom: 10px">
 		<div style="text-align: center;">
 			<!-- 立即注册 -->
@@ -99,6 +118,7 @@ require(["dojo/ready",
 		</div>
 	</div>
 	<div style="border: 1px solid #DDD; border-radius:5px;float: left; width: 640px">
+		<!-- 习题过滤算法 -->
 		<div data-dojo-type="Exercise"></div>
 	</div>
 </div>
