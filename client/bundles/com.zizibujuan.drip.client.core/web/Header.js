@@ -22,8 +22,8 @@ define(["dojo/_base/declare",
 		templateString: headerTemplate,
 		
 		postCreate : function(){
+			
 			xhr("/login/",{method:"POST", handleAs:"json"}).then(lang.hitch(this,function(response){
-				debugger;
 				var menu = new DropDownMenu({ style: "display: none;"});
 		        var menuSetting = new MenuItem({
 		            label: "设置"
@@ -54,7 +54,7 @@ define(["dojo/_base/declare",
 		        });
 				
 			}),function(error){
-				
+				window.location = "/";
 			});
 		}
 	});

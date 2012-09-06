@@ -1,6 +1,7 @@
 package com.zizibujuan.drip.server.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -38,7 +39,15 @@ public class LoginServlet extends DripServlet {
 			// 获取用户登录信息
 			Long userId = UserSession.getUserId(req);
 			Map<String,Object> loginInfo = userService.getLoginInfo(userId);
-			ResponseUtil.toJSON(req, resp, loginInfo);
+			if(loginInfo.isEmpty()){
+				// 用户未登录
+				Map<String,Object> map = new HashMap<String, Object>();
+				ResponseUtil.toJSON(req, resp, map,HttpServletResponse.SC_UNAUTHORIZED);
+			}else{
+				// 用户已登录
+				ResponseUtil.toJSON(req, resp, loginInfo);
+			}
+			
 			return;
 		}else{
 			if(pathInfo.equals("/form")){

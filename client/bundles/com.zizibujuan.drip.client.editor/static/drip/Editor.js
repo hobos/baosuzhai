@@ -3,6 +3,7 @@ define(["dojo/_base/declare",
         "dojo/_base/event",
         "dijit/_WidgetBase",
         "dojo/on",
+        "dojo/keys",
         "dojo/dom-construct",
         "drip/Model",
         "drip/View"],function(
@@ -11,6 +12,7 @@ define(["dojo/_base/declare",
         		 event,
         		 _WidgetBase,
         		 on,
+        		 keys,
         		 domConstruct,
         		 Model,
         		 View){
@@ -44,6 +46,10 @@ define(["dojo/_base/declare",
 			on(textarea, "input", function(e){
 				//console.log(e);
 			});
+			
+			on(textarea, "keypress", lang.hitch(this,function(e){
+				console.log(e);
+			}));
 		},
 		
 		
