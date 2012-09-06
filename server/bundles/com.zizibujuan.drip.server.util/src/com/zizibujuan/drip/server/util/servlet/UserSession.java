@@ -12,8 +12,10 @@ public abstract class UserSession {
 	
 	private static final String SESSION_KEY = "drip-user";
 
-	public static Object getUserId(HttpServletRequest req) {
-		return req.getSession(false).getAttribute(SESSION_KEY);
+	public static Long getUserId(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		Object oUserId = session.getAttribute(SESSION_KEY);
+		return oUserId == null ? null : Long.valueOf(oUserId.toString());
 	}
 	
 	public static void setUserId(HttpServletRequest req, Object oUserId) {

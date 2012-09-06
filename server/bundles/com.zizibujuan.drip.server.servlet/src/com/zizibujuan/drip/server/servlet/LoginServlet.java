@@ -36,7 +36,7 @@ public class LoginServlet extends DripServlet {
 		String pathInfo = req.getPathInfo();
 		if (isNullOrSeparator(pathInfo)) {
 			// 获取用户登录信息
-			String userId = UserSession.getUserId(req).toString();
+			Long userId = UserSession.getUserId(req);
 			Map<String,Object> loginInfo = userService.getLoginInfo(userId);
 			ResponseUtil.toJSON(req, resp, loginInfo);
 			return;

@@ -39,5 +39,5 @@ public interface UserService {
 	 * 		userId : 用户标识
 	 * </pre> 
 	 */
-	Map<String, Object> getLoginInfo(String userId);
+	Map<String, Object> getLoginInfo(Long userId);
 }

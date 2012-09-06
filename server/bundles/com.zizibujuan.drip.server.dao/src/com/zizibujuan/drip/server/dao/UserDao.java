@@ -35,7 +35,7 @@ public interface UserDao {
 	 * 更新用户的最近登录时间
 	 * @param userId 用户标识
 	 */
-	void updateLastLoginTime(String userId);
+	void updateLastLoginTime(Long userId);
 
 	/**
 	 * 获取用户登录信息，返回到客户端的，所以不能包含用户隐私信息。
@@ -45,6 +45,6 @@ public interface UserDao {
 	 * 		userId : 用户标识
 	 * </pre> 
 	 */
-	Map<String, Object> getLoginInfo(String userId);
+	Map<String, Object> getLoginInfo(Long userId);
 	
 }

@@ -53,13 +53,13 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}else{
 			String userId = userInfo.get("DBID").toString();
-			userDao.updateLastLoginTime(userId);
+			userDao.updateLastLoginTime(Long.valueOf(userId));
 			return userInfo;
 		}
 	}
 
 	@Override
-	public Map<String, Object> getLoginInfo(String userId) {
+	public Map<String, Object> getLoginInfo(Long userId) {
 		return userDao.getLoginInfo(userId);
 	}
 

@@ -39,13 +39,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	private static final String SQL_UPDATE_USER = "UPDATE DRIP_USER SET LAST_LOGIN_TM = now() " +
 			"WHERE DBID=?";
 	@Override
-	public void updateLastLoginTime(String userId) {
+	public void updateLastLoginTime(Long userId) {
 		DatabaseUtil.update(getDataSource(), SQL_UPDATE_USER, userId);
 	}
 	
 	private static final String SQL_GET_LOGIN = "SELECT DBID \"userId\", REAL_NM \"realName\" FROM DRIP_USER WHERE DBID=?";
 	@Override
-	public Map<String, Object> getLoginInfo(String userId) {
+	public Map<String, Object> getLoginInfo(Long userId) {
 		return DatabaseUtil.queryForMap(getDataSource(), SQL_GET_LOGIN, userId);
 	}
 
