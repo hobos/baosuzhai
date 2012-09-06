@@ -17,6 +17,7 @@ require(["dojo/ready",
          "dojo/dom-form",
          "dojo/store/JsonRest",
          "dijit/registry",
+         "dojo/keys",
          "dijit/form/Button",
          "dijit/form/Form",
          "dijit/form/ValidationTextBox",
@@ -27,9 +28,11 @@ require(["dojo/ready",
         		 ready,
         		 domForm,
         		 JsonRest,
-        		 registry){
+        		 registry,
+        		 keys){
 	
 	ready(function(){
+		
 		var btnToSignup = registry.byId("btnToSignup");
 		btnToSignup.on("click",function(e){
 			window.location.href = "/signup";
@@ -38,9 +41,10 @@ require(["dojo/ready",
 		var btnLogin = registry.byId("btnLogin");
 		var loginForm = registry.byId("login_form");
 		var jsonRest = new JsonRest({
-			target : "/session/"
+			target : "/login/form"
 		});
-		btnLogin.on("click",function(e){
+		
+		function confirmLogin(e){
 			if(loginForm.validate()){
 				var sessionInfo = domForm.toObject(loginForm.domNode);
 				// POST
@@ -55,7 +59,24 @@ require(["dojo/ready",
 					
 				});
 			}
+		}
+		
+		btnLogin.on("click",confirmLogin);
+		
+		var txtLogin = registry.byId("login");
+		var txtPwd = registry.byId("password");
+		
+		txtLogin.on("keyPress",function(e){
+			if(e.keyCode == keys.ENTER){
+				confirmLogin();
+			}
 		});
+		txtPwd.on("keyPress",function(e){
+			if(e.keyCode == keys.ENTER){
+				confirmLogin();
+			}
+		});
+		
 	});
 	
 });
@@ -92,12 +113,21 @@ require(["dojo/ready",
 			<!-- 登录form -->
 			<div style="width: 250px">
 				<div data-dojo-type="dijit/form/Form" id="login_form">
-					<div data-dojo-type="dijit/form/ValidationTextBox" 
+					<div data-dojo-type="dijit/form/ValidationTextBox"
+					id="login"
 					style="margin-bottom: 10px;display: block;padding: 8px;width:233px" 
-					data-dojo-props="'placeholder':'邮箱/手机号/用户名','required':true,'name':'login'"></div>
-					<div data-dojo-type="dijit/form/ValidationTextBox" 
+					data-dojo-props="'placeholder':'邮箱/手机号/用户名',
+					'required':true,
+					'name':'login',
+					'missingMessage':'请输入登录名'"></div>
+					<div data-dojo-type="dijit/form/ValidationTextBox"
+					id="password"
 					style="display: block;padding: 8px;width:233px" 
-					data-dojo-props="'type':'password','placeholder':'密码','required':true, 'name':'password'"></div>
+					data-dojo-props="'type':'password',
+					'placeholder':'密码',
+					'required':true, 
+					'name':'password',
+					'missingMessage':'请输入密码'"></div>
 					<div style="padding-top: 3px; padding-bottom: 3px">
 						<div data-dojo-type="dijit/form/CheckBox" id="rememberMe"></div><label for="rememberMe">下次自动登录</label>
 						<span style="float: right"><a href="#">忘记密码？</a></span>

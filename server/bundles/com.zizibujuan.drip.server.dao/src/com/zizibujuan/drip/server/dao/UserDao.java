@@ -36,5 +36,15 @@ public interface UserDao {
 	 * @param userId 用户标识
 	 */
 	void updateLastLoginTime(String userId);
+
+	/**
+	 * 获取用户登录信息，返回到客户端的，所以不能包含用户隐私信息。
+	 * @param userId 用户标识
+	 * @return <pre>用户登录信息
+	 * 		realName : 用户真实姓名
+	 * 		userId : 用户标识
+	 * </pre> 
+	 */
+	Map<String, Object> getLoginInfo(String userId);
 	
 }

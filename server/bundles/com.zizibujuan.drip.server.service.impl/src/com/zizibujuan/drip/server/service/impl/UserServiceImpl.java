@@ -58,4 +58,9 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public Map<String, Object> getLoginInfo(String userId) {
+		return userDao.getLoginInfo(userId);
+	}
+
 }

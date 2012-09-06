@@ -17,70 +17,32 @@
 require(["dojo/ready",
          "dojo/dom",
          "dojo/request/xhr",
-         "dijit/form/DropDownButton", 
-         "dijit/DropDownMenu", 
-         "dijit/MenuItem",
+         "dijit/registry",
+         "Header",
          "dojo/parser",
          "dojo/domReady!"],function(
         		 ready,
         		 dom,
         		 xhr,
-        		 DropDownButton,
-        		 DropDownMenu,
-        		 MenuItem){
+        		 registry){
 	
 	ready(function(){
-		var menu = new DropDownMenu({ style: "display: none;"});
-        var menuSetting = new MenuItem({
-            label: "设置"
-        });
-        menu.addChild(menuSetting);
-
-        var menuLogout = new MenuItem({
-            label: "注销"
-        });
-        menu.addChild(menuLogout);
-
-        var button = new DropDownButton({
-            label: "{用户名}",
-            dropDown: menu
-        });
-        dom.byId("userMenu").appendChild(button.domNode);
-        
-        menuSetting.on("click", function(e){
-        	window.location = "/settings";
-        });
-        
-        menuLogout.on("click", function(e){
-        	xhr("/logout/",{method:"POST", handleAs:"json"}).then(function(data){
-        		// window.location = "/"
-        	},function(error){
-        		window.location = "/";
-        	});
-        });
+		// 获取用户信息。
+		var btnNewExercise = registry.byId("btnNewExercise");
+			btnNewExercise.on("click",function(e){
+			window.location.href = "/exercises/new";
+		});
+		
 	});
 	
 });
 </script>
 </head>
 <body  class="claro">
-	<div id="header">
-		<div class="wrapper" style="display: block;">
-			<div class="top-logo">
-				<a href="/">孜孜不倦</a>
-			</div>
-
-			<div class="top-nav">
-				<!-- 进入此页，用户必须已登录 -->
-				<div id="userMenu"></div>
-			</div>
-			
-			<div class="top-toolbar">
-				<!-- 这个区域的操作随着页面和用户权限的不同，动态改变 -->
-				<!-- 只有登录用户才可以进入该页面 -->
-				<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">保存</div>
-			</div>
-		</div>
+	<div data-dojo-type="Header" id="header">
+		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">新建习题</div>
 	</div>
+	
+	
 </body>
 </html>

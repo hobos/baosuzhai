@@ -40,16 +40,13 @@ require(["dojo/ready",
 			</div>
 
 			<div class="top-nav">
-				<ul>
-					<!-- TODO：改为rest风格 -->
-					<li><a href="/signup.html">注册</a></li>
-					<!-- TODO：用人人，qq，gmail，weibo帐号登录 -->
-					<li><a href="/login.html">登录</a></li>
-				</ul>
+				<!-- 重构用户信息组件 -->
 			</div>
 			
 			<div class="top-toolbar">
 				<!-- 这个区域的操作随着页面和用户权限的不同，动态改变 -->
+				<!-- FIXME:如何解决不同页面，这个区域中的内容不同的情况呢？ -->
+				<!-- FIXME:容器标签？ -->
 				<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">新建习题</div>
 			</div>
 		</div>

@@ -42,5 +42,11 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	public void updateLastLoginTime(String userId) {
 		DatabaseUtil.update(getDataSource(), SQL_UPDATE_USER, userId);
 	}
+	
+	private static final String SQL_GET_LOGIN = "SELECT DBID \"userId\", REAL_NM \"realName\" FROM DRIP_USER WHERE DBID=?";
+	@Override
+	public Map<String, Object> getLoginInfo(String userId) {
+		return DatabaseUtil.queryForMap(getDataSource(), SQL_GET_LOGIN, userId);
+	}
 
 }

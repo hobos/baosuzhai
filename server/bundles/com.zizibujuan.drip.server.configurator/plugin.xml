@@ -32,7 +32,7 @@
             class="com.zizibujuan.drip.server.servlet.UserServlet">
       </servlet>
             <servlet
-            alias="/session"
+            alias="/login"
             class="com.zizibujuan.drip.server.servlet.LoginServlet">
       </servlet>
       <servlet

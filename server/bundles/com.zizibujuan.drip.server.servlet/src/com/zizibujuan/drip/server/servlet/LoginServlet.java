@@ -11,6 +11,8 @@ import com.zizibujuan.drip.server.service.UserService;
 import com.zizibujuan.drip.server.servlet.command.LoginCommand;
 import com.zizibujuan.drip.server.util.servlet.DripServlet;
 import com.zizibujuan.drip.server.util.servlet.RequestUtil;
+import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
+import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
  * 用户登录，建立会话
@@ -33,9 +35,17 @@ public class LoginServlet extends DripServlet {
 		traceRequest(req);
 		String pathInfo = req.getPathInfo();
 		if (isNullOrSeparator(pathInfo)) {
-			Map<String, Object> userInfo = RequestUtil.fromJsonObject(req);
-			LoginCommand.handleCommand(req, resp, userService, userInfo);
+			// 获取用户登录信息
+			String userId = UserSession.getUserId(req).toString();
+			Map<String,Object> loginInfo = userService.getLoginInfo(userId);
+			ResponseUtil.toJSON(req, resp, loginInfo);
 			return;
+		}else{
+			if(pathInfo.equals("/form")){
+				Map<String, Object> userInfo = RequestUtil.fromJsonObject(req);
+				LoginCommand.handleCommand(req, resp, userService, userInfo);
+				return;
+			}
 		}
 		super.doPost(req, resp);
 	}
