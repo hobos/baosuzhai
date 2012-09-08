@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>testing Cursor</title>
+<style type="text/css">
+@import "/drip/Editor.css";
+</style>
+<script type="text/javascript" src="/dojo/dojo.js" data-dojo-config="isDebug:true,cacheBust:new Date()"></script>
+<script type="text/javascript">
+require(["dojo", 
+         "doh",
+         "drip/layer/Cursor",
+         "dojo/dom-style", 
+         "dojo/dom", 
+         "dojo/domReady!"], function(
+        		 dojo, 
+        		 doh,
+        		 Cursor,
+        		 domStyle, 
+        		 dom){
+	
+	doh.register("Cursor",[
+		{
+			name: "光标的状态",
+			setUp: function(){
+				var parentEl = dom.byId("parentEl");
+				this.cursor = new Cursor({
+					parentEl:parentEl
+				});
+			},
+			runTest: function(t){
+				var cursor = this.cursor;
+				doh.f(cursor.isVisible);
+				doh.t(cursor.blinkId==null);
+				// 光标初始不可见
+				doh.t(cursor.caret.style.visibility === "hidden");
+				
+				cursor.show();
+				// show之后，瞬间可见
+				doh.t(cursor.caret.style.visibility === "");
+				doh.t(cursor.isVisible);
+				doh.f(cursor.blinkId==null);
+
+				cursor.hide();
+				doh.f(cursor.isVisible);
+				doh.t(cursor.blinkId==null);
+			},
+			tearDown: function(){
+				this.cursor.destroy();
+			}
+		},
+		{
+			name: "光标中闪烁的element对象",
+			setUp: function(){
+				var parentEl = dom.byId("parentEl");
+				this.cursor = new Cursor({
+					parentEl:parentEl
+				});
+			},
+			runTest: function(t){
+				var cursor = this.cursor;
+				doh.t(cursor.caret!=null);
+				cursor.show();
+			},
+			tearDown: function(){
+				//this.cursor.destroy();
+			}
+		},
+		{
+			name: "调整光标的位置,如果光标没有激活，则移动无效，因为看不见的移动不如不移动",
+			setUp: function(){
+				var parentEl = dom.byId("parentEl");
+				this.cursor = new Cursor({
+					parentEl:parentEl
+				});
+			},
+			runTest: function(t){
+				var cursor = this.cursor;
+				// 光标初始的位置
+				doh.t(cursor.caret!=null);
+				cursor.move(100,200);
+				doh.t(cursor.position.top == 0);
+				doh.t(cursor.position.left == 0);
+				
+				cursor.show();
+				var deferred = new doh.Deferred();
+				// 因为1秒之后，光标是隐藏的，此时移动后，光标应立即可见
+			    setTimeout(deferred.getTestCallback(function(){
+			    	cursor.move(100,200);
+					// move之后瞬间可见
+					doh.t(cursor.caret.style.visibility === "");
+					doh.t(cursor.position.top == 100);
+					doh.t(cursor.position.left == 200);
+			    }), 1000);
+			    return deferred;
+			},
+			tearDown: function(){
+				this.cursor.destroy();
+			}
+		}
+	]);
+	doh.runOnLoad();
+	
+});
+</script>
+</head>
+<body>
+<div id="parentEl" style="height:400px;">放置光标的容器</div>
+</body>
+</html>

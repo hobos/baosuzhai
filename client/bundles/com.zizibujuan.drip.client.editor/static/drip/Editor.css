@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.drip_layer {
+    z-index: 1;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* setting pointer-events: auto; on node under the mouse, which changes
+        during scroll, will break mouse wheel scrolling in Safari */
+    pointer-events: none;
+    
+    /*FIXME：寻求更灵活的获取光标默认高度的方法*/
+    line-height: 15px;
+}
+
+.drip_cursor-layer {
+    z-index: 4;
+}
+
+.drip_cursor {
+    z-index: 4;
+    position: absolute;
+    border-left: 2px solid black;
+    line-height: 15px;
+    height: 15px;
+}
+
+.drip_cursor.drip_hidden {
+    opacity: 0.2;
+}
+
+.ace_editor.multiselect .ace_cursor {
+    border-left-width: 1px;
+}

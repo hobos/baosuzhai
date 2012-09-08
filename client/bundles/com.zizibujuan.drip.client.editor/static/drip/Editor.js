@@ -31,7 +31,7 @@ define(["dojo/_base/declare",
 	    },
 		
 		postCreate : function(){
-			var textarea = this.textarea = domConstruct.create("textarea",null, this.domNode);
+			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"300px"}}, this.domNode);
 			
 			this.model = new Model();
 			this.view = new View({
@@ -47,12 +47,35 @@ define(["dojo/_base/declare",
 				//console.log(e);
 			});
 			
-			on(textarea, "keypress", lang.hitch(this,function(e){
-				console.log(e);
+			on(textarea, "keydown", lang.hitch(this,function(e){
+				if(e.keyCode === keys.LEFT_ARROW){
+					this._moveLeft();
+				}else if(e.keyCode === keys.RIGHT_ARROW){
+					this._moveRight();
+				}else if(e.keyCode === keys.UP_ARROW){
+					this._moveUp();
+				}else if(e.keyCode === keys.DOWN_ARROW){
+					this._moveDown();
+				}
+				// event.stop(e);
 			}));
 		},
 		
+		_moveLeft : function(){
+			
+		},
 		
+		_moveRight : function(){
+			
+		},
+		
+		_moveUp : function(){
+			
+		},
+		
+		_moveDown : function(){
+			
+		},
 		
 		_onTextInput :function(e){
 			var textarea = this.textarea;
