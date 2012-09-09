@@ -48,5 +48,12 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	public Map<String, Object> getLoginInfo(Long userId) {
 		return DatabaseUtil.queryForMap(getDataSource(), SQL_GET_LOGIN, userId);
 	}
+	
+	private static final String SQL_EMAIL_EXIST = "select 1 from DRIP_USER where LOGIN_EMAIL = ? limit 1";
+	@Override
+	public boolean emailIsExist(String email) {
+		String result = DatabaseUtil.queryForString(getDataSource(), SQL_EMAIL_EXIST, email);
+		return result != null;
+	}
 
 }

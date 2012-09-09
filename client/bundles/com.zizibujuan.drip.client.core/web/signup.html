@@ -49,7 +49,6 @@ require(["dojo/ready",
 			if(widgetUserForm.validate()){
 				var userInfo = domForm.toObject(widgetUserForm.domNode);
 				jsonRest.add(userInfo).then(function(response){
-					debugger;
 					// 创建成功
 					if(response.status == "1"){
 						// 注册成功，且登录成功
@@ -63,7 +62,17 @@ require(["dojo/ready",
 					}
 				
 				},function(error){
-					// 创建失败	
+					// 创建失败，未通过校验
+					var data = JSON.parse(error.response.data);
+					// 修改没有部件的提示信息
+					for(var key in data){
+						var widget = registry.byId(key);
+						widget.missingMessage = data[key].missingMessage;
+						widget.promptMessage = data[key].promptMessage;
+						widget.invalidMessage = data[key].invalidMessage;
+					}
+					// 执行form的校验方法
+					widgetUserForm.validate();
 					console.log(error);
 				});
 			}
@@ -97,6 +106,12 @@ require(["dojo/ready",
 				});
 				return serverIsValid;
 			}
+			
+			if(value.length > 50){
+				this.promptMessage = this.invalidMessage = "邮箱长度不能超过50个字符";
+				return false;
+			}
+			
 			return clientIsValid;
 		}
 		var widgetPassword = registry.byId("password");
@@ -140,7 +155,7 @@ require(["dojo/ready",
 			this.promptMessage = '请输入您的姓名,便于同学找到您';
 			this.missingMessage = '请输入您的姓名,便于同学找到您';
 			this.invalidMessage = '姓名无效';
-			if(value.length == 0 && lang.trim(value) == ""){
+			if(value.length == 0 || lang.trim(value) == ""){
 				return false;
 			}
 			if(lang.trim(value).length < 2){

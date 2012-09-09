@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.getLoginInfo(userId);
 	}
 
+	@Override
+	public boolean emailIsExist(String email) {
+		return userDao.emailIsExist(email);
+	}
+
 }

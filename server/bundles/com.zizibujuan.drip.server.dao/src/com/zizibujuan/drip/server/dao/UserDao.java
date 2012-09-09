@@ -46,5 +46,12 @@ public interface UserDao {
 	 * </pre> 
 	 */
 	Map<String, Object> getLoginInfo(Long userId);
+
+	/**
+	 * 判断邮箱是否已被使用
+	 * @param email 有效的邮箱地址
+	 * @return 已存在则返回<code>true</code>；否则返回<code>false</code>
+	 */
+	boolean emailIsExist(String email);
 	
 }

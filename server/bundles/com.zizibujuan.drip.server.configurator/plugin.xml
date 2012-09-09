@@ -39,6 +39,10 @@
             alias="/logout"
             class="com.zizibujuan.drip.server.servlet.LogoutServlet">
       </servlet>
+      <servlet
+            alias="/signup_check"
+            class="com.zizibujuan.drip.server.servlet.SignUpCheckServlet">
+      </servlet>
     </extension>
 
 	<extension
