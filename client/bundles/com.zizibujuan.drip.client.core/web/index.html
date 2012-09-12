@@ -15,6 +15,7 @@
 <script type="text/javascript">
 require(["dojo/ready",
          "dojo/dom-form",
+         "dojo/dom-style",
          "dojo/store/JsonRest",
          "dijit/registry",
          "dojo/keys",
@@ -27,6 +28,7 @@ require(["dojo/ready",
          "dojo/domReady!"],function(
         		 ready,
         		 domForm,
+        		 domStyle,
         		 JsonRest,
         		 registry,
         		 keys){
@@ -45,6 +47,7 @@ require(["dojo/ready",
 		});
 		
 		function confirmLogin(e){
+			domStyle.set("errorMsg","display","none");
 			if(loginForm.validate()){
 				var sessionInfo = domForm.toObject(loginForm.domNode);
 				// POST
@@ -52,11 +55,13 @@ require(["dojo/ready",
 					if(response.status == "1"){
 						window.location = "/";
 					}else if(response.status == "2"){
+						console.log("success",response);
+						domStyle.set("errorMsg","display","");
 						// 登录失败
 						// TODO：放在error中，还是放在这里呢？
 					}
 				}, function(error){
-					
+					console.log("error", error);
 				});
 			}
 		}
@@ -76,6 +81,8 @@ require(["dojo/ready",
 				confirmLogin();
 			}
 		});
+		
+		txtLogin.focus();
 		
 	});
 	
@@ -104,7 +111,7 @@ require(["dojo/ready",
 	</div>
 	
 <div style="padding-top:45px; margin:0 auto;width: 900px">
-	<div style="float:right; border: 1px solid #DDD; border-radius:5px;padding-top: 10px; padding-bottom: 10px">
+	<div class="login-pane">
 		<div style="text-align: center;">
 			<!-- 立即注册 -->
 			<div data-dojo-type="dijit/form/Button" id="btnToSignup" style="font-size: 20px;margin-bottom: 15px;">立即注册</div>
@@ -112,6 +119,9 @@ require(["dojo/ready",
 		<div>
 			<!-- 登录form -->
 			<div style="width: 250px">
+				<div id="errorMsg" style="color: red;font-weight: bold;text-align: center;display: none;">
+				无效的用户名或密码
+				</div>
 				<div data-dojo-type="dijit/form/Form" id="login_form">
 					<div data-dojo-type="dijit/form/ValidationTextBox"
 					id="login"

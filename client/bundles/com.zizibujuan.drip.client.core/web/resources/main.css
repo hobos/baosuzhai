@@ -53,3 +53,12 @@ a:active {
 	line-height: 35px;
 	margin-left: 20px;
 }
+
+.login-pane {
+	float: right;
+	border: 1px solid #DDD;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 2px 2px 3px #999;
+}
