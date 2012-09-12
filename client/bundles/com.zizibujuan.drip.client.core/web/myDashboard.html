@@ -19,6 +19,7 @@ require(["dojo/ready",
          "dojo/request/xhr",
          "dijit/registry",
          "Header",
+         "Exercise",
          "dojo/parser",
          "dojo/domReady!"],function(
         		 ready,
@@ -42,6 +43,10 @@ require(["dojo/ready",
 	<div data-dojo-type="Header" id="header">
 		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">新建习题</div>
 	</div>
+	
+		<!-- 习题过滤算法 -->
+		<!-- FIXME:不要将width硬编码在Exercise部件中 -->
+		<div data-dojo-type="Exercise" style="margin-top: 45px"></div>
 	
 	
 </body>
