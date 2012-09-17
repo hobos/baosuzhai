@@ -27,7 +27,7 @@ define(["dojo/_base/declare",
 		value : "",
 		
 		_getValueAttr: function(value){
-			return this.model.getData();
+			return this.model.getXML();
 	    },
 		
 		postCreate : function(){

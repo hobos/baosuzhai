@@ -26,7 +26,6 @@ define(["dojo/_base/declare",
 		
 		constructor: function(kwArgs){
 			lang.mixin(this, kwArgs);
-			debugger;
 			var caret = this.caret = domConstruct.create("div",{class:"drip_cursor"},this.parentEl);
 //			var tmpNode = domConstruct.create("div",{innerHTML:"8",style:{display:"none"}},this.parentEl);
 //			var computedStyle = domStyle.getComputedStyle(tmpNode);

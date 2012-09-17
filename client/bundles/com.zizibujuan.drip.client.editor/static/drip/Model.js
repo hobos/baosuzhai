@@ -12,10 +12,12 @@ define([ "dojo/_base/declare",
         		 xmlParser,
         		 dripString,
         		 dataUtil) {
-
-	return declare("drip.Model",null,{
-	
+	var EMPTY_XML = "<root><line></line></root>";
+	return declare(null,{
+		path: null,
+		xmlString: null,
 		doc: null,
+		
 		
 		// summary:
 		//		当前光标所在的位置。
@@ -33,22 +35,34 @@ define([ "dojo/_base/declare",
 		// nodeIndex：
 		//		附加信息，主要用于定位node。
 		//		node在lineIndex指定的行中的索引
-		cursorPosition: {node:null, offset : -1, lineIndex:0, nodeIndex:0},
+		//node:null, offset : -1, lineIndex:0, nodeIndex:0
+		cursorPosition: null,
 		
 		// 当前节点在xml文件中的具体路径
-		path: [],
+		
 		
 		// 调用顺序
 		//		如果是新建，则直接new即可
 		//		如果已存在内容，则先新建，然后通过loadData，加载内容
 		//		因为包含普通文本和math文本，使用span包含普通文本
 		//		<root><line><text></text><math></math></line></root>
+		//		在构造函数中初始化到位，如果有传入xml文本，则读取文本进行初始化；
+		//		如果什么也没有传，则初始化为默认值。
 		constructor: function(options){
-			lang.mixin(this, options);
-			this.doc = xmlParser.parse("<root><line></line></root>");
+			// 注意：在类中列出的属性，都必须在这里进行初始化。
+			this.doc = xmlParser.parse(EMPTY_XML);
+			this.path = [];
+			this.cursorPosition = {};
+			// FIXME:如何存储呢？
 			
 			this.cursorPosition.node = this.doc.documentElement.firstChild;
 			this.cursorPosition.offset = 0;
+			
+			this.path.push({nodeName:"root"});
+			// offset 偏移量，从1开始
+			this.path.push({nodeName:"line", offset:1});
+			
+			lang.mixin(this, options);
 			
 		},
 		
@@ -69,6 +83,8 @@ define([ "dojo/_base/declare",
 				
 				this.cursorPosition.node = textSpanNode;
 				this.cursorPosition.offset = 0;
+				// 这里的offset是nodeName为text的节点在父节点中位置。
+				this.path.push({nodeName:"text",offset:1});
 			}
 			
 			var offset = this.cursorPosition.offset;
@@ -81,9 +97,40 @@ define([ "dojo/_base/declare",
 			this.onChange(data);
 		},
 		
-		// 获取xml文件的字符串值
-		getData: function(){
+		// 获取xml文件的字符串值。没有没有输入任何内容则返回空字符串。
+		getXML: function(){
+			var doc = this.doc;
+			if(doc.firstChild.firstChild.childNodes.length == 0){
+				return "";
+			}
+			
 			return xmlParser.innerXML(this.doc);
+		},
+		
+		// 获取当前获取焦点的节点相对于根节点的xpath值
+		getXPath: function(){
+			var xpath = "";
+			array.forEach(this.path, function(path, index){
+				xpath += "/";
+				if(path.nodeName != "text" && path.nodeName != "math"){
+					xpath += path.nodeName;
+				}else{
+					xpath += "*";
+				}
+				
+				if(path.offset){
+					xpath += "[" + path.offset + "]";
+				}
+			});
+			return xpath;
+		},
+		
+		getFocusNode: function(){
+			return this.cursorPosition.node;
+		},
+		
+		getOffset: function(){
+			return this.cursorPosition.offset;
 		},
 		
 		// 习题 line 获取html格式的数据
