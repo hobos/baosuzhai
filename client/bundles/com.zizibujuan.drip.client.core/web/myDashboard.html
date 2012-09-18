@@ -12,7 +12,9 @@
 		parseOnLoad:true,
 		isDebug:true" 
 	src="/dojo/dojo.js"></script>
-	
+<script type="text/javascript"
+   src="/mathjax/MathJax.js?config=MML_HTMLorMML">
+</script>	
 <script type="text/javascript">
 require(["dojo/ready",
          "dojo/dom",
@@ -33,7 +35,6 @@ require(["dojo/ready",
 			btnNewExercise.on("click",function(e){
 			window.location.href = "/exercises/new";
 		});
-		
 	});
 	
 });
@@ -46,7 +47,7 @@ require(["dojo/ready",
 	
 		<!-- 习题过滤算法 -->
 		<!-- FIXME:不要将width硬编码在Exercise部件中 -->
-		<div data-dojo-type="Exercise" style="margin-top: 45px"></div>
+		<div data-dojo-type="Exercise" id="exercises" style="margin-top: 45px"></div>
 	
 	
 </body>

@@ -72,6 +72,8 @@ define(["dojo/_base/declare",
 					 this.domNode.appendChild(exerciseNode.domNode);
 					 //this.domNode.innerHTML+=this.domNode.innerHTML+item.CONTENT;
 				 }));
+				 // 使用mathjax进行呈现
+				 MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.domNode]);
 			 }
 		 }
 	

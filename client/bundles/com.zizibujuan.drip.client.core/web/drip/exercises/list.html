@@ -12,7 +12,9 @@
 		parseOnLoad:true,
 		isDebug:true" 
 	src="/dojo/dojo.js"></script>
-	
+<script type="text/javascript"
+   src="/mathjax/MathJax.js?config=MML_HTMLorMML">
+</script>
 <script type="text/javascript">
 require(["dojo/ready", 
          "dijit/registry",
@@ -53,7 +55,7 @@ require(["dojo/ready",
 	</div>
 	<!-- 容器 -->
 	<div style="margin-top: 60px">
-		<div data-dojo-type="Exercise"></div>
+		<div data-dojo-type="Exercise" id="exercises"></div>
 	</div>
 </body>
 </html>
