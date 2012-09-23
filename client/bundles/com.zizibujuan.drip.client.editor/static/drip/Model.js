@@ -74,7 +74,15 @@ define([ "dojo/_base/declare",
 			
 		},
 		
-		setData: function(data){
+		// TODO：需要加入位置参数，指明在什么地方插入
+		setData: function(data, nodeName){
+			// summary:
+			//		往model中插入数据。
+			// data: String
+			//		要插入的内容
+			// nodeName：String
+			//		将data作为什么节点插入，这个通常由人工选择，如果没有值，则系统自动判断。
+			
 			var xmlDoc = this.doc;
 			
 			var length = data.length;
@@ -85,8 +93,6 @@ define([ "dojo/_base/declare",
 				var char = data.charAt(i);
 				var node = this.cursorPosition.node;
 				if(dripLang.isNumber(char)){
-					
-					
 					if(this._isLineNode(node)){
 						// FIXME：重构出一个方法
 						var mathNode = xmlDoc.createElement("math");
@@ -97,7 +103,6 @@ define([ "dojo/_base/declare",
 						this.cursorPosition.offset = 0;
 						
 						this._insertChar(char);
-						
 						
 						this.path.push({nodeName:"math", offset:1});
 						this.path.push({nodeName:"mn", offset:1});
@@ -130,6 +135,8 @@ define([ "dojo/_base/declare",
 							
 							var pos = this.path.pop();
 							this.path.push({nodeName:"mn", offset:pos.offset+1});
+						}else{
+							this._insertChar(char);
 						}
 					}
 				}else if(dripLang.isOperator(char)){
@@ -149,6 +156,23 @@ define([ "dojo/_base/declare",
 							this.path.push({nodeName:"mo", offset:pos.offset+1});
 						}
 					}
+				}else if(dripLang.isNewLine(char)){
+					// TODO:在指定位置新增一行
+					// 暂时只实现了在最后一行新增
+					var focusedLine = this._getFocusLine();
+					// 新建一个空的line节点
+					var newLineNode = this.doc.createElement("line");
+					dripLang.insertNodeAfter(newLineNode, focusedLine);
+					
+					// 将之前缓存的上一行的信息都清除
+					var pos = this.path.pop();
+					while(pos.nodeName != "line"){
+						pos = this.path.pop();
+					}
+					// 然后加入新行
+					// FIXME：这里需要重构
+					this.path.push({nodeName:"line", offset:pos.offset+1});
+					
 				}else{
 					if(this._isLineNode(node)){
 						var textSpanNode = xmlDoc.createElement("text");
@@ -163,15 +187,43 @@ define([ "dojo/_base/declare",
 						this.path.push({nodeName:"text",offset:1});
 					}else if(this._isTextNode(node)){
 						this._insertChar(char);
+					}else if(this._isMathTokenNode(node)){
+						var textSpanNode = xmlDoc.createElement("text");
+						node.appendChild(textSpanNode);
+						
+						this.cursorPosition.node = textSpanNode;
+						this.cursorPosition.offset = 0;
+						
+						this._insertChar(char);
+						
+						var pos = null;
+						do{
+							pos = this.path.pop();
+						}while(pos && pos.nodeName != "math");
+						this.path.push({nodeName:"text", offset:pos.offset+1});
 					}
-					
 				}
-				
 				// TODO:重构 moveNext
 			}
-			
 			this.onChange(data);
 		},
+		
+		getLineCount: function(){
+			return this.doc.documentElement.childNodes.length;
+		},
+		
+		_getFocusLine: function(){
+			// summary:
+			//		当前节点往上追溯，获取nodeName为line的行
+			
+			var focusNode = this.getFocusNode();
+			var lineNode = focusNode;
+			while(lineNode && lineNode.nodeName != "line"){
+				lineNode = lineNode.parentNode;
+			}
+			
+			return lineNode;
+		}, 
 		
 		_isLineNode: function(node){
 			return node.nodeName == "line";
@@ -196,6 +248,9 @@ define([ "dojo/_base/declare",
 		},
 		
 		_insertChar: function(char){
+			// summary:
+			//		在聚焦的节点中，当前光标新的字符，并移动当前光标的位置。
+			
 			var offset = this.cursorPosition.offset;
 			var oldText = this.cursorPosition.node.textContent;
 			var newText = dripString.insertAtOffset(oldText, offset, char);
@@ -236,6 +291,15 @@ define([ "dojo/_base/declare",
 		
 		getOffset: function(){
 			return this.cursorPosition.offset;
+		},
+		
+		getLineAt: function(lineIndex){
+			// summary: 
+			//		获取行节点。
+			// lineIndex: Number
+			//		行节点的索引，从0开始
+			
+			return this.doc.documentElement.childNodes[lineIndex];
 		},
 		
 		// 习题 line 获取html格式的数据

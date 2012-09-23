@@ -11,6 +11,14 @@ define({
 		return false;
 	},
 	
+	isNewLine: function(obj){
+		return obj === "\n";
+	},
+	
+	isTab: function(obj){
+		return obj === "\t";
+	},
+	
 	insertNodeAfter: function(newNode, existingNode){
 		var parentNode = existingNode.parentNode;
 		if(parentNode.lastChild == existingNode){
