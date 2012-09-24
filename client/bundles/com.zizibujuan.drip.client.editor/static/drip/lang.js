@@ -5,7 +5,7 @@ define({
 	},
 	
 	isOperator: function(obj){
-		if(obj == "+" || obj == "="){
+		if(obj == "+" || obj == "=" || obj == "-"){
 			return true;
 		}
 		return false;
