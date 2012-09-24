@@ -175,6 +175,26 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			}
 		},
 		{
+			name: "在已有一个中文字符的model中添加操作符号",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				// 结果是在line中先加一个text节点，然后再加一个math节点
+				var model = this.model;
+				// 如果是中文，则放在text节点中
+				model.setData("中");
+				model.setData("=");
+				t.is("/root/line[1]/math[2]/mo[1]", model.getPath());
+				t.is(model.getFocusNode().nodeName, "mo");
+				t.is(1, model.getOffset());
+				t.is(2, model.getLineAt(0).childNodes.length);
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
 			name: "在已有一个数字的model中添加中文",
 			setUp: function(){
 				this.model = new Model({});

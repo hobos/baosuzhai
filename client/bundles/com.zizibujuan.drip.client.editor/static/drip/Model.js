@@ -167,7 +167,21 @@ define([ "dojo/_base/declare",
 						
 						var pos = this.path.pop();
 						this.path.push({nodeName:"mo", offset:pos.offset+1});
-				
+					}else if(this._isTextNode(node)){
+						// FIXME：重构出一个方法
+						var mathNode = xmlDoc.createElement("math");
+						// math应该放在textNode之后
+						dripLang.insertNodeAfter(mathNode, node);
+						var mnNode = xmlDoc.createElement("mo");
+						mathNode.appendChild(mnNode);
+						this.cursorPosition.node = mnNode;
+						this.cursorPosition.offset = 0;
+						
+						this._insertChar(char);
+						
+						var pos = this.path.pop();
+						this.path.push({nodeName:"math", offset:pos.offset+1});
+						this.path.push({nodeName:"mo", offset:1});
 					}
 				}else if(dripLang.isNewLine(char)){
 					// TODO:在指定位置新增一行
