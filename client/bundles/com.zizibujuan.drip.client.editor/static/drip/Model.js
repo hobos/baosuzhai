@@ -141,21 +141,33 @@ define([ "dojo/_base/declare",
 						}
 					}
 				}else if(dripLang.isOperator(char)){
-					if(this._isMathTokenNode(node)){
+					if(this._isLineNode(node)){
+						var mathNode = xmlDoc.createElement("math");
+						node.appendChild(mathNode);
+						var mnNode = xmlDoc.createElement("mo");
+						mathNode.appendChild(mnNode);
+						this.cursorPosition.node = mnNode;
+						this.cursorPosition.offset = 0;
+						
+						this._insertChar(char);
+						
+						this.path.push({nodeName:"math", offset:1});
+						this.path.push({nodeName:"mo", offset:1});
+					}else if(this._isMathTokenNode(node)){
 						//如果当前节点不是操作符节点，则新建一个操作符节点
 						var node = this.cursorPosition.node;
-						if(node.nodeName != "mo"){
-							var moNode = xmlDoc.createElement("mo");
-							dripLang.insertNodeAfter(moNode,node);
-							
-							this.cursorPosition.node = moNode;
-							this.cursorPosition.offset = 0;
-							
-							this._insertChar(char);
-							
-							var pos = this.path.pop();
-							this.path.push({nodeName:"mo", offset:pos.offset+1});
-						}
+						// 不论是不是mo节点，都单独新建，因此处理逻辑一样，就不再分开。
+						var moNode = xmlDoc.createElement("mo");
+						dripLang.insertNodeAfter(moNode,node);
+						
+						this.cursorPosition.node = moNode;
+						this.cursorPosition.offset = 0;
+						
+						this._insertChar(char);
+						
+						var pos = this.path.pop();
+						this.path.push({nodeName:"mo", offset:pos.offset+1});
+				
 					}
 				}else if(dripLang.isNewLine(char)){
 					// TODO:在指定位置新增一行

@@ -30,9 +30,10 @@ require(["dojo/ready",
         		 registry){
 	
 	ready(function(){
-		// 获取用户信息。
+		debugger;
 		var btnNewExercise = registry.byId("btnNewExercise");
-			btnNewExercise.on("click",function(e){
+		btnNewExercise.on("click",function(e){
+			debugger;
 			window.location.href = "/exercises/new";
 		});
 	});

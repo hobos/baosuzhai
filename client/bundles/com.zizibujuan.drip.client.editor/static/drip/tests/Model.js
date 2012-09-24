@@ -229,6 +229,31 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				
 			}
 		},
+		{
+			name: "允许多个操作符放在一起,即使符号相同，也用多个mo封装",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData("+");
+				t.is("/root/line[1]/math[1]/mo[1]", model.getPath());
+				t.is(model.getFocusNode().nodeName, "mo");
+				t.is(1, model.getOffset());
+				// 确认text没有被放在math节点中
+				t.is(1, model.getLineAt(0).childNodes[0].childNodes.length);
+				
+				model.setData("+");
+				t.is("/root/line[1]/math[1]/mo[2]", model.getPath());
+				t.is(model.getFocusNode().nodeName, "mo");
+				t.is(1, model.getOffset());
+				// 确认text没有被放在math节点中
+				t.is(2, model.getLineAt(0).childNodes[0].childNodes.length);
+			},
+			tearDown: function(){
+				
+			}
+		},
 		
 		
 		// TODO:测试删除，测试替换，其实删除是一种特殊的替换，是用空字符串替换掉选中的文本。

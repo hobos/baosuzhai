@@ -90,6 +90,7 @@ require(["dojo/dom"],function(dom){
 	text.addEventListener("input",function(e){
 		inputCount++;
 		//console.log(e.constructor==UIEvent);
+		logKeyboardEvent(e);
 		console.log(e.type,"textarea.value=='"+this.value+"'","第"+inputCount+"次执行",e);
 		var self = this;
 		//e.stopPropagation();
@@ -112,6 +113,7 @@ require(["dojo/dom"],function(dom){
 
 	text.addEventListener("text",function(e){
 		setTimeout(function(){
+			logKeyboardEvent(e);
 			logUIEvent(e);
 		},0);
 	},false);
