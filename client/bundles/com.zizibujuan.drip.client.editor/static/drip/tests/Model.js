@@ -168,6 +168,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				t.is("/root/line[1]/math[2]/mn[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(1, model.getOffset());
+				t.is(2, model.getLineAt(0).childNodes.length);
 			},
 			tearDown: function(){
 				
@@ -187,6 +188,8 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				t.is("/root/line[1]/text[2]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "text");
 				t.is(1, model.getOffset());
+				// 确认text没有被放在math节点中
+				t.is(2, model.getLineAt(0).childNodes.length);
 			},
 			tearDown: function(){
 				

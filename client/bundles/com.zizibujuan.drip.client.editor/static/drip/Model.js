@@ -109,7 +109,8 @@ define([ "dojo/_base/declare",
 					}else if(this._isTextNode(node)){
 						// FIXME：重构出一个方法
 						var mathNode = xmlDoc.createElement("math");
-						node.appendChild(mathNode);
+						// math应该放在textNode之后
+						dripLang.insertNodeAfter(mathNode, node);
 						var mnNode = xmlDoc.createElement("mn");
 						mathNode.appendChild(mnNode);
 						this.cursorPosition.node = mnNode;
@@ -188,18 +189,27 @@ define([ "dojo/_base/declare",
 					}else if(this._isTextNode(node)){
 						this._insertChar(char);
 					}else if(this._isMathTokenNode(node)){
+						// 要往上移到math节点之外
+						var pos = null;
+						
+						do{
+							pos = this.path.pop();
+						}while(pos && pos.nodeName != "math");
+						
 						var textSpanNode = xmlDoc.createElement("text");
-						node.appendChild(textSpanNode);
+						// 获取math节点，然后将新节点插入到math节点之后
+						var mathNode = node;
+						while(mathNode.nodeName != "math"){
+							mathNode = mathNode.parentNode;
+						}
+						dripLang.insertNodeAfter(textSpanNode, mathNode);
 						
 						this.cursorPosition.node = textSpanNode;
 						this.cursorPosition.offset = 0;
 						
 						this._insertChar(char);
 						
-						var pos = null;
-						do{
-							pos = this.path.pop();
-						}while(pos && pos.nodeName != "math");
+						
 						this.path.push({nodeName:"text", offset:pos.offset+1});
 					}
 				}
