@@ -45,9 +45,10 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 如果刚开始什么都不输入，则只插入一个空的line节点，不预插入text节点
 				t.is("/root/line[2]", model.getPath());
 				// 测试用例需要确定，这个节点不是第一个节点
-				t.is(model.getFocusNode(), model.getLineAt(0));
 				t.is(model.getFocusNode().nodeName, "line");
 				t.is(0, model.getOffset());
+				// 确认当前获取焦点的行节点，是第二行
+				t.is(model.getFocusNode(), model.getLineAt(1));
 			},
 			tearDown: function(){
 				

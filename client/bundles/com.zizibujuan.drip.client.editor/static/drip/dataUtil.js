@@ -16,7 +16,7 @@ define(["dojox/xml/parser",
 		var root = xmlDoc.documentElement;
 		var lines = root.childNodes;
 		array.forEach(lines, function(line, index){
-			var lineString = "<div>";
+			var lineString = "<div class='drip_line'>";
 			var spans = line.childNodes;
 			array.forEach(spans, function(span, index){
 				if(span.nodeName == "text"){

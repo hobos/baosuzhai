@@ -37,3 +37,7 @@
 .ace_editor.multiselect .ace_cursor {
     border-left-width: 1px;
 }
+
+.drip_line{
+	min-height: 15px;
+}

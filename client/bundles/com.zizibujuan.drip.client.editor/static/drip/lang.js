@@ -24,7 +24,7 @@ define({
 		if(parentNode.lastChild == existingNode){
 			parentNode.appendChild(newNode)
 		}else{
-			parentNode.insertBefore(newNode, existiongNode.nextSibling);
+			parentNode.insertBefore(newNode, existingNode.nextSibling);
 		}
 	}
 

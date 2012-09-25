@@ -191,6 +191,9 @@ define([ "dojo/_base/declare",
 					var newLineNode = this.doc.createElement("line");
 					dripLang.insertNodeAfter(newLineNode, focusedLine);
 					
+					this.cursorPosition.node = newLineNode;
+					this.cursorPosition.offset = 0;
+					
 					// 将之前缓存的上一行的信息都清除
 					var pos = this.path.pop();
 					while(pos.nodeName != "line"){
