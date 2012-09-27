@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dojox/gfx","dojo/_base/array",
-		"dojox/lang/functional", "dojox/lang/functional/array", "dojox/lang/functional/fold",
+define(["dojo/_base/declare", "dijit/_WidgetBase", "dojox/gfx","dojo/_base/array",
+		"dojox/lang/functional",
 		"dojo/dom", "dojo/dom-construct", "dojo/dom-class","dijit/registry"],
-		function(lang, declare, _WidgetBase, gfx, arrayUtil, df, dfa, dff,
+		function(declare, _WidgetBase, gfx, arrayUtil, df,
 				dom, domFactory, domClass, registry){
 
 	var REVERSED_SERIES = /\.(StackedColumns|StackedAreas|ClusteredBars)$/;
@@ -42,6 +42,14 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dojox/gfx
 			this.domNode = domFactory.create("table",
 					{role: "group", "aria-label": "chart legend", "class": "dojoxLegendNode"});
 			this.legendBody = domFactory.create("tbody", null, this.domNode);
+			this.inherited(arguments);
+		},
+		destroy: function(){
+			if(this._surfaces){
+				arrayUtil.forEach(this._surfaces, function(surface){
+					surface.destroy();
+				});
+			}
 			this.inherited(arguments);
 		},
 		refresh: function(){

@@ -1,5 +1,5 @@
-define(["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/declare", "dojox/gfx", "dojox/gfx/shape"],
-	function(lang, arr, domConstruct, declare, gfx, shape){
+define(["dojo/_base/array", "dojo/dom-construct","dojo/_base/declare", "dojox/gfx", "dojox/gfx/shape"],
+	function(arr, domConstruct, declare, gfx, shape){
 
 	return declare("dojox.charting.Element", null, {
 		// summary:
@@ -39,12 +39,18 @@ define(["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/
 			this.destroyHtmlElements();
 			if(this.group){
 				// since 1.7.x we need dispose shape otherwise there is a memoryleak
-				this.group.removeShape();
-				var children = this.group.children;
+				this.getGroup().removeShape();
+				var children = this.getGroup().children;
 				for(var i = 0; i < children.length;++i){
 					shape.dispose(children[i]);
 				}
-				this.group.clear();
+				this.getGroup().clear();
+				shape.dispose(this.getGroup());
+				if(this.getGroup() != this.group){
+					// we do have an intermediary clipping group (see CartesianBase)
+					this.group.clear();
+					shape.dispose(this.group);
+				}
 				this.group = null;
 			}
 			this.dirty = true;
@@ -66,16 +72,19 @@ define(["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/
 			this.destroyHtmlElements();
 			if(!creator){ creator = this.chart.surface; }
 			if(this.group){
-				var children = this.group.children;
+				var children = this.getGroup().children;
 				for(var i = 0; i < children.length;++i){
 					shape.dispose(children[i]);
 				}
-				this.group.clear();
+				this.getGroup().clear();
 			}else{
 				this.group = creator.createGroup();
 			}
 			this.dirty = true;
 			return this;	//	dojox.charting.Element
+		},
+		getGroup: function(){
+			return this.group;
 		},
 		destroyHtmlElements: function(){
 			// summary:
@@ -350,7 +359,6 @@ define(["dojo/_base/lang", "dojo/_base/array", "dojo/dom-construct","dojo/_base/
 				y2: center.y + fill.r * radius * Math.sin(angle) / 100,
 				colors: fill.colors
 			};
-			return fill;
 		}
 	});
 });

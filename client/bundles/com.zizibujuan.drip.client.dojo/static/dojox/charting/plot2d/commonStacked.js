@@ -12,12 +12,12 @@ define([
 				for(var j = 0; j < run.data.length; j++){
 					var x, y;
 					if(run.data[j] !== null){
-						if(typeof run.data[j] == "number" || !run.data[j].x){
+						if(typeof run.data[j] == "number" || !run.data[j].hasOwnProperty("x")){
 							y = commonStacked.getIndexValue(series, i, j);
 							x = j+1;
 						}else{
 							x = run.data[j].x;
-							if(x){
+							if(x !== null){
 								y = commonStacked.getValue(series, i, x);
 								y = y != null && y.y ? y.y:null; 
 							}
@@ -45,7 +45,7 @@ define([
 		},
 		
 		getValue: function(series, i, x){
-			var value = null, j, z;
+			var value = null, j, z, v;
 			for(j = 0; j <= i; ++j){
 				for(z = 0; z < series[j].data.length; z++){
 					v = series[j].data[z];

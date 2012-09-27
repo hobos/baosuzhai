@@ -72,7 +72,9 @@ function(dojo, lang, aspect, dom, on, has, mouse, domReady, win){
 			return on(win.doc, "touchmove", function(evt){
 				if(node === win.doc || dom.isDescendant(hoveredNode, node)){
 					listener.call(this, lang.mixin({}, evt, {
-						target: hoveredNode
+						target: hoveredNode,
+						preventDefault: function(){evt.preventDefault();},
+						stopPropagation: function(){evt.stopPropagation();}
 					}));
 				}
 			});
