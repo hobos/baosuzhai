@@ -275,6 +275,48 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				
 			}
 		},
+		{
+			name: "输入Unicode符号表示的操作符",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData("&#xD7;");
+				t.is("/root/line[1]/math[1]/mo[1]", model.getPath());
+				t.is(model.getFocusNode().nodeName, "mo");
+				t.is(1, model.getOffset());
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "拆分字符",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				var dataArray = model._splitData("你好");
+				t.is("你",dataArray[0]);
+				t.is("好",dataArray[1]);
+				
+				dataArray = model._splitData("&1;");
+				t.is("&1;",dataArray[0]);
+				t.t(dataArray.length == 1);
+				
+				dataArray = model._splitData("1&#xD7;2");
+				t.is("1",dataArray[0]);
+				t.is("&#xD7;",dataArray[1]);
+				t.is("2",dataArray[2]);
+				t.t(dataArray.length == 3);
+				
+			},
+			tearDown: function(){
+				
+			}
+		},
 		
 		
 		// TODO:测试删除，测试替换，其实删除是一种特殊的替换，是用空字符串替换掉选中的文本。

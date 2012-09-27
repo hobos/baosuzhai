@@ -77,9 +77,11 @@ define(["dojo/_base/declare",
 			
 		},
 		
-		_onTextInput :function(e){
+		_onTextInput: function(e){
 			var textarea = this.textarea;
 			var model = this.model;
+			
+			// 对输入的内容进行拦截，判断是否有推荐的可选项。
 			
 			// 当model的内容发生变化时，View自动更新,所以这里不写View相关的代码
 			model.setData(e.data);

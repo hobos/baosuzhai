@@ -74,6 +74,38 @@ define([ "dojo/_base/declare",
 			
 		},
 		
+		_splitData: function(data){
+			// summary:
+			//		将传入的数据拆分为最小单元的html符号。
+			//		dataArray的每个元素都只能看作一个字符。
+			var len = data.length;
+			var result = [];
+			var index = 0;
+			var append = false;
+			var cache = "";
+			for(var i = 0; i < len; i++){
+				var char = data.charAt(i);
+				if(char == "&"){
+					append = true;
+					cache = char;
+				}else if(append && char == ";"){
+					append = false;
+					cache += char;
+					result[index] = cache;
+					index++;
+					cache = "";
+				}else{
+					if(append){
+						cache += char;
+					}else{
+						result[index] = data.charAt(i);
+						index++;
+					}
+				}
+			}
+			return result;
+		},
+		
 		// TODO：需要加入位置参数，指明在什么地方插入
 		setData: function(data, nodeName){
 			// summary:
@@ -83,14 +115,18 @@ define([ "dojo/_base/declare",
 			// nodeName：String
 			//		将data作为什么节点插入，这个通常由人工选择，如果没有值，则系统自动判断。
 			
-			var xmlDoc = this.doc;
 			
-			var length = data.length;
+			// 这里需要对data做一个加工，&#xD7;只能看作一个字符。
+			var dataArray = this._splitData(data);
+			// 走到这一步，dataArray的每个元素都只能看作一个字符
+			
+			var xmlDoc = this.doc;
 			// 注意：把对数据类型的判断放在判断节点类型的外面。除非有充分的理由不要修改这个逻辑
 			// 先循环字符，再判断当前要插入字符的环境。
 			// data中可能包含多个字符，通过循环，单独处理每个字符
-			for(var i = 0; i < length; i++){
-				var char = data.charAt(i);
+			array.forEach(dataArray,lang.hitch(this,function(eachData, index){
+
+				var char = eachData;
 				var node = this.cursorPosition.node;
 				if(dripLang.isNumber(char)){
 					if(this._isLineNode(node)){
@@ -243,7 +279,8 @@ define([ "dojo/_base/declare",
 					}
 				}
 				// TODO:重构 moveNext
-			}
+			}));
+			
 			this.onChange(data);
 		},
 		
@@ -294,7 +331,8 @@ define([ "dojo/_base/declare",
 			var oldText = this.cursorPosition.node.textContent;
 			var newText = dripString.insertAtOffset(oldText, offset, char);
 			this.cursorPosition.node.textContent = newText;
-			this.cursorPosition.offset += char.length; // 1
+			// 这里输入的char，不管几个字符都当作一个长度处理。
+			this.cursorPosition.offset += 1; // char.length
 		},
 		
 		
