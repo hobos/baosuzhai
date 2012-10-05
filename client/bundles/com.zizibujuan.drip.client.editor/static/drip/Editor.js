@@ -48,7 +48,7 @@ define(["dojo/_base/declare",
 			aspect.after(contentAssist,"apply", function(input, event){
 				// FIXME:这里直接获取map值的逻辑不正确，如果处于cache状态，则不应该往model中
 				// 输入值。
-				model.setData(input);
+				model.setData({data:input});
 				setTimeout(function() {
 					textarea.value = "";
 			    });
@@ -112,7 +112,7 @@ define(["dojo/_base/declare",
 			
 			// 当model的内容发生变化时，View自动更新,所以这里不写View相关的代码
 			var model = this.model;
-			model.setData(inputData);
+			model.setData({data:inputData});
 			
 			var textarea = this.textarea;
 			setTimeout(function() {

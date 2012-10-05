@@ -107,14 +107,25 @@ define([ "dojo/_base/declare",
 		},
 		
 		// TODO：需要加入位置参数，指明在什么地方插入
-		setData: function(data, nodeName){
+		setData: function(insertInfo){
 			// summary:
 			//		往model中插入数据。
-			// data: String
-			//		要插入的内容
-			// nodeName：String
-			//		将data作为什么节点插入，这个通常由人工选择，如果没有值，则系统自动判断。
+			// insertInfo: JSON Object
+			//		插入数据的详情。
+			//		data: String
+			//			要插入的内容	
+			// 		nodeName：String
+			//			将data作为什么节点插入，这个通常由人工选择，如果没有值，则系统自动判断。
+			//		removeCount: Int
+			//			要移除的字符的数量，从当前聚焦位置往前删除removeCount个字符。
 			
+			var data = insertInfo.data;
+			var nodeName = insertInfo.nodeName;
+			var removeCount = insertInfo.removeCount;
+			
+			if(removeCount && removeCount > 0){
+				this._removeLeft(removeCount);
+			}
 			
 			// 这里需要对data做一个加工，&#xD7;只能看作一个字符。
 			var dataArray = this._splitData(data);
@@ -282,6 +293,14 @@ define([ "dojo/_base/declare",
 			}));
 			
 			this.onChange(data);
+		},
+		
+		_removeLeft: function(removeCount){
+			var offset = this.cursorPosition.offset;
+			var oldText = this.cursorPosition.node.textContent;
+			var newText = dripString.insertAtOffset(oldText, offset, char, removeCount);
+			this.cursorPosition.node.textContent = newText;
+			this.cursorPosition.offset -= removeCount;
 		},
 		
 		getLineCount: function(){

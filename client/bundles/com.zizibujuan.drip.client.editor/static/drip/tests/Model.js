@@ -40,7 +40,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			runTest: function(t){
 				var model = this.model;
 				// 遇到如回车符号或者换行符号这类特殊的字符时，使用转义字符表示。
-				model.setData("\n");
+				model.setData({data:"\n"});
 				t.t(model.getLineCount() == 2);
 				// 如果刚开始什么都不输入，则只插入一个空的line节点，不预插入text节点
 				t.is("/root/line[2]", model.getPath());
@@ -61,7 +61,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			},
 			runTest: function(t){
 				var model = this.model;
-				model.setData("\t");
+				model.setData({data:"\t"});
 				// 制表符在model中用什么节点表示呢， 制表符用4个空格表示，还是8个空格？
 				// 在model中直接用\t表示，但是在界面上进行绘制的时候，需要使用span节点封装。
 				// 并在其中放置指定个数的空格。
@@ -86,7 +86,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			runTest: function(t){
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("中文"); // 注意中文可以一次插入多个字
+				model.setData({data:"中文"}); // 注意中文可以一次插入多个字
 				
 				// 因为line节点中包含
 				t.is("/root/line[1]/text[1]", model.getPath());
@@ -96,7 +96,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				t.is("text", node.nodeName);
 				
 				// 追加中文
-				model.setData("一");
+				model.setData({data:"一"});
 				t.is("/root/line[1]/text[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "text");
 				t.is(3, model.getOffset());
@@ -113,7 +113,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			runTest: function(t){
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("1"); // 数字一次可以插入1个，但都当多个处理
+				model.setData({data:"1"}); // 数字一次可以插入1个，但都当多个处理
 				
 				// 因为line节点中包含
 				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
@@ -121,7 +121,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				t.is(1, model.getOffset());
 				
 				// 追加数值
-				model.setData("2");
+				model.setData({data:"2"});
 				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(2, model.getOffset());
@@ -143,7 +143,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 两种判断数据类型的方法：1是系统自动判断；2是人工判断
 				// 所以setData应该再加一个参数，表示人工判断的结果，表名数据是什么类型。
 				// 如果没有这个参数，则系统自动判断
-				model.setData("a");
+				model.setData({data:"a"});
 				// 需要阻断
 				// 因为line节点中包含
 				t.is("/root/line[1]/text[1]", model.getPath());
@@ -164,8 +164,8 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 结果是在line中先加一个text节点，然后再加一个math节点
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("中");
-				model.setData("1");
+				model.setData({data:"中"});
+				model.setData({data:"1"});
 				t.is("/root/line[1]/math[2]/mn[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(1, model.getOffset());
@@ -184,8 +184,8 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 结果是在line中先加一个text节点，然后再加一个math节点
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("中");
-				model.setData("=");
+				model.setData({data:"中"});
+				model.setData({data:"="});
 				t.is("/root/line[1]/math[2]/mo[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
@@ -204,8 +204,8 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 结果是在line中先加一个text节点，然后再加一个math节点
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("1");
-				model.setData("中");
+				model.setData({data:"1"});
+				model.setData({data:"中"});
 				t.is("/root/line[1]/text[2]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "text");
 				t.is(1, model.getOffset());
@@ -225,23 +225,23 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				// 结果是在line中先加一个text节点，然后再加一个math节点
 				var model = this.model;
 				// 如果是中文，则放在text节点中
-				model.setData("1");
+				model.setData({data:"1"});
 				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(1, model.getOffset());
-				model.setData("+");
+				model.setData({data:"+"});
 				t.is("/root/line[1]/math[1]/mo[2]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
-				model.setData("1");
+				model.setData({data:"1"});
 				t.is("/root/line[1]/math[1]/mn[3]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(1, model.getOffset());
-				model.setData("=");
+				model.setData({data:"="});
 				t.is("/root/line[1]/math[1]/mo[4]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
-				model.setData("2");
+				model.setData({data:"2"});
 				t.is("/root/line[1]/math[1]/mn[5]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mn");
 				t.is(1, model.getOffset());
@@ -257,14 +257,14 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			},
 			runTest: function(t){
 				var model = this.model;
-				model.setData("+");
+				model.setData({data:"+"});
 				t.is("/root/line[1]/math[1]/mo[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
 				// 确认text没有被放在math节点中
 				t.is(1, model.getLineAt(0).childNodes[0].childNodes.length);
 				
-				model.setData("+");
+				model.setData({data:"+"});
 				t.is("/root/line[1]/math[1]/mo[2]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
@@ -282,7 +282,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			},
 			runTest: function(t){
 				var model = this.model;
-				model.setData("&#xD7;");
+				model.setData({data:"&#xD7;"});
 				t.is("/root/line[1]/math[1]/mo[1]", model.getPath());
 				t.is(model.getFocusNode().nodeName, "mo");
 				t.is(1, model.getOffset());
@@ -315,6 +315,25 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			tearDown: function(){
 				
 			}
+		},
+		{
+			name: "替换字符",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"你好"});
+				model.setData({data:"",removeCount:2});
+				t.is("/root/line[1]/text[1]", model.getPath());
+				t.is(model.getFocusNode().nodeName, "text");
+				t.is("", model.getFocusNode().textContent);
+				t.is(0, model.getOffset());
+			},
+			tearDown: function(){
+				
+			}
+		
 		},
 		
 		
