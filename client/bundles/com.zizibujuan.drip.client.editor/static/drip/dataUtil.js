@@ -1,11 +1,9 @@
-/**
- * 数据处理工具类，将xml字符串转换为html等
- */
 define(["dojox/xml/parser",
         "dojo/_base/array"], function(
         		xmlParser,
         		array){
-	
+	// summary:
+	//		数据处理工具类，将xml字符串转换为html等。
 	var dataUtil = {};
 	
 	// summary:
