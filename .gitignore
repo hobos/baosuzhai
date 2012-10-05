@@ -1,3 +1,4 @@
+# 忽略target文件夹
 server/features/com.zizibujuan.drip-feature/target
 server/features/com.zizibujuan.drip.base-feature/target
 server/features/com.zizibujuan.drip.client-feature/target
@@ -23,3 +24,30 @@ client/bundles/com.zizibujuan.drip.client.dojo/target
 client/bundles/com.zizibujuan.drip.client.mathjax/target
 
 server/build/com.zizibujuan.drip.repository/target
+
+# 忽略bin文件夹
+server/features/com.zizibujuan.drip-feature/bin
+server/features/com.zizibujuan.drip.base-feature/bin
+server/features/com.zizibujuan.drip.client-feature/bin
+server/features/com.zizibujuan.drip.server-feature/bin
+
+server/bundles/com.zizibujuan.drip.server.configurator/bin
+server/bundles/com.zizibujuan.dbaccess.mysql/bin
+server/bundles/com.zizibujuan.jdbc.mysql/bin
+
+server/bundles/com.zizibujuan.drip.server.servlet/bin
+server/bundles/com.zizibujuan.drip.server.service/bin
+server/bundles/com.zizibujuan.drip.server.service.impl/bin
+server/bundles/com.zizibujuan.drip.server.dao/bin
+server/bundles/com.zizibujuan.drip.server.dao.mysql/bin
+server/bundles/com.zizibujuan.drip.server.util/bin
+server/bundles/com.zizibujuan.drip.server.exception/bin
+
+server/bundles/com.zizibujuan.drip.server.logback.config/bin
+
+client/bundles/com.zizibujuan.drip.client.core/bin
+client/bundles/com.zizibujuan.drip.client.editor/bin
+client/bundles/com.zizibujuan.drip.client.dojo/bin
+client/bundles/com.zizibujuan.drip.client.mathjax/bin
+
+server/build/com.zizibujuan.drip.repository/bin
