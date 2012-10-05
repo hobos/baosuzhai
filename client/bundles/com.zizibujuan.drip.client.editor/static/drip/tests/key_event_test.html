@@ -117,10 +117,14 @@ require(["dojo/dom"],function(dom){
 			logUIEvent(e);
 		},0);
 	},false);
+	
+	dom.byId("divUnicode").innerHTML = "&#xF7;";
 });
 </script>
 
 <div style="border:solid 1px red;min-height:30px" contenteditable="true"></div>
+
+<div id="divUnicode"></div>
 </body>
 
 </html>
