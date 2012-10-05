@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试提示面板</title>
+<script type="text/javascript" src="/dojo/dojo.js" data-dojo-config="isDebug:true,cacheBust:new Date()"></script>
+<script type="text/javascript">
+require(["dojo", 
+         "doh",
+         "dojo/dom-style", 
+         "dojo/dom",
+         "dojo/aspect",
+         "drip/ContentAssist",
+         "drip/mathContentAssist",
+         "dojo/domReady!"], function(
+        		 dojo, 
+        		 doh,
+        		 domStyle, 
+        		 dom,
+        		 aspect,
+        		 ContentAssist,
+        		 mathContentAssist){
+	
+	doh.register("ContentAssist",[
+		{
+			name: "show",
+			setUp: function(){
+				this.contentAssist = new ContentAssist({});
+				mathContentAssist.keywords = [{
+					input:"1",
+					map:"a",
+					nodeName:"text",
+					freq:1
+				},{
+					input:"12",
+					map:"ab",
+					nodeName:"text",
+					freq:1
+				}];
+			},
+			runTest: function(t){
+				var contentAssist = this.contentAssist;
+				t.f(contentAssist.show("a"));//不显示
+				
+				t.t(contentAssist.show("1"));
+				t.t(contentAssist.proposals.length == 2);
+				t.is("1", contentAssist.cacheString);
+				
+				// 追加输入的值
+				t.t(contentAssist.show("2"));
+				t.t(contentAssist.proposals.length == 1);
+				t.is("12", contentAssist.cacheString);
+				
+				t.f(contentAssist.show("3"));
+				t.t(contentAssist.proposals.length == 0);
+				t.is("", contentAssist.cacheString);
+				// FIXME:在model中具体添加值的逻辑怎么处理呢？
+			},
+			tearDown: function(){
+				
+			}
+		},{
+			name: "有提示框时，往model中插入\"临时\"数据",
+			setUp: function(){
+				this.contentAssist = new ContentAssist({});
+				var inputData = this.inputData = "";
+				mathContentAssist.keywords = [{
+					input:"1",
+					map:"a",
+					nodeName:"text",
+					freq:1
+				},{
+					input:"12",
+					map:"ab",
+					nodeName:"text",
+					freq:1
+				}];
+			},
+			runTest: function(t){
+				var contentAssist = this.contentAssist;
+				contentAssist.show("1");
+				// TODO:位置
+				t.is("1", this.inputData);
+				
+				
+			},
+			tearDown: function(){
+				
+			}
+		},{
+			name: "有提示框时，点击确定后，在model中用\"最终值\"替换到\"临时值\"",
+			setUp: function(){
+				
+			},
+			runTest: function(t){
+				
+			},
+			tearDown: function(){
+				
+			}
+		}
+	]);
+	doh.runOnLoad();
+	
+});
+</script>
+</head>
+<body>
+
+</body>
+</html>

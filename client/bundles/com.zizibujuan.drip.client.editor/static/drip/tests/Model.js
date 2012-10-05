@@ -33,7 +33,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			}
 		},
 		{
-			name: "敲击回车插入空行, 使用\n表示换行，因此遇到keyCode为13时，转换为\n",
+			name: "敲击回车插入空行, 使用\\n表示换行，因此遇到keyCode为13时，转换为\\n",
 			setUp: function(){
 				this.model = new Model({});
 			},
@@ -55,7 +55,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 			}
 		},
 		{
-			name: "在空的model中，敲击tab键盘之后插入制表符号，使用\t表示制表符，keyCode为9",
+			name: "在空的model中，敲击tab键盘之后插入制表符号，使用\\t表示制表符，keyCode为9",
 			setUp: function(){
 				this.model = new Model({});
 			},
@@ -311,7 +311,6 @@ define([ "doh","drip/Model" ], function(doh,Model) {
 				t.is("&#xD7;",dataArray[1]);
 				t.is("2",dataArray[2]);
 				t.t(dataArray.length == 3);
-				
 			},
 			tearDown: function(){
 				
