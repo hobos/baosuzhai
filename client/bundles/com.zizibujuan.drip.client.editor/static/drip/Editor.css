@@ -30,6 +30,18 @@
     height: 15px;
 }
 
+.drip_contentAssist{
+	min-width: 200px;
+	font-size: 15px;
+	background-color: white;
+}
+
+.drip_contentAssist div{
+	padding-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
 .drip_cursor.drip_hidden {
     opacity: 0.2;
 }

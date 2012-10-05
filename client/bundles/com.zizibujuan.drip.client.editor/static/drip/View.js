@@ -40,13 +40,14 @@ define(["dojo/_base/declare",
 		},
 		
 		_onChange : function(){
+			debugger;
 			this.textLayer.innerHTML = this.model.getHTML();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.parentNode]);
 			
 			var top = 0;
 			// TODO:这里需要一个根据model中的数据映射到浏览器中的dom节点
-			var left = this.textLayer.firstChild.firstChild.offsetWidth;
-			this.cursor.move(top,left);//如果传入参数，可能会弄错顺序；直接传入对象，可避免这个错误。
+			//var left = this.textLayer.firstChild.firstChild.offsetWidth;
+			//this.cursor.move(top,left);//如果传入参数，可能会弄错顺序；直接传入对象，可避免这个错误。
 		}
 		
 	});
