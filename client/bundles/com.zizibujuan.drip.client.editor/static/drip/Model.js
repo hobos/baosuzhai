@@ -51,6 +51,11 @@ define([ "dojo/_base/declare",
 		//		在构造函数中初始化到位，如果有传入xml文本，则读取文本进行初始化；
 		//		如果什么也没有传，则初始化为默认值。
 		constructor: function(options){
+			this._init();
+			lang.mixin(this, options);
+		},
+		
+		_init: function(){
 			// 注意：在类中列出的属性，都必须在这里进行初始化。
 			this.doc = xmlParser.parse(EMPTY_XML);
 			this.path = [];
@@ -63,9 +68,10 @@ define([ "dojo/_base/declare",
 			this.path.push({nodeName:"root"});
 			// offset 偏移量，从1开始
 			this.path.push({nodeName:"line", offset:1});
-			
-			lang.mixin(this, options);
-			
+		},
+		
+		clear: function(){
+			this._init();
 		},
 		
 		// 如果没有内容，则创建一个新行
@@ -298,9 +304,43 @@ define([ "dojo/_base/declare",
 		_removeLeft: function(removeCount){
 			var offset = this.cursorPosition.offset;
 			var oldText = this.cursorPosition.node.textContent;
-			var newText = dripString.insertAtOffset(oldText, offset, char, removeCount);
+			var newText = dripString.insertAtOffset(oldText, offset, "", removeCount);
 			this.cursorPosition.node.textContent = newText;
 			this.cursorPosition.offset -= removeCount;
+		},
+		
+		removeLeft: function(){
+			// summary:
+			//		删除当前聚焦点的前一个字符
+			// return:String
+			//		删除的字符
+			
+			var offset = this.cursorPosition.offset;
+			var oldText = this.cursorPosition.node.textContent;
+			
+			if(offset == 0){
+				return "";
+			}else{
+				var removed = oldText.charAt(offset - 1);
+				var newText = dripString.insertAtOffset(oldText, offset, "", 1);
+				if(newText == ""){
+					var curNode = this.cursorPosition.node;
+					var parentNode = curNode.parentNode;
+					parentNode.removeChild(curNode);
+					
+					this.cursorPosition.node = parentNode;
+					this.cursorPosition.offset = 0;
+				}else{
+					this.cursorPosition.node.textContent = newText;
+					this.cursorPosition.offset -= 1;
+				}
+				
+				return removed;
+			}
+		},
+		
+		moveLeft: function(){
+			
 		},
 		
 		getLineCount: function(){
