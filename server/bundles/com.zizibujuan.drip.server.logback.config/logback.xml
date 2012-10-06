@@ -10,6 +10,7 @@
     <file>logFile.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <!-- daily rollover -->
+      <!-- FIXME: dd表示的时间比真实日期少一天 -->
       <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
 
       <!-- keep 30 days' worth of history -->

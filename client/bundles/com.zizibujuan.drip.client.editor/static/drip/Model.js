@@ -340,6 +340,67 @@ define([ "dojo/_base/declare",
 		},
 		
 		moveLeft: function(){
+			var node = this.cursorPosition.node;
+			var offset = this.cursorPosition.offset;
+			
+			var nodeName = node.nodeName;
+			if(nodeName == "line"){
+				var previousNode = node.previousSibling;
+				if(!previousNode){
+					return;
+				}
+				
+				previousNode = previousNode.lastChild;
+				if(previousNode.nodeName == "math"){
+					previousNode = previousNode.lastChild;
+				}
+				var textContent = previousNode.textContent;
+				
+				this.cursorPosition.node = previousNode;
+				this.cursorPosition.offset = textContent.length;
+				return;
+			}
+			
+			if(offset > 0){
+				this.cursorPosition.offset--;
+				return;
+			}
+			
+			if(offset == 0){
+				// 先往前寻找兄弟节点
+				var previousNode = node.previousSibling;
+				if(previousNode){
+					if(previousNode.nodeName == "math"){
+						previousNode = previousNode.lastChild;
+					}
+					var textContent = previousNode.textContent;
+					
+					this.cursorPosition.node = previousNode;
+					this.cursorPosition.offset = textContent.length - 1;
+					return;
+				}
+				// 如果找不到兄弟节点，则寻找父节点
+				var parentNode = node.parentNode;
+				var previousNode = parentNode.previousSibling;
+				if(previousNode){
+					if(previousNode.nodeName == "line"){
+						previousNode = previousNode.lastChild;
+						if(previousNode.nodeName == "math"){
+							previousNode = previousNode.lastChild;
+						}
+						var textContent = previousNode.textContent;
+						
+						this.cursorPosition.node = previousNode;
+						this.cursorPosition.offset = textContent.length;
+					}else{
+						var textContent = previousNode.textContent;
+						
+						this.cursorPosition.node = previousNode;
+						this.cursorPosition.offset = textContent.length - 1;
+					}
+					
+				}
+			}
 			
 		},
 		
