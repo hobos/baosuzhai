@@ -1,48 +1,159 @@
 define([ "doh", "drip/Model" ], function(doh, Model) {
 	doh.register("Model.removeLeft", [
 	    {
-			name: "removeLeft--删除当前聚焦点左边的一个字符",
+			name: "当没有任何内容时，removeLeft不起任何作用",
 			setUp: function(){
 				this.model = new Model({});
 			},
 			runTest: function(t){
 				var model = this.model;
-				// 当没有任何内容时，removeLeft不起任何作用
 				var removed = model.removeLeft();
 				t.is("", removed);
 				t.is("line",model.getFocusNode().nodeName);
 				t.is(0, model.getOffset());
-				model.clear();
+			},
+			tearDown: function(){
 				
-				// 当有一个text文本时，removeLeft后也删除text节点
+			}
+		},
+		{
+			name: "当有一个text文本时，removeLeft后也删除text节点",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
 				model.setData({data:"a"});
 				removed = model.removeLeft();
 				t.is("a", removed);
 				t.is("line", model.getFocusNode().nodeName);
 				t.is(0, model.getOffset());
-				model.clear();
+			},
+			tearDown: function(){
 				
-				// 当text节点中有三个字符时，删除最后一个
+			}
+		},
+		{
+			name: "当text节点中有三个字符时，删除最后一个",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
 				model.setData({data:"你我他"});
 				t.is("他", model.removeLeft());
 				t.is("text", model.getFocusNode().nodeName);
 				t.is(2, model.getOffset());
 				model.clear();
+			},
+			tearDown: function(){
 				
-				// 当text节点中有三个字符时，删除中间一个
-				// 当text节点中有三个字符时，删除最前一个
-				// 当一个text文本后，有math时，removeLeft后，math获取焦点(需要moveLeft方法配合测试)
-				// 当math节点中任何内容的token节点，只要其中没有内容，就删除节点，并让前一个节点获取焦点。
-				// math节点与text节点类似，只要当前聚焦点前有大于等于两个字符的内容，就删除内容
-				// 当math节点中如果只有一个token节点，执行删除后，math下面没有节点，则删除math节点
-				// 当在第二行的起始位置时，removeLeft到第一行的最末尾
-				// 
+			}
+		},
+		{
+			name: "当text节点中有三个字符时，删除中间一个",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"你我他"});
+				model.moveLeft();
+				t.is("我", model.removeLeft());
+				t.is("text", model.getFocusNode().nodeName);
+				t.is("你他", model.getFocusNode().textContent);
+				t.is(1, model.getOffset());
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "当text节点中有三个字符时，删除最前一个",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"你我他"});
+				model.moveLeft();
+				model.moveLeft();
+				t.is("你", model.removeLeft());
+				t.is("text", model.getFocusNode().nodeName);
+				t.is("我他", model.getFocusNode().textContent);
+				t.is(0, model.getOffset());
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "当一个text文本后，有math时，removeLeft后，math获取焦点",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"和"});
+				model.setData({data:"1"});
+				model.moveLeft();
+				t.is("和", model.removeLeft());
+				t.is("mn", model.getFocusNode().nodeName);
+				t.is("1", model.getFocusNode().textContent);
+				t.is(0, model.getOffset());
+				// 确保text节点被删除
+				var line = model.getLineAt(0);
+				t.is(1, line.childNodes.length);
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "当有一个text节点，其后紧跟math节点，如果text节点中有两个字符，则text之后执行removeLeft后，就近text获取焦点。",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"你我"});
+				model.setData({data:"1"});
+				model.moveLeft();
+				t.is("我", model.removeLeft());
+				t.is("text", model.getFocusNode().nodeName);
+				t.is("你", model.getFocusNode().textContent);
+				t.is(1, model.getOffset());
+				var line = model.getLineAt(0);
+				t.is(2, line.childNodes.length);
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "当math节点中任何内容的token节点，只要其中没有内容，就删除节点，并让前一个节点获取焦点。",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"1"});
+				model.setData({data:"+"});
+				t.is("+",model.removeLeft());
+				t.is("1", model.getFocusNode().textContent);
+				t.is(1, model.getOffset());
+				var line = model.getLineAt(0);
+				t.is(1, line.firstChild.childNodes.length);
 			},
 			tearDown: function(){
 				
 			}
 		},
 		
+		// math节点与text节点类似，只要当前聚焦点前有大于等于两个字符的内容，就删除内容
+		// 当math节点中如果只有一个token节点，执行删除后，math下面没有节点，则删除math节点
+		// 当在第二行的起始位置时，removeLeft到第一行的最末尾
+		//
 		
 		// TODO:测试删除，测试替换，其实删除是一种特殊的替换，是用空字符串替换掉选中的文本。
 		// TODO:如果是数学用的表达式，则在弹出的框中给出提示，如“math”，“数”或用更好看的图片

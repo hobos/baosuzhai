@@ -316,20 +316,49 @@ define([ "dojo/_base/declare",
 			//		删除的字符
 			
 			var offset = this.cursorPosition.offset;
-			var oldText = this.cursorPosition.node.textContent;
+			var node = this.cursorPosition.node;
+			var oldText = node.textContent;
 			
 			if(offset == 0){
+				var _node = node;
+				if(node.nodeName != "text" && node.nodeName != "line"){
+					while(_node.nodeName != "math"){
+						_node = _node.parentNode;
+					}
+					var previousNode = _node.previousSibling;
+					if(previousNode){
+						var textContent = previousNode.textContent;
+						var oldLength = textContent.length;
+						var newText = dripString.insertAtOffset(textContent, oldLength, "", 1);
+						var newLength = oldLength - 1; //newText.length; 
+						if(newText == ""){
+							// 如果节点中没有内容，则删除节点
+							previousNode.parentNode.removeChild(previousNode);
+						}else{
+							previousNode.textContent = newText;
+							this.cursorPosition.node = previousNode;
+							this.cursorPosition.offset = newLength;
+						}
+						var removed = textContent.charAt(newLength);
+						// 注意这里不设置cursorPosition，因为要与之前的值保持一致。
+						return removed;
+					}
+				}
 				return "";
 			}else{
 				var removed = oldText.charAt(offset - 1);
 				var newText = dripString.insertAtOffset(oldText, offset, "", 1);
 				if(newText == ""){
-					var curNode = this.cursorPosition.node;
-					var parentNode = curNode.parentNode;
-					parentNode.removeChild(curNode);
+					var previousNode = node.previousSibling;
+					if(previousNode){
+						this.cursorPosition.node = previousNode;
+						this.cursorPosition.offset = previousNode.textContent.length;
+					}else{
+						this.cursorPosition.node = node.parentNode;
+						this.cursorPosition.offset = 0;
+					}
 					
-					this.cursorPosition.node = parentNode;
-					this.cursorPosition.offset = 0;
+					node.parentNode.removeChild(node);
 				}else{
 					this.cursorPosition.node.textContent = newText;
 					this.cursorPosition.offset -= 1;
