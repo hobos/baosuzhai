@@ -79,7 +79,8 @@ require(["dojo",
 				var cursor = this.cursor;
 				// 光标初始的位置
 				doh.t(cursor.caret!=null);
-				cursor.move(100,200);
+				var cursorConfig = {top:100, left:200};
+				cursor.move(cursorConfig);
 				doh.t(cursor.position.top == 0);
 				doh.t(cursor.position.left == 0);
 				
@@ -87,7 +88,7 @@ require(["dojo",
 				var deferred = new doh.Deferred();
 				// 因为1秒之后，光标是隐藏的，此时移动后，光标应立即可见
 			    setTimeout(deferred.getTestCallback(function(){
-			    	cursor.move(100,200);
+			    	cursor.move(cursorConfig);
 					// move之后瞬间可见
 					doh.t(cursor.caret.style.visibility === "");
 					doh.t(cursor.position.top == 100);

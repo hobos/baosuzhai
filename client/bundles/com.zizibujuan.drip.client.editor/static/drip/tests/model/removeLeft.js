@@ -28,6 +28,10 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
 				t.is("a", removed);
 				t.is("line", model.getFocusNode().nodeName);
 				t.is(0, model.getOffset());
+				
+				// 同时从path也移除
+				// 注意将删除节点和从path中移除聚焦的节点等信息都放在一起。
+				t.is("/root/line[1]", model.getPath());
 			},
 			tearDown: function(){
 				

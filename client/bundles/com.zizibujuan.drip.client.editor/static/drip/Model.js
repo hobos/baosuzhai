@@ -16,6 +16,12 @@ define([ "dojo/_base/declare",
         		 dripLang) {
 	var EMPTY_XML = "<root><line></line></root>";
 	return declare(null,{
+		// summary:
+		//		存储当前聚焦点的完整路径
+		// nodeName:
+		//		节点名称
+		// offset:
+		//		节点在父节点中的位置，从1开始计数。
 		path: null,
 		xmlString: null,
 		doc: null,
@@ -113,6 +119,8 @@ define([ "dojo/_base/declare",
 		},
 		
 		// TODO：需要加入位置参数，指明在什么地方插入
+		// TODO: 该方法需要重构，因为太多的针对不同类型的节点名称进行编程，而不是
+		//		 经过抽象后的逻辑。
 		setData: function(insertInfo){
 			// summary:
 			//		往model中插入数据。
@@ -309,6 +317,14 @@ define([ "dojo/_base/declare",
 			this.cursorPosition.offset -= removeCount;
 		},
 		
+		doDelete: function(){
+			// 暂时让do系列方法作为共有接口暴露，当_removeLeft调通之后，使用removeLeft作为公用接口
+			var removed = this.removeLeft();
+			if(removed != ""){
+				this.onChange();
+			}
+		},
+		
 		removeLeft: function(){
 			// summary:
 			//		删除当前聚焦点的前一个字符
@@ -359,6 +375,7 @@ define([ "dojo/_base/declare",
 					}
 					
 					node.parentNode.removeChild(node);
+					this.path.pop();
 				}else{
 					this.cursorPosition.node.textContent = newText;
 					this.cursorPosition.offset -= 1;

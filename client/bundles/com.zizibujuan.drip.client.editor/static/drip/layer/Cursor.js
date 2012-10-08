@@ -45,8 +45,13 @@ define(["dojo/_base/declare",
 			this._restartTimer();
 		},
 		
-		move: function(top, left, height){
+		move: function(cursorConfig){
 			if(this.isVisible == false)return;
+			
+			var top = cursorConfig.top;
+			var left = cursorConfig.left;
+			var height = cursorConfig.height;
+			// TODO:在这里删除多余代码
 			
 			this.position.top = top;
 			this.position.left = left;

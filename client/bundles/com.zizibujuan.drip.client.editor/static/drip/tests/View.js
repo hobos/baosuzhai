@@ -1,1 +1,5 @@
-// 测试View中的节点与model当前节点的对应关系，然后获取光标信息。
+define(["doh/main", "require"], function(doh, require){
+	if(doh.isBrowser){
+		doh.register("tests.View", require.toUrl("./View.html"), 30000);
+	}
+});

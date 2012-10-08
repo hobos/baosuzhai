@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>View Test</title>
+<script type="text/javascript" src="/dojo/dojo.js" data-dojo-config="isDebug:true,cacheBust:new Date()"></script>
+<script type="text/javascript"
+   src="/mathjax/MathJax.js?config=MML_HTMLorMML">
+</script>
+<script type="text/javascript">
+//测试View中的节点与model当前节点的对应关系，然后获取光标信息。
+require([ "doh", "dojo/dom", "drip/View", "drip/Model", "dojo/domReady!" ], function(doh, dom, View, Model) {
+	doh.register("View", [ {
+		name: "在第一行的纯text节点中显示光标",
+		setUp: function(){
+			this.model = new Model({});
+			var parentNode = dom.byId("container");
+			this.view = new View({model:this.model, parentNode:parentNode});
+		},
+		runTest: function(t){
+			var view = this.view;
+			var model = view.model;
+			// node, offset
+			var p1 = view._getFocusInfo();
+			t.is("div", p1.node.nodeName.toLowerCase());
+			t.is(0, p1.offset);
+			model.setData({data:"你"});
+			var p2 = view._getFocusInfo();
+			t.is("span", p2.node.nodeName.toLowerCase());
+			t.is(1, p2.offset);
+			
+			model.setData({data:"我"});
+			var p3 = view._getFocusInfo();
+			t.is("span", p3.node.nodeName.toLowerCase());
+			t.is(2, p3.offset);
+		},
+		tearDown: function(){
+			
+		}
+	},{
+		name: "插入换行符后，",
+		setUp: function(){
+			this.model = new Model({});
+			var parentNode = dom.byId("container");
+			this.view = new View({model:this.model, parentNode:parentNode});
+		},
+		runTest: function(t){
+			var view = this.view;
+			var model = view.model;
+		},
+		tearDown: function(){
+			
+		}
+	}]);
+	doh.runOnLoad();
+});
+</script>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
