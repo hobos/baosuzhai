@@ -450,6 +450,18 @@ define([ "dojo/_base/declare",
 			
 		},
 		
+		moveRight: function(){
+			
+		},
+		
+		moveUp: function(){
+			
+		},
+		
+		moveDown: function(){
+			
+		},
+		
 		getLineCount: function(){
 			return this.doc.documentElement.childNodes.length;
 		},

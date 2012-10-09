@@ -64,13 +64,15 @@ define(["dojo/_base/declare",
 			on(textarea, "keydown", lang.hitch(this,function(e){
 				console.log(e, e.keyCode);
 				if(e.keyCode === keys.LEFT_ARROW){
-					this._moveLeft();
+					debugger;
+					this.model.moveLeft();// 注意在move系列方法中不调用model.onChange方法
+					this.view.showCursor();
 				}else if(e.keyCode === keys.RIGHT_ARROW){
-					this._moveRight();
+					this.model.moveRight();
 				}else if(e.keyCode === keys.UP_ARROW){
-					this._moveUp();
+					this.model.moveUp();
 				}else if(e.keyCode === keys.DOWN_ARROW){
-					this._moveDown();
+					this.model.moveDown();
 				}else if(e.keyCode === keys.BACKSPACE){
 					//this.model.removeLeft();
 					this.model.doDelete(); // TODO:使用removeLeft代替doDelete
@@ -86,22 +88,6 @@ define(["dojo/_base/declare",
 				}
 				
 			}));
-		},
-		
-		_moveLeft : function(){
-			
-		},
-		
-		_moveRight : function(){
-			
-		},
-		
-		_moveUp : function(){
-			
-		},
-		
-		_moveDown : function(){
-			
 		},
 		
 		_onTextInput: function(e){

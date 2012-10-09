@@ -38,7 +38,7 @@ require([ "doh", "dojo/dom", "drip/View", "drip/Model", "dojo/domReady!" ], func
 			
 		}
 	},{
-		name: "插入换行符后，",
+		name: "_getCursorConfig,测试在text文本中光标的左移",
 		setUp: function(){
 			this.model = new Model({});
 			var parentNode = dom.byId("container");
@@ -47,6 +47,19 @@ require([ "doh", "dojo/dom", "drip/View", "drip/Model", "dojo/domReady!" ], func
 		runTest: function(t){
 			var view = this.view;
 			var model = view.model;
+			model.setData({data:"你我他"});
+			var c1 = view._getCursorConfig();
+			
+			model.moveLeft();
+			var c2 = view._getCursorConfig();
+			t.t(c1.left > c2.left);
+			
+			model.moveLeft();
+			var c3 = view._getCursorConfig();
+			
+			model.moveLeft();
+			var c4 = view._getCursorConfig();
+			
 		},
 		tearDown: function(){
 			

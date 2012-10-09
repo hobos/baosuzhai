@@ -5,7 +5,8 @@ define(["dojo/_base/declare",
         "dojo/on",
         "dojo/aspect",
         "drip/Model",
-        "drip/layer/Cursor"],function(
+        "drip/layer/Cursor",
+        "drip/lang"],function(
 		declare,
 		lang,
 		array,
@@ -13,7 +14,8 @@ define(["dojo/_base/declare",
 		on,
 		aspect,
 		Model,
-		Cursor){
+		Cursor,
+		dripLang){
 	
 	var ELEMENT = 1, TEXT = 3;
 	
@@ -49,14 +51,14 @@ define(["dojo/_base/declare",
 			this.textLayer.innerHTML = this.model.getHTML();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.textLayer]);
 			// 因为是异步操作，需要把显示光标的方法放在MathJax的异步函数中。
-			MathJax.Hub.Queue(lang.hitch(this,this._showCursor));
+			MathJax.Hub.Queue(lang.hitch(this,this.showCursor));
 			var top = 0;
 			// TODO:这里需要一个根据model中的数据映射到浏览器中的dom节点
 			
 			//this.cursor.move(top,left);//如果传入参数，可能会弄错顺序；直接传入对象，可避免这个错误。
 		},
 		
-		_showCursor: function(){
+		showCursor: function(){
 			console.log("Typeset完成后执行此方法");
 			var cursorConfig = this._getCursorConfig();
 			this.cursor.move(cursorConfig);
@@ -89,14 +91,20 @@ define(["dojo/_base/declare",
 			var node = focusInfo.node;
 			var offset = focusInfo.offset;
 			
-			debugger;
-			
 			top = node.offsetTop;
 			left = node.offsetLeft;
 			//left += 字节点的宽度
 			if(node.nodeType == ELEMENT){
 				if(node.nodeName.toLowerCase() == "span"){
-					left += node.offsetWidth;
+					if(node.textContent.length == offset){
+						left += node.offsetWidth;
+					}else{
+						// 测宽度
+						var text = node.textContent.substring(0, offset);
+						var width = dripLang.measureTextSize(node, text).width;
+						left += width;
+					}
+					
 				}
 			}else if(node.nodeType == TEXT){
 				
