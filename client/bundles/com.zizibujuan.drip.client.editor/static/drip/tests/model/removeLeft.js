@@ -92,7 +92,28 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
 			}
 		},
 		{
-			name: "当一个text文本后，有math时，removeLeft后，math获取焦点",
+			name: "当在一个text节点后，有一个存储着1的math节点，在math节点后执行removeLeft后，text节点获取焦点",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"和"});
+				model.setData({data:"1"});
+				t.is("1", model.removeLeft());
+				t.is("text", model.getFocusNode().nodeName);
+				t.is("和", model.getFocusNode().textContent);
+				t.is(1, model.getOffset());
+				// 确保math节点被删除
+				var line = model.getLineAt(0);
+				t.is(1, line.childNodes.length);
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
+			name: "当一个text文本后，有math时，在text文本后执行removeLeft后，math获取焦点",
 			setUp: function(){
 				this.model = new Model({});
 			},

@@ -338,6 +338,7 @@ define([ "dojo/_base/declare",
 			if(offset == 0){
 				var _node = node;
 				if(node.nodeName != "text" && node.nodeName != "line"){
+					// FIXME:这里需要重构，使用与下面相同的逻辑
 					while(_node.nodeName != "math"){
 						_node = _node.parentNode;
 					}
@@ -386,12 +387,20 @@ define([ "dojo/_base/declare",
 								this.path.pop();
 							}
 						}
+						
+						previousNode = c.previousSibling;
 						p = c.parentNode;
 						p.removeChild(c);
-						this.path.pop();
+						var oldOffset = this.path.pop().offset;
 						
-						this.cursorPosition.node = p;
-						this.cursorPosition.offset = p.childElementCount;
+						if(previousNode){
+							this.cursorPosition.node = previousNode;
+							this.cursorPosition.offset = previousNode.textContent.length;
+							this.path.push({nodeName:this.cursorPosition.node.nodeName, offset:oldOffset-1});
+						}else{
+							this.cursorPosition.node = p;
+							this.cursorPosition.offset = p.childElementCount;
+						}
 					}
 				}else{
 					this.cursorPosition.node.textContent = newText;
