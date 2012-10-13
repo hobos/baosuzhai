@@ -47,18 +47,16 @@ define(["dojo/_base/declare",
 		
 		move: function(cursorConfig){
 			if(this.isVisible == false)return;
-			
 			var top = cursorConfig.top;
 			var left = cursorConfig.left;
 			var height = cursorConfig.height;
 			// TODO:在这里删除多余代码
-			
 			this.position.top = top;
 			this.position.left = left;
 			var style = this.caret.style;
 			style.top = top+"px";
 			style.left = left+"px";
-			if(height){
+			if(height && height > 0){
 				style.height = height+"px";
 			}
 			

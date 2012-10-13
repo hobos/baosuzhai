@@ -1,7 +1,9 @@
 define(["dojo/_base/declare",
         "dojo/_base/lang",
         "dojo/_base/array",
+        "dojo/dom",
         "dojo/dom-construct",
+        "dojo/dom-geometry",
         "dojo/on",
         "dojo/aspect",
         "drip/Model",
@@ -10,7 +12,9 @@ define(["dojo/_base/declare",
 		declare,
 		lang,
 		array,
+		dom,
 		domConstruct,
+		domGeom,
 		on,
 		aspect,
 		Model,
@@ -31,6 +35,7 @@ define(["dojo/_base/declare",
 			var editorDiv = this.editorDiv = domConstruct.create("div",{style:{height:"100%",width:"100%", position:"absolute"}}, this.parentNode);
 			// 内容层
 			var textLayer = this.textLayer = domConstruct.create("div",{"class":"drip_layer"}, editorDiv);
+			this.textLayerPosition = domGeom.position(textLayer);
 			// 光标层， 看是否需要把光标放到光标层中
 			var cursor = this.cursor = new Cursor({parentEl:editorDiv});
 			
@@ -51,7 +56,9 @@ define(["dojo/_base/declare",
 			this.textLayer.innerHTML = this.model.getHTML();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.textLayer]);
 			// 因为是异步操作，需要把显示光标的方法放在MathJax的异步函数中。
+			// 貌似showCursor并没有在Typeset执行完之后再执行。
 			MathJax.Hub.Queue(lang.hitch(this,this.showCursor));
+			// MathJax.Hub.Register.StartupHook("End",lang.hitch(this,this.showCursor));
 			var top = 0;
 			// TODO:这里需要一个根据model中的数据映射到浏览器中的dom节点
 			
@@ -60,8 +67,14 @@ define(["dojo/_base/declare",
 		
 		showCursor: function(){
 			console.log("Typeset完成后执行此方法");
+			console.log(this.editorDiv);
 			var cursorConfig = this._getCursorConfig();
 			this.cursor.move(cursorConfig);
+		},
+		
+		moveLeft: function(){
+			this.model.moveLeft();
+			this.showCursor();
 		},
 		
 		_getFocusInfo: function(){
@@ -71,14 +84,46 @@ define(["dojo/_base/declare",
 			var pathes = this.model.path;// TODO:重构，想个更好的方法名，getPath已经被使用。
 			
 			var focusDomNode = this.textLayer;
+			var elementJax = null;
+			var lastOffset = 0; 
+			// 如果是math节点，则需要先
 			array.forEach(pathes, function(path, index){
 				// 移除root
-				if(path.nodeName != "root"){
-					console.log(path);
+				if(path.nodeName == 'root')return;
+				if(path.nodeName == "line"){
 					focusDomNode = focusDomNode.childNodes[path.offset - 1];
+				}else if(path.nodeName == "text" || path.nodeName == "math"){
+					var childNodes = focusDomNode.childNodes;
+					var filtered = array.filter(childNodes, function(node, i){
+						return node.nodeName.toLowerCase() == 'span';
+					});
+					focusDomNode = filtered[path.offset - 1];
+					// 如果是math，还需要继续往下找节点
+					// 或者根据这个div找到script中的数据，来进行循环
+					// 如果已经定位到设置的层级，但是发现是mrow，则需要继续往下走一步。
+					if(path.nodeName == "math"){
+						var scriptNode = focusDomNode.nextSibling;
+						elementJax = scriptNode.MathJax.elementJax.root;
+					}
+				}else{
+					if(elementJax){
+						elementJax = elementJax.data[path.offset - 1];
+						lastOffset = path.offset - 1;
+					}
 				}
 			});
-			return {node:focusDomNode, offset:this.model.getOffset()};
+			
+			var mrowNode = null;
+			if(elementJax){
+				focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+				if(focusDomNode.className == "mrow"){
+					mrowNode = focusDomNode;
+					elementJax = elementJax.data[lastOffset];
+					focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+				}
+			}
+			
+			return {node:focusDomNode, offset:this.model.getOffset(), mrowNode:mrowNode};
 		},
 		
 		_getCursorConfig: function(){
@@ -91,11 +136,22 @@ define(["dojo/_base/declare",
 			var node = focusInfo.node;
 			var offset = focusInfo.offset;
 			
-			top = node.offsetTop;
-			left = node.offsetLeft;
+			var textLayerPosition = this.textLayerPosition;
+			var mrowNode = focusInfo.mrowNode;
+			var _node = node;
+			if(mrowNode){
+				_node = mrowNode;
+			}
+			var position = domGeom.position(_node);
+			top = position.y - textLayerPosition.y;
+			left = position.x - textLayerPosition.x;
+			height = position.h;
+			
 			//left += 字节点的宽度
 			if(node.nodeType == ELEMENT){
-				if(node.nodeName.toLowerCase() == "span"){
+				var childNodes = node.childNodes;
+				if(childNodes.length == 1 && childNodes[0].nodeType == TEXT){
+					// 如果childNodes的长度不是1，则offset对应的必是这些字节点的偏移量，而不是文本的
 					if(node.textContent.length == offset){
 						left += node.offsetWidth;
 					}else{
@@ -104,10 +160,9 @@ define(["dojo/_base/declare",
 						var width = dripLang.measureTextSize(node, text).width;
 						left += width;
 					}
+				}else{
 					
 				}
-			}else if(node.nodeType == TEXT){
-				
 			}
 			
 			//left = node.offsetWidth;
