@@ -1,25 +1,27 @@
-define({
+define(["dojo/_base/array"],function(array){
 
-	isNumber: function(obj) {
+	var lang = {};
+	
+	lang.isNumber = function(obj) {
 		return !isNaN(parseFloat(obj)) && isFinite(obj);
 	},
 	
-	isOperator: function(obj){
+	lang.isOperator = function(obj){
 		if(obj == "+" || obj == "=" || obj == "-" || obj == "&#xD7;"/*乘*/ || obj == "&#xF7;"/*除*/){
 			return true;
 		}
 		return false;
 	},
 	
-	isNewLine: function(obj){
+	lang.isNewLine = function(obj){
 		return obj === "\n";
 	},
 	
-	isTab: function(obj){
+	lang.isTab = function(obj){
 		return obj === "\t";
 	},
 	
-	insertNodeAfter: function(newNode, existingNode){
+	lang.insertNodeAfter = function(newNode, existingNode){
 		var parentNode = existingNode.parentNode;
 		if(parentNode.lastChild == existingNode){
 			parentNode.appendChild(newNode)
@@ -28,15 +30,33 @@ define({
 		}
 	},
 	
-	_fontStyles: {
+	lang._fontStyles = {
 			fontFamily : 1,
 			fontSize : 1,
 			fontWeight : 1,
 			fontStyle : 1,
 			lineHeight : 1
 	},
+	
+	lang.isMathTokenNode = function(node){
+		var nodeName = node.nodeName;
+		return this.isMathTokenName(nodeName);
+	},
+	
+	lang.isMathTokenName = function(nodeName){
+		var isTokenNode = false;
 		
-	measureTextSize: function(elem ,text) {
+		var tokenNames = ["mi","mn","mo","mtext","mspace","ms"];
+		array.forEach(tokenNames, function(name,index){
+			if(nodeName == name){
+				isTokenNode = true;
+				return;
+			}
+		});
+		return isTokenNode;
+	},
+		
+	lang.measureTextSize = function(elem ,text) {
 		if (!this.measureNode) {
 			var _measureNode = document.createElement("div");
 			var style = _measureNode.style;
@@ -66,4 +86,5 @@ define({
 		return size;
 	}
 
+	return lang;
 });

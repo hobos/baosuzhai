@@ -126,10 +126,36 @@ require([ "doh",
 			var view = this.view;
 			var model = view.model;
 			view.cursor.show();
-			debugger;
 			model.setData({data:"1"});
 			// 这里需要让页面飞一会。
 			
+			var deferred = new doh.Deferred();
+		    setTimeout(deferred.getTestCallback(function(){
+		    	var style = view.cursor.caret.style;
+		    	var left = parseInt(style.left);
+		    	t.t(left > 0);
+		    	var top = parseInt(style.top);
+		    	t.t(top <= 0);
+		    }), 1000);
+		    return deferred;
+		},
+		tearDown: function(){
+			domConstruct.empty("container");
+		}
+	},{
+		name:"在mrow中有两个子节点时",
+		setUp: function(){
+			this.model = new Model({});
+			var parentNode = dom.byId("container");
+			this.view = new View({model:this.model, parentNode:parentNode});
+		},
+		runTest: function(t){
+			var view = this.view;
+			var model = view.model;
+			view.cursor.show();
+			model.setData({data:"1"});
+			model.setData({data:"+"});
+			// 这里需要让页面飞一会。
 			var deferred = new doh.Deferred();
 		    setTimeout(deferred.getTestCallback(function(){
 		    	var style = view.cursor.caret.style;

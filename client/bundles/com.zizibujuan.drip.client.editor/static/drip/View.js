@@ -85,7 +85,7 @@ define(["dojo/_base/declare",
 			
 			var focusDomNode = this.textLayer;
 			var elementJax = null;
-			var lastOffset = 0; 
+			var mrowNode = null;
 			// 如果是math节点，则需要先
 			array.forEach(pathes, function(path, index){
 				// 移除root
@@ -107,21 +107,22 @@ define(["dojo/_base/declare",
 					}
 				}else{
 					if(elementJax){
-						elementJax = elementJax.data[path.offset - 1];
-						lastOffset = path.offset - 1;
+						if(dripLang.isMathTokenName(path.nodeName)){
+							// token节点之上，在mathjax中必封装一个mrow节点
+							elementJax = elementJax.data[0];
+							// mrow
+							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+							mrowNode = focusDomNode;
+							
+							elementJax = elementJax.data[path.offset - 1];
+							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+						}else{
+							elementJax = elementJax.data[path.offset - 1];
+							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+						}
 					}
 				}
 			});
-			
-			var mrowNode = null;
-			if(elementJax){
-				focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
-				if(focusDomNode.className == "mrow"){
-					mrowNode = focusDomNode;
-					elementJax = elementJax.data[lastOffset];
-					focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
-				}
-			}
 			
 			return {node:focusDomNode, offset:this.model.getOffset(), mrowNode:mrowNode};
 		},
@@ -138,14 +139,19 @@ define(["dojo/_base/declare",
 			
 			var textLayerPosition = this.textLayerPosition;
 			var mrowNode = focusInfo.mrowNode;
-			var _node = node;
 			if(mrowNode){
-				_node = mrowNode;
+				var mrowPosition = domGeom.position(mrowNode);
+				top = mrowPosition.y - textLayerPosition.y;
+				height = mrowPosition.h;
+				
+				var position = domGeom.position(node);
+				left = position.x - textLayerPosition.x;
+			}else{
+				var position = domGeom.position(node);
+				top = position.y - textLayerPosition.y;
+				height = position.h;
+				left = position.x - textLayerPosition.x;
 			}
-			var position = domGeom.position(_node);
-			top = position.y - textLayerPosition.y;
-			left = position.x - textLayerPosition.x;
-			height = position.h;
 			
 			//left += 字节点的宽度
 			if(node.nodeType == ELEMENT){

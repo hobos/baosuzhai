@@ -148,6 +148,9 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
 				t.is(1, model.getOffset());
 				var line = model.getLineAt(0);
 				t.is(1, line.firstChild.childNodes.length);
+				// 测试，要同时修改path的值
+				t.t(model.path.length == 4);
+				t.t(model.path[3].nodeName=="mn");
 			},
 			tearDown: function(){
 				

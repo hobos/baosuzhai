@@ -343,6 +343,29 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   			tearDown: function(){
   				
   			}
+  		},
+  		{
+  			name: "当model中的math值被删除完后，重新输入新的math值",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"1"});
+  				model.removeLeft();
+  				t.is("/root/line[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "line");
+  				t.is(0, model.getOffset());
+  				
+  				model.setData({data:"2"});
+  				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "mn");
+  				t.is("2", model.getFocusNode().textContent);
+  				t.is(1, model.getOffset());
+  			},
+  			tearDown: function(){
+  				
+  			}
   		}
   	]);
 });

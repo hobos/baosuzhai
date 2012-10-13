@@ -182,7 +182,7 @@ define([ "dojo/_base/declare",
 						var pos = this.path.pop();
 						this.path.push({nodeName:"math", offset:pos.offset+1});
 						this.path.push({nodeName:"mn", offset:1});
-					}else if(this._isMathTokenNode(node)){
+					}else if(dripLang.isMathTokenNode(node)){
 						// FIXME：重构，可抽象出一个逻辑，期望新建的节点与当前节点的类型不同。
 						//如果当前节点不是操作符节点，则新建一个操作符节点
 						var node = this.cursorPosition.node;
@@ -214,7 +214,7 @@ define([ "dojo/_base/declare",
 						
 						this.path.push({nodeName:"math", offset:1});
 						this.path.push({nodeName:"mo", offset:1});
-					}else if(this._isMathTokenNode(node)){
+					}else if(dripLang.isMathTokenNode(node)){
 						//如果当前节点不是操作符节点，则新建一个操作符节点
 						var node = this.cursorPosition.node;
 						// 不论是不是mo节点，都单独新建，因此处理逻辑一样，就不再分开。
@@ -278,7 +278,7 @@ define([ "dojo/_base/declare",
 						this.path.push({nodeName:"text",offset:1});
 					}else if(this._isTextNode(node)){
 						this._insertChar(char);
-					}else if(this._isMathTokenNode(node)){
+					}else if(dripLang.isMathTokenNode(node)){
 						// 要往上移到math节点之外
 						var pos = null;
 						
@@ -350,6 +350,7 @@ define([ "dojo/_base/declare",
 						if(newText == ""){
 							// 如果节点中没有内容，则删除节点
 							previousNode.parentNode.removeChild(previousNode);
+							this.path.pop();
 						}else{
 							previousNode.textContent = newText;
 							this.cursorPosition.node = previousNode;
@@ -366,16 +367,32 @@ define([ "dojo/_base/declare",
 				var newText = dripString.insertAtOffset(oldText, offset, "", 1);
 				if(newText == ""){
 					var previousNode = node.previousSibling;
+					var _offset = 0;
 					if(previousNode){
 						this.cursorPosition.node = previousNode;
 						this.cursorPosition.offset = previousNode.textContent.length;
+						node.parentNode.removeChild(node);
+						var old = this.path.pop();
+						this.path.push({nodeName:this.cursorPosition.node.nodeName, offset:old.offset-1});
 					}else{
-						this.cursorPosition.node = node.parentNode;
-						this.cursorPosition.offset = 0;
+						var p = node;
+						var c = node;
+						// 如果是mathml节点，则追溯到math节点
+						if(node.nodeName != "text" && node.nodeName != "line"){
+							while(c.nodeName != "math"){
+								p = c.parentNode;
+								p.removeChild(c);
+								c = p;
+								this.path.pop();
+							}
+						}
+						p = c.parentNode;
+						p.removeChild(c);
+						this.path.pop();
+						
+						this.cursorPosition.node = p;
+						this.cursorPosition.offset = p.childElementCount;
 					}
-					
-					node.parentNode.removeChild(node);
-					this.path.pop();
 				}else{
 					this.cursorPosition.node.textContent = newText;
 					this.cursorPosition.offset -= 1;
@@ -486,19 +503,6 @@ define([ "dojo/_base/declare",
 		// TODO：起更好的名字，因为textNode容易与document中定义的Text类型的Node混淆
 		_isTextNode: function(node){
 			return node.nodeName == "text";
-		},
-		
-		_isMathTokenNode: function(node){
-			var isTokenNode = false;
-			var nodeName = node.nodeName;
-			var tokenNames = ["mi","mn","mo","mtext","mspace","ms"];
-			array.forEach(tokenNames, function(name,index){
-				if(nodeName == name){
-					isTokenNode = true;
-					return;
-				}
-			});
-			return isTokenNode;
 		},
 		
 		_insertChar: function(char){
