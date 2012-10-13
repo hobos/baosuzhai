@@ -177,6 +177,23 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
 				
 			}
 		},
+		{
+			name: "删除一个unicode字符，这里使用除号测试。因为现在只有操作符以unicode表示，所以一个操作符用一个mo封装，removeLeft遇到mo直接删除",
+			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"&#xD7;"});
+  				t.is("&#xD7;",model.removeLeft());
+  				t.is("/root/line[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "line");
+  				t.is(0, model.getOffset());
+  			},
+  			tearDown: function(){
+  				
+  			}
+		},
 		
 		// math节点与text节点类似，只要当前聚焦点前有大于等于两个字符的内容，就删除内容
 		// 当math节点中如果只有一个token节点，执行删除后，math下面没有节点，则删除math节点

@@ -96,14 +96,17 @@ define(["dojo/_base/declare",
 			// TODO:重构，提出方法,放到contentAssist中，输入参数为e.data,返回值boolean
 			debugger;
 			var adviceData = this.contentAssist.show(inputData);
+			var removeCount = 0;
 			if(adviceData != null){
 				// 优先显示提示框中级别最高的数据。而不是直接输入的内容。
 				inputData = adviceData;
+				//removeCount = 
 			}
 			// 对输入的内容进行拦截，判断是否有推荐的可选项。
 			
 			// 当model的内容发生变化时，View自动更新,所以这里不写View相关的代码
 			var model = this.model;
+			// removeCount
 			model.setData({data:inputData});
 			
 			var textarea = this.textarea;

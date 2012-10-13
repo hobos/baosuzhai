@@ -335,6 +335,11 @@ define([ "dojo/_base/declare",
 			var node = this.cursorPosition.node;
 			var oldText = node.textContent;
 			
+			console.log("removeLeft", node, offset);
+			
+			// TODO:如果是text节点（dom的），则把值先split为数组，然后再删除
+			// 或者删除前，先判断当前要删除的内容是否为unicode，注意在&和;中间不能包含这两个字符。
+			
 			if(offset == 0){
 				var _node = node;
 				if(node.nodeName != "text" && node.nodeName != "line"){
@@ -364,8 +369,18 @@ define([ "dojo/_base/declare",
 				}
 				return "";
 			}else{
-				var removed = oldText.charAt(offset - 1);
-				var newText = dripString.insertAtOffset(oldText, offset, "", 1);
+				var removed = "";
+				var newText = "";
+				debugger;
+				if(node.nodeName == "mo"){
+					// 因为现在只有操作符使用unicode表示，所以不需要专门处理unicode，遇到mo直接整个删除就可以。
+					removed = node.textContent;
+					newText = "";
+				}else{
+					removed = oldText.charAt(offset - 1);
+					newText = dripString.insertAtOffset(oldText, offset, "", 1);
+				}
+				
 				if(newText == ""){
 					var previousNode = node.previousSibling;
 					var _offset = 0;

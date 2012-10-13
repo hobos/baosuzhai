@@ -43,6 +43,7 @@ define(["dojo/_base/declare",
 			//		even after a event.stop(e).  (Shift-F10 on windows doesn't generate the
 			//		oncontextmenu event.)
 
+			view = this.view;
 			if(!this._openTimer){
 				this._openTimer = this.defer(function(){
 					delete this._openTimer;
@@ -52,12 +53,17 @@ define(["dojo/_base/declare",
 						y : y,
 						onExecute : function() {
 							popup.close(target);
+							// 编辑器获取焦点
+							view.focus();
 						},
 						onCancel : function() {
 							popup.close(target);
+							// 编辑器获取焦点
+							view.focus();
 						},
 						onClose : function() {
-							
+							// 编辑器获取焦点
+							view.focus();
 						}
 					});
 					target.focus();
@@ -87,6 +93,8 @@ define(["dojo/_base/declare",
 			}));
 		},
 
+		// TODO:需要弹出框与编辑器之间切换焦点
+		// 当弹出框时，弹出框获取焦点；当关闭弹出狂框，编辑器获取焦点。
 		show: function(data){
 			// summary:
 			//		判断输入的内容是否可以获取到建议的映射值
@@ -94,6 +102,7 @@ define(["dojo/_base/declare",
 			//		输入的字符
 			// return:String
 			//		推荐的值，如果没有则返回null。
+			// FIXME：返回一个数组，每个值是一个“单个”字符
 			
 			this.cacheString += data;
 			var proposals = mathContentAssist.getProposals(this.cacheString);

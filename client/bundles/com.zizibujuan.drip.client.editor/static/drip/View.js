@@ -39,17 +39,21 @@ define(["dojo/_base/declare",
 			// 光标层， 看是否需要把光标放到光标层中
 			var cursor = this.cursor = new Cursor({parentEl:editorDiv});
 			
-			var textarea = this.textarea;
-			on(editorDiv, "mousedown",function(e){
-				setTimeout(function() {
-					 textarea.focus();
-					 cursor.show();
-			    });
-			});
+			on(editorDiv, "mousedown",lang.hitch(this, this.focus));
 			
 			// 初始化视图
 			textLayer.innerHTML = this.model.getHTML();
 			aspect.after(this.model, "onChange", lang.hitch(this,this._onChange));
+		},
+		
+		focus: function(){
+			var textarea = this.textarea;
+			var cursor = this.cursor;
+			
+			setTimeout(function() {
+				 textarea.focus();
+				 cursor.show();
+		    });
 		},
 		
 		_onChange : function(){
