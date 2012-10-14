@@ -1,7 +1,7 @@
 define([ "doh", "drip/Model" ], function(doh, Model) {
 	doh.register("Model.removeLeft", [
 	    {
-			name: "当没有任何内容时，removeLeft不起任何作用",
+			name: "当没有任何内容时，removeLeft什么也不做",
 			setUp: function(){
 				this.model = new Model({});
 			},
@@ -156,6 +156,28 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
 			}
 		},
 		{
+			name: "当math节点后，有一个text节点，两个中都只有一个字符，删除text节点后，math节点的最后一个子节点获取焦点",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				model.setData({data:"1"});
+				model.setData({data:"a"});
+				t.is("a",model.removeLeft());
+				t.is("1", model.getFocusNode().textContent);
+				t.is(1, model.getOffset());
+				var line = model.getLineAt(0);
+				t.is(1, line.firstChild.childNodes.length);
+				// 测试，要同时修改path的值
+				t.t(model.path.length == 4);
+				t.t(model.path[3].nodeName=="mn");
+			},
+			tearDown: function(){
+				
+			}
+		},
+		{
 			name: "当math节点中任何内容的token节点，只要其中没有内容，就删除节点，并让前一个节点获取焦点。",
 			setUp: function(){
 				this.model = new Model({});
@@ -193,6 +215,36 @@ define([ "doh", "drip/Model" ], function(doh, Model) {
   			tearDown: function(){
   				
   			}
+		},
+		{
+			name: "删除第一个空行时，保留该行对应的div；删除其余的空行时，则删除对应的div",
+			setUp: function(){
+				this.model = new Model({});
+			},
+			runTest: function(t){
+				var model = this.model;
+				// 在初始化已经加入一个空行了，所以这里不需要再添加
+  				t.is("",model.removeLeft());
+  				t.is(1, model.getLineCount());
+  				t.is("/root/line[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "line");
+  				t.is(0, model.getOffset());
+  				
+  				model.setData({data:"\n"});
+  				t.is(2, model.getLineCount());
+  				t.is("/root/line[2]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "line");
+  				t.is(0, model.getOffset());
+  				
+  				t.is("\n",model.removeLeft());
+  				t.is(1, model.getLineCount());
+  				t.is("/root/line[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "line");
+  				t.is(0, model.getOffset());
+			},
+			tearDown: function(){
+				
+			}
 		},
 		
 		// math节点与text节点类似，只要当前聚焦点前有大于等于两个字符的内容，就删除内容

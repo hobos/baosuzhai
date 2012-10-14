@@ -366,12 +366,63 @@ define([ "dojo/_base/declare",
 						// 注意这里不设置cursorPosition，因为要与之前的值保持一致。
 						return removed;
 					}
+				}else if(node.nodeName == "line"){
+					// FIXME:在后面的重构中需要认识到，也许遇到line时，offset都等于0。还需进一步验证。
+					if(this.getLineCount() > 1){
+						// 删除一个空行
+						var previousNode = node.previousSibling;
+						var childCount = previousNode.childNodes.length;
+						//如果前一行也是空行
+						if(childCount == 0){
+							this.cursorPosition.node = previousNode;
+							this.cursorPosition.offset = 0;
+							var lastPath = this.path.pop();
+							lastPath.offset--;
+							this.path.push(lastPath);
+							node.parentNode.removeChild(node);
+						}else{
+							// FIXME：提取一个方法，获取一行最后一个有效的节点，将div等的逻辑都封装进去
+							// 需要支持将math看作一个整体，这样可以删除整个math节点
+							previousNode = previousNode.lastChild;
+							
+							if(previousNode.nodeName == "text"){
+								this.cursorPosition.node = previousNode;
+								this.cursorPosition.offset = previousNode.textContent.length;
+								
+								var lastPath = this.path.pop();
+								lastPath.offset--;
+								this.path.push(lastPath);
+								this.path.push({nodeName:previousNode.nodeName, offset: childCount});
+								node.parentNode.removeChild(node);
+							}else if(previousNode.nodeName == "math"){
+								// FIXME：math节点中的移动逻辑，因为这里涉及到了层次之间的移动。寻找最佳实践。
+								var mathChildCount = previousNode.childNodes.length;
+								previousNode = previousNode.lastChild;
+								
+								this.cursorPosition.node = previousNode;
+								this.cursorPosition.offset = previousNode.textContent.length;
+								
+								var lastPath = this.path.pop();
+								lastPath.offset--;
+								this.path.push(lastPath);
+								this.path.push({nodeName:"math", offset:childCount});
+								this.path.push({nodeName:previousNode.nodeName, offset: mathChildCount});
+								node.parentNode.removeChild(node);
+							}
+							
+						}
+						
+						return "\n";
+					}else{
+						return "";// 只剩下一行时，什么也不做。
+					}
+					
 				}
 				return "";
 			}else{
 				var removed = "";
 				var newText = "";
-				debugger;
+				
 				if(node.nodeName == "mo"){
 					// 因为现在只有操作符使用unicode表示，所以不需要专门处理unicode，遇到mo直接整个删除就可以。
 					removed = node.textContent;
@@ -385,11 +436,26 @@ define([ "dojo/_base/declare",
 					var previousNode = node.previousSibling;
 					var _offset = 0;
 					if(previousNode){
-						this.cursorPosition.node = previousNode;
-						this.cursorPosition.offset = previousNode.textContent.length;
-						node.parentNode.removeChild(node);
-						var old = this.path.pop();
-						this.path.push({nodeName:this.cursorPosition.node.nodeName, offset:old.offset-1});
+						if(previousNode.nodeName == "math"){
+							var mathChildCount = previousNode.childNodes.length;
+							previousNode = previousNode.lastChild;
+							
+							this.cursorPosition.node = previousNode;
+							this.cursorPosition.offset = previousNode.textContent.length;
+							
+							var lastPath = this.path.pop();
+							var lastOffset = lastPath.offset - 1;
+							this.path.push({nodeName:"math", offset:lastOffset});
+							this.path.push({nodeName:previousNode.nodeName, offset: mathChildCount});
+							node.parentNode.removeChild(node);
+						}else{
+							this.cursorPosition.node = previousNode;
+							this.cursorPosition.offset = previousNode.textContent.length;
+							node.parentNode.removeChild(node);
+							var old = this.path.pop();
+							this.path.push({nodeName:this.cursorPosition.node.nodeName, offset:old.offset-1});
+						}
+						
 					}else{
 						var p = node;
 						var c = node;
