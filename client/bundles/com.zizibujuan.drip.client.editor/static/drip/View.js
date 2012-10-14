@@ -60,13 +60,7 @@ define(["dojo/_base/declare",
 			this.textLayer.innerHTML = this.model.getHTML();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.textLayer]);
 			// 因为是异步操作，需要把显示光标的方法放在MathJax的异步函数中。
-			// 貌似showCursor并没有在Typeset执行完之后再执行。
 			MathJax.Hub.Queue(lang.hitch(this,this.showCursor));
-			// MathJax.Hub.Register.StartupHook("End",lang.hitch(this,this.showCursor));
-			var top = 0;
-			// TODO:这里需要一个根据model中的数据映射到浏览器中的dom节点
-			
-			//this.cursor.move(top,left);//如果传入参数，可能会弄错顺序；直接传入对象，可避免这个错误。
 		},
 		
 		showCursor: function(){
@@ -180,6 +174,20 @@ define(["dojo/_base/declare",
 			
 			
 			return {top:top,left:left,height:height, width:width};
+		},
+		
+		getCursorPosition: function(){
+			// summary:
+			//		相对浏览器视窗的左上角位置
+			//		注意这里定位的是提示框弹出前的位置。用在更普遍的场合，是在执行其他操作前的光标位置。
+			
+			var textLayerPosition = this.textLayerPosition;
+			var x = textLayerPosition.x;
+			var y = textLayerPosition.y;
+			var cursorConfig = this.cursor.getCursorConfig();
+			x += cursorConfig.left;
+			y += cursorConfig.top + cursorConfig.height;
+			return {x:x, y:y};
 		}
 		
 	});

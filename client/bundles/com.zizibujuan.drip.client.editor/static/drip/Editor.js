@@ -93,8 +93,6 @@ define(["dojo/_base/declare",
 		_onTextInput: function(e){
 			var inputData = e.data;
 			
-			// TODO:重构，提出方法,放到contentAssist中，输入参数为e.data,返回值boolean
-			debugger;
 			var adviceData = this.contentAssist.show(inputData);
 			var removeCount = 0;
 			if(adviceData != null){

@@ -3,6 +3,7 @@ define(["dojo/_base/declare",
         "dojo/_base/lang",
         "dojo/dom-construct",
         "dojo/dom-class",
+        "dojo/dom-style",
         "dijit/popup",
         "dijit/DropDownMenu",
         "dijit/MenuItem",
@@ -12,6 +13,7 @@ define(["dojo/_base/declare",
 		lang,
 		domConstruct,
 		domClass,
+		domStyle,
 		popup,
 		DropDownMenu,
 		MenuItem,
@@ -72,8 +74,9 @@ define(["dojo/_base/declare",
 		},
 		
 		_open: function(){
-			var x = 100; // 从view中获取
-			var y = 100; // 从view中获取
+			var cursorPosition = this.view.getCursorPosition();
+			var x = cursorPosition.x;
+			var y = cursorPosition.y;
 			this._scheduleOpen(this, x, y);
 		},
 		

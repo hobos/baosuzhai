@@ -22,7 +22,7 @@ define(["dojo/_base/declare",
 		
 		isVisible: false,
 		
-		position: {top:0, left:0},
+		cursorConfig: {top:0, left:0},
 		
 		constructor: function(kwArgs){
 			lang.mixin(this, kwArgs);
@@ -33,6 +33,8 @@ define(["dojo/_base/declare",
 //			domConstruct.destroy(tmpNode);
 //			caret.style.height = defaultHeight;
 			caret.style.visibility = "hidden";
+			this.defaultHeight = caret.clientHeight;
+			this.cursorConfig.height = this.defaultHeight;
 		},
 		
 		show: function(){
@@ -47,12 +49,10 @@ define(["dojo/_base/declare",
 		
 		move: function(cursorConfig){
 			if(this.isVisible == false)return;
+			this.cursorConfig = cursorConfig;
 			var top = cursorConfig.top;
 			var left = cursorConfig.left;
 			var height = cursorConfig.height;
-			// TODO:在这里删除多余代码
-			this.position.top = top;
-			this.position.left = left;
 			var style = this.caret.style;
 			style.top = top+"px";
 			style.left = left+"px";
@@ -62,6 +62,10 @@ define(["dojo/_base/declare",
 			
 			this.caret.style.visibility = "";
 			this._restartTimer();
+		},
+		
+		getCursorConfig: function(){
+			return this.cursorConfig;
 		},
 		
 		hide: function(){
