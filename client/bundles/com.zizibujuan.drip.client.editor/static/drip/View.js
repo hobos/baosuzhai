@@ -168,11 +168,6 @@ define(["dojo/_base/declare",
 					
 				}
 			}
-			
-			//left = node.offsetWidth;
-			//var left = this.textLayer.firstChild.firstChild.offsetWidth;
-			
-			
 			return {top:top,left:left,height:height, width:width};
 		},
 		

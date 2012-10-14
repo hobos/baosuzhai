@@ -81,8 +81,8 @@ require(["dojo",
 				doh.t(cursor.caret!=null);
 				var cursorConfig = {top:100, left:200};
 				cursor.move(cursorConfig);
-				doh.t(cursor.position.top == 0);
-				doh.t(cursor.position.left == 0);
+				doh.t(cursor.cursorConfig.top == 0);
+				doh.t(cursor.cursorConfig.left == 0);
 				
 				cursor.show();
 				var deferred = new doh.Deferred();
@@ -91,8 +91,8 @@ require(["dojo",
 			    	cursor.move(cursorConfig);
 					// move之后瞬间可见
 					doh.t(cursor.caret.style.visibility === "");
-					doh.t(cursor.position.top == 100);
-					doh.t(cursor.position.left == 200);
+					doh.t(cursor.cursorConfig.top == 100);
+					doh.t(cursor.cursorConfig.left == 200);
 			    }), 1000);
 			    return deferred;
 			},
