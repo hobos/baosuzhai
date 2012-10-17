@@ -44,6 +44,10 @@
 	float: left;
 }
 
+div.dijitNumberTextBoxRtl {
+	text-align: right;
+}
+
 /* Calendar */
 
 .dijitCalendarRtl .dijitCalendarNextYear {
@@ -145,6 +149,12 @@
 .dijitSelectRtl .dijitButtonContents {
 	border-style: none none none solid;
 	text-align: right;
+}
+
+/* Tree */
+
+.dijitTreeRtl .dijitTreeContainer {
+	float: right;	/* for correct highlighting during horizontal scroll, see #16132 */
 }
 
 /* DnD
