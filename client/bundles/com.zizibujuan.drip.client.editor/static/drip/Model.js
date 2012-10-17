@@ -86,37 +86,7 @@ define([ "dojo/_base/declare",
 			
 		},
 		
-		_splitData: function(data){
-			// summary:
-			//		将传入的数据拆分为最小单元的html符号。
-			//		dataArray的每个元素都只能看作一个字符。
-			var len = data.length;
-			var result = [];
-			var index = 0;
-			var append = false;
-			var cache = "";
-			for(var i = 0; i < len; i++){
-				var char = data.charAt(i);
-				if(char == "&"){
-					append = true;
-					cache = char;
-				}else if(append && char == ";"){
-					append = false;
-					cache += char;
-					result[index] = cache;
-					index++;
-					cache = "";
-				}else{
-					if(append){
-						cache += char;
-					}else{
-						result[index] = data.charAt(i);
-						index++;
-					}
-				}
-			}
-			return result;
-		},
+		
 		
 		// TODO：需要加入位置参数，指明在什么地方插入
 		// TODO: 该方法需要重构，因为太多的针对不同类型的节点名称进行编程，而不是
@@ -126,7 +96,7 @@ define([ "dojo/_base/declare",
 			//		往model中插入数据。
 			// insertInfo: JSON Object
 			//		插入数据的详情。
-			//		data: String
+			//		data: String || Array
 			//			要插入的内容	
 			// 		nodeName：String
 			//			将data作为什么节点插入，这个通常由人工选择，如果没有值，则系统自动判断。
@@ -138,12 +108,21 @@ define([ "dojo/_base/declare",
 			var removeCount = insertInfo.removeCount;
 			
 			if(removeCount && removeCount > 0){
-				this._removeLeft(removeCount);
+				for(var i = 0; i < removeCount; i++){
+					this.removeLeft();
+				}
 			}
 			
 			// 这里需要对data做一个加工，&#xD7;只能看作一个字符。
-			var dataArray = this._splitData(data);
 			// 走到这一步，dataArray的每个元素都只能看作一个字符
+			var dataArray = [];
+			if(lang.isString(data)){
+				dataArray = dripString.splitData(data);
+			}else if(lang.isArray(data)){
+				dataArray = data;
+			}
+				
+			
 			
 			var xmlDoc = this.doc;
 			// 注意：把对数据类型的判断放在判断节点类型的外面。除非有充分的理由不要修改这个逻辑
@@ -299,7 +278,6 @@ define([ "dojo/_base/declare",
 						
 						this._insertChar(char);
 						
-						
 						this.path.push({nodeName:"text", offset:pos.offset+1});
 					}
 				}
@@ -307,14 +285,6 @@ define([ "dojo/_base/declare",
 			}));
 			
 			this.onChange(data);
-		},
-		
-		_removeLeft: function(removeCount){
-			var offset = this.cursorPosition.offset;
-			var oldText = this.cursorPosition.node.textContent;
-			var newText = dripString.insertAtOffset(oldText, offset, "", removeCount);
-			this.cursorPosition.node.textContent = newText;
-			this.cursorPosition.offset -= removeCount;
 		},
 		
 		doDelete: function(){

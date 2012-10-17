@@ -292,31 +292,6 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   			}
   		},
   		{
-  			name: "拆分字符",
-  			setUp: function(){
-  				this.model = new Model({});
-  			},
-  			runTest: function(t){
-  				var model = this.model;
-  				var dataArray = model._splitData("你好");
-  				t.is("你",dataArray[0]);
-  				t.is("好",dataArray[1]);
-  				
-  				dataArray = model._splitData("&1;");
-  				t.is("&1;",dataArray[0]);
-  				t.t(dataArray.length == 1);
-  				
-  				dataArray = model._splitData("1&#xD7;2");
-  				t.is("1",dataArray[0]);
-  				t.is("&#xD7;",dataArray[1]);
-  				t.is("2",dataArray[2]);
-  				t.t(dataArray.length == 3);
-  			},
-  			tearDown: function(){
-  				
-  			}
-  		},
-  		{
   			name: "替换字符",
   			setUp: function(){
   				this.model = new Model({});

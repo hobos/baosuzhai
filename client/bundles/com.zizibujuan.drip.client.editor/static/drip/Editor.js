@@ -45,10 +45,11 @@ define(["dojo/_base/declare",
 			});
 			
 			var contentAssist = this.contentAssist = new ContentAssist({view:this.view});
-			aspect.after(contentAssist,"apply", function(input, event){
+			aspect.after(contentAssist,"apply", function(input, cacheCount, event){
 				// FIXME:这里直接获取map值的逻辑不正确，如果处于cache状态，则不应该往model中
 				// 输入值。
-				model.setData({data:input});
+				// FIXME:1为硬编码值，需要替换。
+				model.setData({data:input,removeCount:cacheCount});
 				setTimeout(function() {
 					textarea.value = "";
 			    });
@@ -61,6 +62,7 @@ define(["dojo/_base/declare",
 				//console.log(e);
 			});
 			
+			// FIXME:一种重构思路是将key与方法绑定，然后根据key自动调用方法，即把if改为json对象
 			on(textarea, "keydown", lang.hitch(this,function(e){
 				console.log(e, e.keyCode);
 				if(e.keyCode === keys.LEFT_ARROW){
@@ -70,9 +72,17 @@ define(["dojo/_base/declare",
 				}else if(e.keyCode === keys.RIGHT_ARROW){
 					this.model.moveRight();
 				}else if(e.keyCode === keys.UP_ARROW){
-					this.model.moveUp();
+					if(this.contentAssist.opened){
+						this.contentAssist.selectPrev();
+					}else{
+						this.model.moveUp();
+					}
 				}else if(e.keyCode === keys.DOWN_ARROW){
-					this.model.moveDown();
+					if(this.contentAssist.opened){
+						this.contentAssist.selectNext();
+					}else{
+						this.model.moveDown();
+					}
 				}else if(e.keyCode === keys.BACKSPACE){
 					//this.model.removeLeft();
 					this.model.doDelete(); // TODO:使用removeLeft代替doDelete
@@ -81,8 +91,12 @@ define(["dojo/_base/declare",
 					this.contentAssist.open();
 					event.stop(e);
 				}else if(e.keyCode === keys.ENTER){
-					debugger;
-					this.model.setData({data:"\n"});
+					if(this.contentAssist.opened){
+						this.contentAssist.enter(e);
+					}else{
+						this.model.setData({data:"\n"});
+					}
+					
 					// 回车换行。
 					event.stop(e);
 				}
@@ -92,9 +106,10 @@ define(["dojo/_base/declare",
 		
 		_onTextInput: function(e){
 			var inputData = e.data;
+			// TODO：如果用户新输入的值，不在推荐之中，则先执行一个应用操作。
+			
 			
 			var adviceData = this.contentAssist.show(inputData);
-			var removeCount = 0;
 			if(adviceData != null){
 				// 优先显示提示框中级别最高的数据。而不是直接输入的内容。
 				inputData = adviceData;

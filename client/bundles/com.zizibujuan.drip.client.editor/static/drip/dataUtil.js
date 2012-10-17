@@ -21,7 +21,7 @@ define(["dojox/xml/parser",
 					lineString += "<span>"+span.textContent+"</span>";
 				}else if(span.nodeName == "math"){
 					var tmp = xmlParser.innerXML(span);
-					lineString += tmp.replace("&amp;", "&");
+					lineString += tmp.replace(/&amp;/g, "&");
 				}
 			});
 			lineString += "</div>";
