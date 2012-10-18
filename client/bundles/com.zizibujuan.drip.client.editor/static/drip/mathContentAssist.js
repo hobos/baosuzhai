@@ -2,15 +2,25 @@ define([ "dojo/_base/array" ], function(array) {
 
 	return {
 		keywords : [ {
-			input : "/",
-			map : "&#xF7;",
-			nodeName : "mo",
-			freq : 0
+			input: "/",
+			map: "&#xF7;",
+			nodeName: "mo",
+			freq: 0
 		},{
-			input : "/",
-			map : "/",
-			nodeName : "text",
-			freq : 0
+			input: "/",
+			map: "/",
+			nodeName: "text",
+			freq: 0
+		},{
+			input: "*",
+			map: "&#xD7;",
+			nodeName: "mo",
+			freq: 0
+		},{
+			input: "*",
+			map: "*",
+			nodeName: "mo",
+			freq: 0
 		} ],
 
 		getProposals : function(prefix) {
