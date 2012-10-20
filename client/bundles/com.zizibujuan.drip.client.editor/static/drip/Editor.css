@@ -53,3 +53,31 @@
 .drip_line{
 	min-height: 15px;
 }
+
+
+/***********************math icon*************************/
+.drip_equation_icon{
+	/*这些图片来自google doc， 如果不允许使用，则立即替换.
+		这些图片的质量也不是很好，后面更新。
+	*/
+	background-image: url("images/ee-palettes.gif");
+}
+
+.drip_frac{
+	width: 30px;
+	height: 45px;
+	background-position: -150px -90px;
+}
+
+.drip_multiplication{
+	width: 18px;
+	height: 18px;
+	background-position: 0px -50px;
+}
+
+.drip_division{
+	width: 18px;
+	height: 18px;
+	background-position: -18px -50px;
+	
+}

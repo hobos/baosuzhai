@@ -118,9 +118,9 @@ define(["dojo/_base/declare",
 			
 			this.proposals = proposals;
 			array.forEach(proposals,lang.hitch(this,function(jsonObject,index){
-				var menuItem = new MenuItem({label:jsonObject.map});
+				var menuItem = new MenuItem({label:jsonObject.label, iconClass:jsonObject.iconClass});
 				// jsonObject
-				menuItem.on("click", lang.hitch(this,this._onApplyProposal,jsonObject.map));
+				menuItem.on("click", lang.hitch(this,this._onApplyProposal,jsonObject.map, jsonObject.nodeName));
 				this.addChild(menuItem);
 			}));
 		},
@@ -160,16 +160,18 @@ define(["dojo/_base/declare",
 			}
 		},
 		
-		_onApplyProposal: function(data, evt){
+		_onApplyProposal: function(data,nodeName, evt){
 			// 因为cacheString的值是实时变化的，所以需要在外面加一层方法调用。
-			this.apply(data,this.cacheString.length,evt);
+			this.apply(data, nodeName, this.cacheString.length,evt);
 		},
 		
-		apply: function(data, cacheCount,evt){
+		apply: function(data, nodeName, cacheCount,evt){
 			// summary:
 			//		应用某个建议的值，将其最终存入到model中。
 			// data：
 			//		当前item对应的数据
+			// nodeName:
+			//		用那个mathml标签封装data
 			// cacheCount:
 			//		缓存的字符的个数，这些字符已经在view中显示，需要根据这个数字删除
 			// evt：

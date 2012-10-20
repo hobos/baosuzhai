@@ -45,11 +45,11 @@ define(["dojo/_base/declare",
 			});
 			
 			var contentAssist = this.contentAssist = new ContentAssist({view:this.view});
-			aspect.after(contentAssist,"apply", function(input, cacheCount, event){
+			aspect.after(contentAssist,"apply", function(input, nodeName, cacheCount, event){
 				// FIXME:这里直接获取map值的逻辑不正确，如果处于cache状态，则不应该往model中
 				// 输入值。
 				// FIXME:1为硬编码值，需要替换。
-				model.setData({data:input,removeCount:cacheCount});
+				model.setData({data:input,nodeName:nodeName, removeCount:cacheCount});
 				setTimeout(function() {
 					textarea.value = "";
 			    });
