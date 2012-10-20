@@ -3,3 +3,6 @@
 
 修改端口号：
 -Dorg.osgi.service.http.port=8088
+
+
+#TODO: 在ContentAssist中添加，通过选择数字，快速定位到要选择的项

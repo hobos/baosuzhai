@@ -29,6 +29,8 @@ define(["dojo/_base/declare",
 		parentNode : null,
 		textarea : null,
 		
+		readOnly: false, // 有时，编辑状态和只读状态显示的样式，是不一样的。暂时还没有区分对待。
+		
 		constructor: function(options){
 			lang.mixin(this, options);
 			// 创建一个div容器，然后其中按照垂直层次，罗列各div

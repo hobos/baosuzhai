@@ -577,6 +577,18 @@ define([ "dojo/_base/declare",
 			this.cursorPosition.offset += 1; // char.length
 		},
 		
+		_getPlaceHolder: function(){
+			// summary:
+			//		在节点上加上占位框的样式，本想直接添加一个className，但是会被mathjax的样式覆盖，
+			//		所以在节点上添加一个className,但是真正的效果是通过style中属性实现的。
+			
+			var node = this.doc.createElement("mn");
+			node.setAttribute("class", "drip_placeholder_box");
+			node.setAttribute("style", "border:1px dotted black; padding:1px;background-color: #cccccc;color: #cccccc;");
+			node.textContent = "8";
+			return node;
+		},
+		
 		
 		// 获取xml文件的字符串值。没有没有输入任何内容则返回空字符串。
 		getXML: function(){
