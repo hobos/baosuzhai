@@ -1,6 +1,7 @@
 define(["dojo/_base/declare",
         "dojo/_base/array",
         "dojo/_base/lang",
+        "dojo/on",
         "dojo/dom-construct",
         "dojo/dom-class",
         "dojo/dom-style",
@@ -11,6 +12,7 @@ define(["dojo/_base/declare",
 		declare,
 		array,
 		lang,
+		on,
 		domConstruct,
 		domClass,
 		domStyle,
@@ -41,6 +43,11 @@ define(["dojo/_base/declare",
 		
 		postCreate: function(){
 			this.inherited(arguments);
+			on(this.view.editorDiv, "mousedown", lang.hitch(this,function(e){
+				if(this.opened){
+					popup.close(this);
+				}
+			}));
 		},
 		
 		startup: function(){
