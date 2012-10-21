@@ -51,3 +51,6 @@ client/bundles/com.zizibujuan.drip.client.dojo/bin
 client/bundles/com.zizibujuan.drip.client.mathjax/bin
 
 server/build/com.zizibujuan.drip.repository/bin
+
+# 忽略wiki
+server/doc/com.zizibujuan.drip.wiki
