@@ -2,6 +2,7 @@ define(["dojo/_base/declare",
         "dojo/_base/lang",
         "dojo/_base/array",
         "dojo/dom",
+        "dojo/dom-class",
         "dojo/dom-construct",
         "dojo/dom-geometry",
         "dojo/on",
@@ -13,6 +14,7 @@ define(["dojo/_base/declare",
 		lang,
 		array,
 		dom,
+		domClass,
 		domConstruct,
 		domGeom,
 		on,
@@ -108,17 +110,23 @@ define(["dojo/_base/declare",
 				}else{
 					if(elementJax){
 						if(dripLang.isMathTokenName(path.nodeName)){
-							// token节点之上，在mathjax中必封装一个mrow节点
 							elementJax = elementJax.data[0];
-							// mrow
-							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
-							mrowNode = focusDomNode;
-							
-							elementJax = elementJax.data[path.offset - 1];
-							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
 						}else{
 							elementJax = elementJax.data[path.offset - 1];
-							focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+						}
+						focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+						
+						if(domClass.contains(focusDomNode, "mstyle")){
+							if(path != "mstyle"){
+								elementJax = elementJax.data[path.offset - 1];
+								focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+							}
+						}else if(domClass.contains(focusDomNode, "mrow")){
+							mrowNode = focusDomNode;
+							if(path != "mrow"){
+								elementJax = elementJax.data[path.offset - 1];
+								focusDomNode = dom.byId("MathJax-Span-"+elementJax.spanID);
+							}
 						}
 					}
 				}

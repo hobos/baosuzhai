@@ -16,6 +16,8 @@
     
     /*FIXME：寻求更灵活的获取光标默认高度的方法*/
     line-height: 15px;
+    
+    padding-top: 1px;
 }
 
 .drip_cursor-layer {

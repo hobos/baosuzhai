@@ -5,7 +5,8 @@ define([ "dojo/_base/declare",
          "dojox/xml/parser",
          "drip/string",
          "drip/dataUtil",
-         "drip/lang"], function(
+         "drip/lang",
+         "drip/xmlUtil"], function(
         		 declare,
         		 lang,
         		 array,
@@ -13,7 +14,8 @@ define([ "dojo/_base/declare",
         		 xmlParser,
         		 dripString,
         		 dataUtil,
-        		 dripLang) {
+        		 dripLang,
+        		 xmlUtil) {
 	var EMPTY_XML = "<root><line></line></root>";
 	return declare(null,{
 		// summary:
@@ -113,6 +115,44 @@ define([ "dojo/_base/declare",
 				}
 			}
 			
+			var xmlDoc = this.doc;
+			
+			if(nodeName != ""){
+				if(nodeName == "mfrac"){
+					debugger;
+					this._splitNodeIfNeed();
+					var node = this.cursorPosition.node;
+					var offset = this.cursorPosition.offset;
+					var newOffset = 1;
+					var position = "last";
+					if(this._isLineNode(node)){
+						
+					}else if(this._isTextNode(node)){
+						var _offset = this.path.pop().offset;
+						newOffset = _offset + 1;
+						position = "after";
+					}
+					
+					
+					this.path.push({nodeName:"math", offset:newOffset});
+					this.path.push({nodeName:"mfrac", offset:1});
+					this.path.push({nodeName:"mrow", offset:1});
+					this.path.push({nodeName:"mn", offset:1});
+					
+					var math = xmlDoc.createElement("math");
+					var fracData = xmlUtil.createEmptyFrac(xmlDoc);
+					math.appendChild(fracData.rootNode);
+					domConstruct.place(math, node, position);
+					
+					this.cursorPosition.node = fracData.focusNode;
+					this.cursorPosition.offset = 0;
+					
+					this.onChange();
+					return;
+				}
+				
+			}
+			
 			// 这里需要对data做一个加工，&#xD7;只能看作一个字符。
 			// 走到这一步，dataArray的每个元素都只能看作一个字符
 			var dataArray = [];
@@ -124,61 +164,89 @@ define([ "dojo/_base/declare",
 				
 			
 			
-			var xmlDoc = this.doc;
+			
 			// 注意：把对数据类型的判断放在判断节点类型的外面。除非有充分的理由不要修改这个逻辑
 			// 先循环字符，再判断当前要插入字符的环境。
 			// data中可能包含多个字符，通过循环，单独处理每个字符
 			array.forEach(dataArray,lang.hitch(this,function(eachData, index){
-
 				var char = eachData;
 				var node = this.cursorPosition.node;
+				
 				if(dripLang.isNumber(char)){
-					if(this._isLineNode(node)){
-						// FIXME：重构出一个方法
+					
+					// 按照以下思路重构。
+					// 添加一个数据，分以下几步：
+					//		如果指定了nodeName，则直接使用；如果没有指定，则先推导
+					//		比较要输入的值和当前输入的环境
+					//		确定可以执行哪些动作
+					//		新建节点
+					//		设置当前节点，将cursorPosition改为context
+					//		在新节点中插入内容
+					//		修正当前的path值
+					nodeName = "mn";
+					
+					function isLineOrText(node){
+						var nodeName = node.nodeName;
+						return nodeName == "line" || nodeName == "text";
+					}
+					
+					if(isLineOrText(node)){
+						var offset = this.cursorPosition.offset;
+						// 这两个默认的值，是根据lineNode的值设置的，所以可以删除对lineNode的判断。
+						var position = "last";
+						var pathOffset = 1;
+						if(this._isLineNode(node)){
+							position = "last";
+							pathOffset = 1;
+						}else if(this._isTextNode(node)){
+							// 如果光标在文本中间，则先拆分文本节点
+							this._splitNodeIfNeed();
+							
+							var pos = this.path.pop();
+							
+							if(offset > 0){
+								position = "after";
+								pathOffset = pos.offset+1;
+							}else{
+								position = "before";
+							}
+						}
+						
 						var mathNode = xmlDoc.createElement("math");
-						node.appendChild(mathNode);
-						var mnNode = xmlDoc.createElement("mn");
+						var mnNode = xmlDoc.createElement(nodeName);
 						mathNode.appendChild(mnNode);
+						domConstruct.place(mathNode, node, position);
+						
+						
 						this.cursorPosition.node = mnNode;
 						this.cursorPosition.offset = 0;
 						
 						this._insertChar(char);
 						
-						this.path.push({nodeName:"math", offset:1});
-						this.path.push({nodeName:"mn", offset:1});
-					}else if(this._isTextNode(node)){
-						// FIXME：重构出一个方法
-						var mathNode = xmlDoc.createElement("math");
-						// math应该放在textNode之后
-						dripLang.insertNodeAfter(mathNode, node);
-						var mnNode = xmlDoc.createElement("mn");
-						mathNode.appendChild(mnNode);
-						this.cursorPosition.node = mnNode;
-						this.cursorPosition.offset = 0;
-						
-						this._insertChar(char);
-						
-						var pos = this.path.pop();
-						this.path.push({nodeName:"math", offset:pos.offset+1});
-						this.path.push({nodeName:"mn", offset:1});
+						this.path.push({nodeName:"math", offset:pathOffset});
+						this.path.push({nodeName:nodeName, offset:1});
 					}else if(dripLang.isMathTokenNode(node)){
 						// FIXME：重构，可抽象出一个逻辑，期望新建的节点与当前节点的类型不同。
 						//如果当前节点不是操作符节点，则新建一个操作符节点
 						var node = this.cursorPosition.node;
-						if(node.nodeName != "mn"){
-							var mnNode = xmlDoc.createElement("mn");
+						if(node.nodeName != nodeName){
+							var mnNode = xmlDoc.createElement(nodeName);
+							
+							// 需要判断是否需要拆分节点。
 							dripLang.insertNodeAfter(mnNode,node);
 							
 							this.cursorPosition.node = mnNode;
 							this.cursorPosition.offset = 0;
 							
-							this._insertChar(char);
+							
 							
 							var pos = this.path.pop();
-							this.path.push({nodeName:"mn", offset:pos.offset+1});
+							this.path.push({nodeName:nodeName, offset:pos.offset+1});
 						}else{
-							this._insertChar(char);
+							
 						}
+						
+						this._insertChar(char);
 					}
 				}else if(dripLang.isOperator(char)){
 					if(this._isLineNode(node)){
@@ -543,6 +611,28 @@ define([ "dojo/_base/declare",
 			return this.doc.documentElement.childNodes.length;
 		},
 		
+		_splitNodeIfNeed: function(){
+			// summary:
+			//		如果节点满足被拆分的条件，则将节点拆分为两个。
+			//		只能用在放置文本节点的节点中，如text节点和mathml的token节点。
+			var offset = this.cursorPosition.offset;
+			var node = this.cursorPosition.node;
+			var textContent = node.textContent;
+			var textLength = textContent.length;
+			if(0< offset && offset < textLength){
+				// 拆分
+				var part1 = textContent.substring(0, offset);
+				var part2 = textContent.substring(offset);
+				
+				var node2 = this.doc.createElement(node.nodeName);//因为是拆分
+				
+				node.textContent = part1;
+				node2.textContent = part2;
+				
+				dripLang.insertNodeAfter(node2, node);
+			}
+		},
+		
 		_getFocusLine: function(){
 			// summary:
 			//		当前节点往上追溯，获取nodeName为line的行
@@ -555,6 +645,11 @@ define([ "dojo/_base/declare",
 			
 			return lineNode;
 		}, 
+		
+		_isNotSameNode: function(newNodeName, node){
+			var nodeName = node.nodeName;
+			return newNodeName == nodeName;
+		},
 		
 		_isLineNode: function(node){
 			return node.nodeName == "line";
@@ -576,19 +671,6 @@ define([ "dojo/_base/declare",
 			// 这里输入的char，不管几个字符都当作一个长度处理。
 			this.cursorPosition.offset += 1; // char.length
 		},
-		
-		_getPlaceHolder: function(){
-			// summary:
-			//		在节点上加上占位框的样式，本想直接添加一个className，但是会被mathjax的样式覆盖，
-			//		所以在节点上添加一个className,但是真正的效果是通过style中属性实现的。
-			
-			var node = this.doc.createElement("mn");
-			node.setAttribute("class", "drip_placeholder_box");
-			node.setAttribute("style", "border:1px dotted black; padding:1px;background-color: #cccccc;color: #cccccc;");
-			node.textContent = "8";
-			return node;
-		},
-		
 		
 		// 获取xml文件的字符串值。没有没有输入任何内容则返回空字符串。
 		getXML: function(){

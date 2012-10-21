@@ -156,7 +156,7 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   			}
   		},
   		{
-  			name: "在已有一个中文字符的model中添加数字",
+  			name: "model中有一个中文字符，在中文字符\"后面\"添加一个数字",
   			setUp: function(){
   				this.model = new Model({});
   			},
@@ -170,6 +170,31 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   				t.is(model.getFocusNode().nodeName, "mn");
   				t.is(1, model.getOffset());
   				t.is(2, model.getLineAt(0).childNodes.length);
+  			},
+  			tearDown: function(){
+  				
+  			}
+  		},
+  		{
+  			name: "model中有一个中文字符，在中文字符\"前面\"加一个数字",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				// 结果是在line中先加一个text节点，然后再加一个math节点
+  				var model = this.model;
+  				// 如果是中文，则放在text节点中
+  				model.setData({data:"中"});
+  				model.moveLeft();
+  				debugger;
+  				model.setData({data:"1"});
+  				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
+  				t.is(model.getFocusNode().nodeName, "mn");
+  				t.is(1, model.getOffset());
+  				var children = model.getLineAt(0).childNodes;
+  				t.is(2, children.length);
+  				t.is("math", children[0].nodeName);
+  				t.is("text", children[1].nodeName);
   			},
   			tearDown: function(){
   				
@@ -337,6 +362,108 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   				t.is(model.getFocusNode().nodeName, "mn");
   				t.is("2", model.getFocusNode().textContent);
   				t.is(1, model.getOffset());
+  			},
+  			tearDown: function(){
+  				
+  			}
+  		},
+  		{
+  			name: "在两个中文字符中间插入数字1后，行中应该被分为三部分",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"你我"});
+  				model.moveLeft();
+  				model.setData({data:"1"});
+  				
+  				t.is("/root/line[1]/math[2]/mn[1]", model.getPath()); //创建完成后，让分子先获取焦点
+  				var node = model.getFocusNode();
+  				t.is("mn", node.nodeName);
+  				t.is(1, model.getOffset());
+  				var children = model.getLineAt(0).childNodes;
+  				t.is(3, children.length);
+  				t.is("text", children[0].nodeName);
+  				t.is("math", children[1].nodeName);
+  				t.is("text", children[2].nodeName);
+  				
+  				t.is("你", children[0].textContent);
+  				t.is("1", children[1].textContent);
+  				t.is("我", children[2].textContent);
+  			},
+  			tearDown: function(){
+  				
+  			}
+  		},
+  		{
+  			name: "在一个空的model中加入一个空的分数",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"", nodeName:"mfrac"});
+  				t.is("/root/line[1]/math[1]/mfrac[1]/mrow[1]/mn[1]", model.getPath()); //创建完成后，让分子先获取焦点
+  				var node = model.getFocusNode();
+  				// 确保选中的是分子节点
+  				t.t(node.parentNode.previousSibling == null);
+  				t.is("mn", node.nodeName);
+  				t.is("drip_placeholder_box", node.getAttribute("class"));
+  				t.is(0, model.getOffset());
+  			},
+  			tearDown: function(){
+  				
+  			}
+  		},
+  		{
+  			name: "在一个已输入中文的model中加入一个空的分数",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"你"});
+  				model.setData({data:"", nodeName:"mfrac"});
+  				t.is("/root/line[1]/math[2]/mfrac[1]/mrow[1]/mn[1]", model.getPath()); //创建完成后，让分子先获取焦点
+  				var node = model.getFocusNode();
+  				// 确保选中的是分子节点
+  				t.t(node.parentNode.previousSibling == null);
+  				t.is("mn", node.nodeName);
+  				t.is("drip_placeholder_box", node.getAttribute("class"));
+  				t.is(0, model.getOffset());
+  			},
+  			tearDown: function(){
+  				
+  			}
+  		},
+  		{
+  			name: "在两个已输入中文中间加入一个空的分数",
+  			setUp: function(){
+  				this.model = new Model({});
+  			},
+  			runTest: function(t){
+  				var model = this.model;
+  				model.setData({data:"你我"});
+  				model.moveLeft();
+  				model.setData({data:"", nodeName:"mfrac"});
+  				t.is("/root/line[1]/math[2]/mfrac[1]/mrow[1]/mn[1]", model.getPath()); //创建完成后，让分子先获取焦点
+  				var node = model.getFocusNode();
+  				// 确保选中的是分子节点
+  				t.t(node.parentNode.previousSibling == null);
+  				t.is("mn", node.nodeName);
+  				t.is("drip_placeholder_box", node.getAttribute("class"));
+  				t.is(0, model.getOffset());
+  				
+  				var children = model.getLineAt(0).childNodes;
+  				t.is(3, children.length);
+  				t.is("text", children[0].nodeName);
+  				t.is("math", children[1].nodeName);
+  				t.is("text", children[2].nodeName);
+  				
+  				t.is("你", children[0].textContent);
+  				//t.is("1", children[1].textContent);
+  				t.is("我", children[2].textContent);
   			},
   			tearDown: function(){
   				
