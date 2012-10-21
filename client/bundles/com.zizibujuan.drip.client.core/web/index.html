@@ -84,6 +84,11 @@ require(["dojo/ready",
 		
 		txtLogin.focus();
 		
+		// 进入题库页面
+		registry.byId("btnExercises").on("click", function(e){
+			window.location.href = "/exercises";
+		});
+		
 	});
 	
 });
@@ -105,7 +110,7 @@ require(["dojo/ready",
 			<div class="top-toolbar">
 				<!-- 这个区域的操作随着页面和用户权限的不同，动态改变 -->
 				<!-- 只有登录用户才可以进入该页面 -->
-				
+				<div data-dojo-type="dijit/form/Button" id="btnExercises">题库</div>
 			</div>
 		</div>
 	</div>

@@ -36,6 +36,11 @@ require(["dojo/ready",
 			debugger;
 			window.location.href = "/exercises/new";
 		});
+		
+		// 进入题库页面
+		registry.byId("btnExercises").on("click", function(e){
+			window.location.href = "/exercises";
+		});
 	});
 	
 });
@@ -43,6 +48,7 @@ require(["dojo/ready",
 </head>
 <body  class="claro">
 	<div data-dojo-type="Header" id="header">
+		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnExercises">题库</div>
 		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">新建习题</div>
 	</div>
 	
