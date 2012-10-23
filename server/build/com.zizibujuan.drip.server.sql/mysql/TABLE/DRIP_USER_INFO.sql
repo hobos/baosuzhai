@@ -1,9 +1,9 @@
 -- -----------------------------------------------------
--- Table `drip`.`DRIP_USER` 用户表
+-- Table `drip`.`DRIP_USER_INFO` 用户表
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `drip`.`DRIP_USER`;
+DROP TABLE IF EXISTS `drip`.`DRIP_USER_INFO`;
 
-CREATE  TABLE IF NOT EXISTS `drip`.`DRIP_USER` (
+CREATE  TABLE IF NOT EXISTS `drip`.`DRIP_USER_INFO` (
   `DBID` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键' ,
   `LOGIN_NM` VARCHAR(45) NULL COMMENT '登录名' ,
   `LOGIN_EMAIL` VARCHAR(100) NULL COMMENT '登录邮箱' ,
