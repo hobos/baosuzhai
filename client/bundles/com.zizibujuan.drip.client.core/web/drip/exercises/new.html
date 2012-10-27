@@ -58,10 +58,162 @@ require(["dojo/ready",
 		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">保存</div>
 	</div>
 	
+	<div style=" margin: 0 auto;width: 920px;margin-top: 50px;">
+		<ul class="tabs">
+			<li>
+				<a href="#">单项选择题</a>
+			</li>
+			<li>
+				<a href="#">多项选择题</a>
+			</li>
+			<li>
+				<a href="#">填空题</a>
+			</li>
+			<li>
+				<a href="#">问答题</a>
+			</li>
+		</ul>
+		<div style="margin-top: 15px;">
+			<div style="width: 660px; float: left;">
+				<div class="drip-title">内容</div>
+				<div style="padding: 3px; margin-bottom: 10px; border-radius: 3px; background: #eee">
+					<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
+						<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
+							<div data-dojo-type="drip/Editor" style="height:150px; position: relative;" id="editor" data-dojo-props=""></div>
+						</div>
+					</div>
+				</div>
+				<div class="drip-title" style="margin-bottom: 5px;">
+					<a href="#">附图？</a>
+				</div>
+				<div style="display: none">
+				提供上传图片，或者直接在本地画图.
+				当需要添加的时候，再撑开。
+				</div>
+			
+				<div class="drip-title">选项和答案</div>
+					<div>
+					
+						<table class="drip-exercise-option">
+							<tr>
+								<td><input type="radio" name="answer-option"/></td>
+								<td><label>A</label></td>
+								<td>
+									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
+										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
+											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
+												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<a>
+									<img alt="删除" src="/resources/images/delete.png">
+									</a>
+									<a>
+									<img alt="下移" src="/resources/images/arrow_down.gif">
+									</a>
+									<a>
+									<img alt="上移" src="/resources/images/arrow_up.gif">
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="radio" name="answer-option"/></td>
+								<td><label>B</label></td>
+								<td>
+									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
+										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
+											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
+												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;"  data-dojo-props=""></div>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<a>
+									<img alt="删除" src="/resources/images/delete.png">
+									</a>
+									<a>
+									<img alt="下移" src="/resources/images/arrow_down.gif">
+									</a>
+									<a>
+									<img alt="上移" src="/resources/images/arrow_up.gif">
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="radio" name="answer-option"/></td>
+								<td><label>C</label></td>
+								<td>
+									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
+										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
+											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
+												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<a>
+									<img alt="删除" src="/resources/images/delete.png">
+									</a>
+									<a>
+									<img alt="下移" src="/resources/images/arrow_down.gif">
+									</a>
+									<a>
+									<img alt="上移" src="/resources/images/arrow_up.gif">
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="radio" name="answer-option"/></td>
+								<td><label>D</label></td>
+								<td>
+									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
+										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
+											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
+												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<a>
+									<img alt="删除" src="/resources/images/delete.png">
+									</a>
+									<a>
+									<img alt="下移" src="/resources/images/arrow_down.gif">
+									</a>
+									<a>
+									<img alt="上移" src="/resources/images/arrow_up.gif">
+									</a>
+								</td>
+							</tr>
+						</table>
+						<div><img src="/resources/images/add_20.png"/></div>
+					</div>
+					
+					<div style="text-align: right;">
+						<div data-dojo-type="dijit/form/Button" style="font-size: 15px;font-weight: bold;">保存</div>
+					</div>
+				</div>
+			
+			<div style="float: right; width:240px">
+				<h3>选择科目</h3>
+				<div>高等数学</div>
+				<div>
+					树状结构展示更详细的分类。
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!-- 
 	<div style="margin-top: 60px">
 		<div class="wrapper">
 			<div style="padding: 3px; margin-bottom: 10px; border-radius: 3px; background: #eee">
-				<!-- TODO：将这些style提取到样式文件中 -->
 				<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
 					<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
 						<div data-dojo-type="drip/Editor" style="height:350px" id="editor" data-dojo-props=""></div>
@@ -70,5 +222,6 @@ require(["dojo/ready",
 			</div>
 		</div>
 	</div>
+	-->
 </body>
 </html>

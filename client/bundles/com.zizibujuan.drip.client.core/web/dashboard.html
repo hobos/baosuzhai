@@ -30,10 +30,8 @@ require(["dojo/ready",
         		 registry){
 	
 	ready(function(){
-		debugger;
 		var btnNewExercise = registry.byId("btnNewExercise");
 		btnNewExercise.on("click",function(e){
-			debugger;
 			window.location.href = "/exercises/new";
 		});
 		
@@ -54,7 +52,46 @@ require(["dojo/ready",
 	
 		<!-- 习题过滤算法 -->
 		<!-- FIXME:不要将width硬编码在Exercise部件中 -->
+		<!-- 
 		<div data-dojo-type="Exercise" id="exercises" style="margin-top: 45px"></div>
+		 -->
+		 
+		 
+		 <div style="margin: 0 auto; width: 980px; margin-top: 45px;">
+		 
+		 	<div class="clearfix">
+		 		<div class="drip_main_left">
+		 			<!-- 也许模仿github的布局更好一些 -->
+		 			<div class="drip_nav_left">
+		 				<div class = "lev">
+		 					<a href="#">我的任务</a>
+		 				</div>
+		 				<!-- 功能导航区 -->
+		 				<div class = "lev">
+		 					<a href="exercises/new">添加习题</a>
+		 				</div>
+		 				<div class = "lev">
+		 					<a href="#">我贡献的习题</a>
+		 				</div>
+		 				<div class = "lev">
+		 					<a href="#">我回答的习题</a>
+		 				</div>
+		 			</div>
+		 		</div>
+		 		<div>
+		 			<div class="drip_main_a">
+		 				<div class="drip_main_center">
+		 					用户活动区
+		 				</div>
+		 				<div class="drip_main_right">
+		 					<!-- 将微薄的关注和粉丝信息导进来 -->
+		 					用户信息区
+		 				</div>
+		 			</div>
+		 		</div>
+		 	</div>
+		 
+		 </div>
 	
 	
 </body>

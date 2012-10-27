@@ -35,7 +35,7 @@ define(["dojo/_base/declare",
 	    },
 		
 		postCreate : function(){
-			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"300px"}}, this.domNode);
+			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"-40px",left:'700px'}}, this.domNode);
 			
 			var model = this.model = new Model();
 			this.view = new View({
