@@ -21,33 +21,35 @@
 require(["dojo/ready", 
          "dojo/store/JsonRest",
          "dijit/registry",
+         "drip/exercises/new",
          "dojo/parser",
          "dijit/form/Button",
-         "drip/Editor",
          "Header",
          "dojo/domReady!"],function(
         		 ready,
         		 JsonRest,
-        		 registry){
+        		 registry,
+        		 ExerciseInput){
 	ready(function(){
-		var jsonRest = new JsonRest({
-			 target:"/exercises/"
-		 });
-		var btnNewExercise = registry.byId("btnNewExercise");
-		var editor = registry.byId("editor");
-		btnNewExercise.on("click",function(e){
-			var content = editor.get("value");
-			var data = {content:content};
-			jsonRest.add(data).then(function(response){
-				// 保存成功
-				//		给出成功提示，然后一段时间后自动消失（使用固定的提示区域）
-				//		清空习题内容
-			},function(error){
-				// 保存失败
-				//		界面上保留习题内容
-				//		给出失败提示（成功与失败使用相同的提示区域）
-			});
+		var exerciseInput = new ExerciseInput();
+		exerciseInput.placeAt("leftForm");
+		
+		
+		/*
+		function(e){
+		var content = editor.get("value");
+		var data = {content:content};
+		jsonRest.add(data).then(function(response){
+			// 保存成功
+			//		给出成功提示，然后一段时间后自动消失（使用固定的提示区域）
+			//		清空习题内容
+		},function(error){
+			// 保存失败
+			//		界面上保留习题内容
+			//		给出失败提示（成功与失败使用相同的提示区域）
 		});
+	}
+		*/
 	});
 	
 });
@@ -58,149 +60,28 @@ require(["dojo/ready",
 		<div data-dojo-type="dijit/form/Button" style="margin: 0px;" id="btnNewExercise">保存</div>
 	</div>
 	
-	<div style=" margin: 0 auto;width: 920px;margin-top: 50px;">
+	<div id="main" style=" margin: 0 auto;width: 920px;margin-top: 50px;">
 		<ul class="tabs">
 			<li>
-				<a href="#">单项选择题</a>
+				<a href="#" class="selected" id="single">单项选择题</a>
 			</li>
 			<li>
-				<a href="#">多项选择题</a>
+				<a href="#" id="multiple">多项选择题</a>
 			</li>
 			<li>
-				<a href="#">填空题</a>
+				<a href="#" id="tk">填空题</a>
 			</li>
 			<li>
-				<a href="#">问答题</a>
+				<a href="#" id="wd">问答题</a>
 			</li>
 		</ul>
-		<div style="margin-top: 15px;">
-			<div style="width: 660px; float: left;">
-				<div class="drip-title">内容</div>
-				<div style="padding: 3px; margin-bottom: 10px; border-radius: 3px; background: #eee">
-					<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
-						<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-							<div data-dojo-type="drip/Editor" style="height:150px; position: relative;" id="editor" data-dojo-props=""></div>
-						</div>
-					</div>
-				</div>
-				<div class="drip-title" style="margin-bottom: 5px;">
-					<a href="#">附图？</a>
-				</div>
-				<div style="display: none">
-				提供上传图片，或者直接在本地画图.
-				当需要添加的时候，再撑开。
-				</div>
+		<div style="margin-top: 10px;" id="formContainer">
+			<div style="width: 660px; float: left;" id="leftForm">
 			
-				<div class="drip-title">选项和答案</div>
-					<div>
-					
-						<table class="drip-exercise-option">
-							<tr>
-								<td><input type="radio" name="answer-option"/></td>
-								<td><label>A</label></td>
-								<td>
-									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
-										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
-											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
-											</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									<a>
-									<img alt="删除" src="/resources/images/delete.png">
-									</a>
-									<a>
-									<img alt="下移" src="/resources/images/arrow_down.gif">
-									</a>
-									<a>
-									<img alt="上移" src="/resources/images/arrow_up.gif">
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="answer-option"/></td>
-								<td><label>B</label></td>
-								<td>
-									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
-										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
-											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;"  data-dojo-props=""></div>
-											</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									<a>
-									<img alt="删除" src="/resources/images/delete.png">
-									</a>
-									<a>
-									<img alt="下移" src="/resources/images/arrow_down.gif">
-									</a>
-									<a>
-									<img alt="上移" src="/resources/images/arrow_up.gif">
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="answer-option"/></td>
-								<td><label>C</label></td>
-								<td>
-									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
-										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
-											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
-											</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									<a>
-									<img alt="删除" src="/resources/images/delete.png">
-									</a>
-									<a>
-									<img alt="下移" src="/resources/images/arrow_down.gif">
-									</a>
-									<a>
-									<img alt="上移" src="/resources/images/arrow_up.gif">
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="answer-option"/></td>
-								<td><label>D</label></td>
-								<td>
-									<div style="padding: 3px; border-radius: 3px; background: #eee;float: right;width: 550px">
-										<div style="border: 1px solid #cacaca; background: #fbfbfb; padding-left: 10px; padding-right: 10px">
-											<div style="padding-top: 5px; padding-bottom: 10px;" data-dojo-attach-point="divContent">
-												<div data-dojo-type="drip/Editor" style="height:20px; position: relative;" data-dojo-props=""></div>
-											</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									<a>
-									<img alt="删除" src="/resources/images/delete.png">
-									</a>
-									<a>
-									<img alt="下移" src="/resources/images/arrow_down.gif">
-									</a>
-									<a>
-									<img alt="上移" src="/resources/images/arrow_up.gif">
-									</a>
-								</td>
-							</tr>
-						</table>
-						<div><img src="/resources/images/add_20.png"/></div>
-					</div>
-					
-					<div style="text-align: right;">
-						<div data-dojo-type="dijit/form/Button" style="font-size: 15px;font-weight: bold;">保存</div>
-					</div>
-				</div>
+			</div>
 			
 			<div style="float: right; width:240px">
+				<!-- 提供系统标签，也允许用户自定义标签，放在各自的tab中 -->
 				<h3>选择科目</h3>
 				<div>高等数学</div>
 				<div>

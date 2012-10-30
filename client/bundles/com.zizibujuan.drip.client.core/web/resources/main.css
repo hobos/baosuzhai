@@ -1,13 +1,7 @@
 @CHARSET "UTF-8";
 
-ul {
-	display: block;
-	list-style-type: disc;
-	-webkit-margin-before: 1em;
-	-webkit-margin-after: 1em;
-	-webkit-margin-start: 0px;
-	-webkit-margin-end: 0px;
-	-webkit-padding-start: 40px;
+ul{
+	padding: 0px;
 }
 
 ul.tabs {
@@ -50,6 +44,15 @@ ul.tabs li a {
 ul.tabs li:first-child a {
 	border-left: none;
 	border-bottom-left-radius: 3px;
+}
+
+ul.tabs li a.selected {
+	color: black;
+	background: #FCFCFC;
+	background: -moz-linear-gradient(#FCFCFC, #EBEBEB);
+	background: -webkit-linear-gradient(#FCFCFC, #EBEBEB);
+	background: linear-gradient(#FCFCFC, #EBEBEB);
+	border-bottom: 2px solid #D26911;
 }
 
 .drip-title{

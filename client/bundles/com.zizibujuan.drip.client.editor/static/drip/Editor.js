@@ -6,6 +6,7 @@ define(["dojo/_base/declare",
         "dojo/keys",
         "dojo/aspect",
         "dojo/dom-construct",
+        "dojo/dom-style",
         "drip/Model",
         "drip/View",
         "drip/ContentAssist"],function(
@@ -17,6 +18,7 @@ define(["dojo/_base/declare",
         		 keys,
         		 aspect,
         		 domConstruct,
+        		 domStyle,
         		 Model,
         		 View,
         		 ContentAssist){
@@ -35,6 +37,7 @@ define(["dojo/_base/declare",
 	    },
 		
 		postCreate : function(){
+			domStyle.set(this.domNode, {position: "relative"});
 			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"-40px",left:'700px'}}, this.domNode);
 			
 			var model = this.model = new Model();
