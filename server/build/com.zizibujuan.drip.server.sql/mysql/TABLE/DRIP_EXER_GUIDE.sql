@@ -1,17 +1,17 @@
--- 习题答案的基本信息
+-- 习题解析
 -- -----------------------------------------------------
--- Table `drip`.`DRIP_ANSWER` 习题答案的基本信息
+-- Table `drip`.`DRIP_EXER_GUIDE` 习题解析
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `drip`.`DRIP_ANSWER`;
+DROP TABLE IF EXISTS `drip`.`DRIP_EXER_GUIDE`;
 
-CREATE  TABLE IF NOT EXISTS `drip`.`DRIP_ANSWER` (
+CREATE  TABLE IF NOT EXISTS `drip`.`DRIP_EXER_GUIDE` (
   `DBID` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键' ,
   `EXER_ID` BIGINT NOT NULL COMMENT '习题标识' ,
-  `CONTENT_TYPE` INT NULL COMMENT '存储答案的数据类型，1：text；2：int，从option中选择' ,
+  `CONTENT` TEXT NOT NULL COMMENT '习题解析内容',
   `CRT_TM` DATETIME NULL COMMENT '创建时间' ,
   `CRT_USER_ID` BIGINT NOT NULL COMMENT '创建人标识',
   `UPT_TM` DATETIME NULL COMMENT '最近一次修改时间',
   `UPT_USER_ID` BIGINT NULL COMMENT '最近一次修改人标识',
   PRIMARY KEY (`DBID`))
 ENGINE = InnoDB
-COMMENT = '习题答案的基本信息';
+COMMENT = '习题解析';
