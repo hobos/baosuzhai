@@ -442,4 +442,30 @@ public abstract class DatabaseUtil {
 			safeClose(con, rst, pst);
 		}
 	}
+	
+	public static int insert(Connection con, String sql, Object... inParams) throws SQLException {
+		if(inParams == null){
+			inParams = new Object[]{};
+		}
+		PreparedStatement pst = null;
+		ResultSet rst = null;
+		try{
+			pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			int len = inParams.length;
+			for(int i = 0; i < len; i++){
+				pst.setObject((i+1), inParams[i]);
+			}
+			pst.executeUpdate();
+			rst = pst.getGeneratedKeys();    
+			rst.next();         
+			return rst.getInt(1);
+		}catch(SQLException e){
+			System.out.println(e);
+			throw e;
+		}finally{
+			DatabaseUtil.closeResultSet(rst);
+			DatabaseUtil.closeStatement(pst);
+		}
+	}
+
 }

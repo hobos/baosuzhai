@@ -24,10 +24,15 @@ public interface ExerciseDao {
 	 * 新增习题。<br/>
 	 * <pre>
 	 * 习题的数据格式为：
-	 * 		content ： 习题内容
+	 * 		exerType: 题型
+	 * 		exerCategory: 习题所属科目中的分类
+	 * 		content： 习题内容
+	 * 		options：Array  题目选项
+	 * 		answers: Array  习题答案列表
+	 * 		guide: 习题解析
 	 * </pre>
 	 * @param exerciseInfo 习题信息
-	 * @return 新增习题的标识
+	 * @return 新增习题的标识,如果返回-1，则新增用户失败。
 	 */
 	int add(Map<String, Object> exerciseInfo);
 }
