@@ -32,10 +32,17 @@ define(["dojo/_base/declare",
 		//		编辑器的值
 		value : "",
 		
-		_getValueAttr: function(value){
+		_getValueAttr: function(){
 			return this.model.getXML();
 	    },
 		
+	    _setValueAttr: function(value){
+	    	this.model.clear();
+	    	if(value && value != ""){
+	    		this.model.setData({data:value});
+	    	}
+	    },
+	    
 		postCreate : function(){
 			domStyle.set(this.domNode, {position: "relative"});
 			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"-40px",left:'700px'}}, this.domNode);

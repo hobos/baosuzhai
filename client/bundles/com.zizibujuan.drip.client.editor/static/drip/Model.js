@@ -80,6 +80,7 @@ define([ "dojo/_base/declare",
 		
 		clear: function(){
 			this._init();
+			this.onChange();
 		},
 		
 		// 如果没有内容，则创建一个新行

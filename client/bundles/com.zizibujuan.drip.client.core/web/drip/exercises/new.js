@@ -78,9 +78,22 @@ define(["dojo/_base/declare",
 			
 			xhr("/exercises/",{method:"POST", data:JSON.stringify(data)}).then(lang.hitch(this,function(response){
 				// 保存成功，在界面上清除用户输入数据，使处于新增状态。在页面给出保存成功的提示，在按钮旁边显示。
+				this._reset();
 			}),lang.hitch(this, function(error){
 				// 保存失败，不清除用户输入数据，并给出详尽的错误提示
 			}));
+		},
+		
+		_reset: function(){
+			this.data = {};
+			this.editorExerContent.set("value","");
+			this.editorGuide.set("value","");
+			query("[name="+this._optionName+"]:checked", this.tblOption).forEach(function(inputEl, index){
+				domAttr.set(inputEl,"checked", false);
+			});
+			registry.findWidgets(this.tblOption).forEach(function(widget, index){
+				widget.set("value","");
+			});
 		},
 		
 		empty: function(){
