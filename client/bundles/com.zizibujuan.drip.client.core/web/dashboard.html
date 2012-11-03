@@ -21,7 +21,7 @@ require(["dojo/ready",
          "dojo/request/xhr",
          "dijit/registry",
          "Header",
-         "Exercise",
+         "Activity",
          "dojo/parser",
          "dojo/domReady!"],function(
         		 ready,
@@ -55,44 +55,31 @@ require(["dojo/ready",
 		<!-- 
 		<div data-dojo-type="Exercise" id="exercises" style="margin-top: 45px"></div>
 		 -->
-		 
-		 
-		 <div style="margin: 0 auto; width: 980px; margin-top: 45px;">
-		 
-		 	<div class="clearfix">
-		 		<div class="drip_main_left">
-		 			<!-- 也许模仿github的布局更好一些 -->
-		 			<div class="drip_nav_left">
-		 				<div class = "lev">
-		 					<a href="#">我的任务</a>
-		 				</div>
-		 				<!-- 功能导航区 -->
-		 				<div class = "lev">
-		 					<a href="exercises/new">添加习题</a>
-		 				</div>
-		 				<div class = "lev">
-		 					<a href="#">我贡献的习题</a>
-		 				</div>
-		 				<div class = "lev">
-		 					<a href="#">我回答的习题</a>
-		 				</div>
-		 			</div>
-		 		</div>
-		 		<div>
-		 			<div class="drip_main_a">
-		 				<div class="drip_main_center">
-		 					用户活动区
-		 				</div>
-		 				<div class="drip_main_right">
-		 					<!-- 将微薄的关注和粉丝信息导进来 -->
-		 					用户信息区
-		 				</div>
-		 			</div>
-		 		</div>
-		 	</div>
-		 
-		 </div>
+	 
+	<div id="main" class="wrapper" style="margin-top: 50px;">
+		<ul class="tabs">
+			<li>
+				<a href="#" class="selected">首页</a>
+			</li>
+			<li>
+			<!--TODO： 这里要强调的应该是答案，想个更好的名字 -->
+				<a href="#">我回答的习题<span class="counter">0</span></a>
+			</li>
+			<li>
+				<a href="#">我录入的习题<span class="counter">0</span></a>
+			</li>
+			<li>
+				<a href="#">题库<span class="counter">0</span></a>
+			</li>
+		</ul>
+	</div>
+	<div class="wrapper">
+		<div id="dashboard">
+			<div data-dojo-type="Activity"></div>
+		</div>
+	</div>
 	
+		
 	
 </body>
 </html>
