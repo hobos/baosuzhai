@@ -3,6 +3,7 @@ package com.zizibujuan.drip.server.servlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zizibujuan.drip.server.service.ActivityService;
 import com.zizibujuan.drip.server.service.ExerciseService;
 import com.zizibujuan.drip.server.service.UserService;
 
@@ -69,4 +70,21 @@ public class ServiceHolder {
 	public UserService getUserService() {
 		return this.userService;
 	}
+	
+	private ActivityService activityService;
+	public void setActivityService(ActivityService activityService) {
+		logger.info("注入ActivityService");
+		this.activityService = activityService;
+	}
+
+	public void unsetActivityService(ActivityService activityService) {
+		logger.info("注销ActivityService");
+		if (this.activityService == activityService) {
+			this.activityService = null;
+		}
+	}
+	public ActivityService getActivityService() {
+		return this.activityService;
+	}
+	
 }

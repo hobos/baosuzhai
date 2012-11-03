@@ -7,6 +7,7 @@ Bundle-Activator: com.zizibujuan.drip.server.servlet.Activator
 Bundle-Vendor: zizibujuan.com
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.zizibujuan.drip.server.service,
+ com.zizibujuan.drip.server.util,
  com.zizibujuan.drip.server.util.io,
  com.zizibujuan.drip.server.util.servlet,
  org.apache.commons.validator.routines,

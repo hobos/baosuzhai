@@ -43,6 +43,10 @@
             alias="/signup_check"
             class="com.zizibujuan.drip.server.servlet.SignUpCheckServlet">
       </servlet>
+      <servlet 
+      		alias="/activities"
+      		class="com.zizibujuan.drip.server.servlet.DashboardServlet">
+      </servlet>
     </extension>
 
 	<extension

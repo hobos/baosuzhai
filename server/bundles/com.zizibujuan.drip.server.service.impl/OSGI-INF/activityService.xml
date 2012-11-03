@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	name="com.zizibujuan.drip.server.service.impl.activityServiceImpl">
+   <implementation class="com.zizibujuan.drip.server.service.impl.ActivityServiceImpl"/>
+   <reference 
+   		bind="setActivityDao" 
+   		unbind="unsetActivityDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.ActivityDao" 
+   		name="activityDao" 
+   		policy="dynamic"/>
+   <service>
+      <provide interface="com.zizibujuan.drip.server.service.ActivityService"/>
+   </service>
+</scr:component>
