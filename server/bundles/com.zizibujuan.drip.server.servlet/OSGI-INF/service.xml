@@ -21,4 +21,12 @@
 		interface="com.zizibujuan.drip.server.service.UserService" 
 		name="userService" 
 		policy="dynamic" />
+	
+	<reference 
+		bind="setActivityService" 
+		unbind="unsetActivityService" 
+		cardinality="0..1" 
+		interface="com.zizibujuan.drip.server.service.ActivityService" 
+		name="activityService" 
+		policy="dynamic" />
 </scr:component>

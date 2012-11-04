@@ -35,4 +35,27 @@ public interface ExerciseDao {
 	 * @return 新增习题的标识,如果返回-1，则新增用户失败。
 	 */
 	int add(Map<String, Object> exerciseInfo);
+
+	/**
+	 * 获取习题详情
+	 * @param exerciseId 习题标识
+	 * @return 习题详情，如果没有找到，则返回空的map对象。
+	 * <pre>
+	 * map的结构为：
+	 * 		id: 习题标识
+	 * 		exerType: 题型
+	 * 		exerCategory: 习题所属科目
+	 * 		content: 习题内容
+	 * 		options: 习题选项
+	 * 			id：	习题选项标识
+	 * 			exerId: 所属习题标识
+	 * 			content： 选项内容
+	 * 			seq： 选项显示顺序，TODO:支持随机模式，可在客户端处理
+	 * 		createTime: 创建时间
+	 * 		updateTime: 更新时间
+	 * 		createUserId: 创建用户标识
+	 * 		updateUserId: 更新用户标识
+	 * </pre>
+	 */
+	Map<String, Object> get(Long exerciseId);
 }

@@ -128,6 +128,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	private static final String SQL_INSERT_EXER_ANSWER_DETAIL = "INSERT INTO DRIP_ANSWER_DETAIL " +
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
+	// TODO：移到AnswerDao中？
 	private void addAnswer(Connection con, int exerId, Object oUserId, List<Integer> optIds, List<String> answers) throws SQLException{
 		int answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
 		
@@ -144,6 +145,43 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 		}
 	}
 
+	// TODO:不在sql中联合查询编码，而是从缓存中获取编码对应的文本信息
+	private static final String SQL_GET_EXERCISE = "SELECT " +
+			"DBID \"id\"," +
+			"CONTENT \"content\"," +
+			"EXER_TYPE \"exerType\"," +
+			"EXER_CATEGORY \"exerCategory\"," +
+			"CRT_TM \"createTime\"," +
+			"CRT_USER_ID \"createUserId\"," +
+			"UPT_TM \"updateTime\"," +
+			"UPT_USER_ID \"updateUserId\" " +
+			"FROM " +
+			"DRIP_EXERCISE WHERE DBID=?";
+	@Override
+	public Map<String, Object> get(Long exerciseId) {
+		Map<String,Object> exercise = DatabaseUtil.queryForMap(getDataSource(), SQL_GET_EXERCISE, exerciseId);
+		if(!exercise.isEmpty()){
+			String exerType = exercise.get("exerType").toString();
+			if (ExerciseType.SINGLE_OPTION.equals(exerType)
+					|| ExerciseType.MULTI_OPTION.equals(exerType)
+					|| ExerciseType.FILL.equals(exerType)) {
+				List<Map<String,Object>> options = this.getExerciseOptions(exerciseId);
+				exercise.put("options", options);
+			}
+		}
+		return exercise;
+	}
+
+	private final static String SQL_LIST_EXERCISE_OPTION = "SELECT " +
+			"DBID \"id\"," +
+			"EXER_ID \"exerId\"," +
+			"CONTENT \"content\"," +
+			"OPT_SEQ \"seq\" " +
+			"FROM DRIP_EXER_OPTION WHERE EXER_ID=? " +
+			"ORDER BY OPT_SEQ";
+	private List<Map<String,Object>> getExerciseOptions(Long exerciseId){
+		return DatabaseUtil.queryForList(getDataSource(), SQL_LIST_EXERCISE_OPTION, exerciseId);
+	}
 	
 	// 2. 回答习题
 	// 3. 新增习题的同时，回答习题，放在一个事务中。

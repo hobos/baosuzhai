@@ -102,13 +102,15 @@ public abstract class DatabaseUtil {
 			DatabaseUtil.safeClose(con, rst, stmt);
 		}
 		
-		int count = getCount(ds,sql,params);
-		pageInfo.setCount(count);
+		if(pageInfo != null){
+			int count = getCount(ds,sql,params);
+			pageInfo.setCount(count);
+		}
 		return result;
 	}
 	
 	private static int getCount(DataSource ds, String sql, Object... params){
-		String sqlCount = "select count(*) from ( " + sql + " ) table_count";
+		String sqlCount = "select count(*) from ( " + sql + " )";
 		return queryForInt(ds, sqlCount, params);
 	}
 	

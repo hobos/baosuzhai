@@ -9,6 +9,23 @@
    		interface="com.zizibujuan.drip.server.dao.ActivityDao" 
    		name="activityDao" 
    		policy="dynamic"/>
+   
+   <reference 
+   		bind="setExerciseDao" 
+   		unbind="unsetExerciseDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.ExerciseDao" 
+   		name="exerciseDao" 
+   		policy="dynamic"/>
+   		
+   <reference 
+   		bind="setAnswerDao" 
+   		unbind="unsetAnswerDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.AnswerDao" 
+   		name="answerDao" 
+   		policy="dynamic"/>
+   		
    <service>
       <provide interface="com.zizibujuan.drip.server.service.ActivityService"/>
    </service>
