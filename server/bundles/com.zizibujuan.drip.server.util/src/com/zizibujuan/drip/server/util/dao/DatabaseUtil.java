@@ -70,8 +70,10 @@ public abstract class DatabaseUtil {
 		ResultSet rst = null;
 		Connection con= null;
 		try {
-			String sqlPage =  "SELECT * FROM ( SELECT ROWNUM AS NUMROW, table_data.* from ( " 
-		+ sql + " ) table_data) WHERE NUMROW >= "  + (pageInfo.getStart()+1) + "  AND NUMROW <= " + (pageInfo.getEnd()+1) ; 
+			String sqlPage = sql;
+			if(pageInfo != null){
+				 sqlPage += "limit "+pageInfo.getStart()+" "+(pageInfo.getEnd()-pageInfo.getStart());
+			}
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 			stmt = con.prepareStatement(sqlPage);
