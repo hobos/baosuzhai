@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	name="com.zizibujuan.cache.ehcache.service.cacheService">
+   <implementation class="com.zizibujuan.cache.ehcache.service.CacheServiceImpl"/>
+   <service>
+      <provide interface="com.zizibujuan.cache.ehcache.service.CacheService"/>
+   </service>
+</scr:component>
