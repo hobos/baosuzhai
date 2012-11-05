@@ -1,5 +1,7 @@
 package com.zizibujuan.cache.ehcache;
 
+import net.sf.ehcache.CacheManager;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -25,6 +27,8 @@ public class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
+		// 关闭该bundle时，关闭缓存管理器
+		CacheManager.getInstance().shutdown();
 	}
 
 }

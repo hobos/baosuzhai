@@ -687,7 +687,19 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
            timeToLiveSeconds="1200">
       <terracotta/>
     </defaultCache>
+    
+    <cache name="userInfo"
+    	   eternal="false">
+    </cache>
 
+	<cache name="exercise"
+		   eternal="false">
+	</cache>
+	
+	<cache name="answer"
+	       eternal="false">
+	</cache>
+	
     <!--
     Sample caches. Following are some example caches. Remove these before use.
     -->
@@ -701,7 +713,7 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
     If there are more than 10000 elements it will overflow to the
     disk cache, which in this configuration will go to wherever java.io.tmp is
     defined on your system. On a standard Linux system this will be /tmp"
-    -->
+    
     <cache name="sampleCache1"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="1000"
@@ -713,6 +725,7 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
            transactionalMode="off">
         <persistence strategy="localTempSwap"/>
     </cache>
+    -->
 
 
     <!--
@@ -720,18 +733,18 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
     This cache has a maximum of 1000 elements in memory. There is no overflow to disk, so 1000
     is also the maximum cache size. Note that when a cache is eternal, timeToLive and
     timeToIdle are not used and do not need to be specified.
-    -->
+    
     <cache name="sampleCache2"
            maxEntriesLocalHeap="1000"
            eternal="true"
            memoryStoreEvictionPolicy="FIFO"/>
-
+	-->
 
     <!--
     Sample cache named sampleCache3. This cache overflows to disk. The disk store is
     persistent between cache and VM restarts. The disk expiry thread interval is set to 10
     minutes, overriding the default of 2 minutes.
-    -->
+    
     <cache name="sampleCache3"
            maxEntriesLocalHeap="500"
            eternal="false"
@@ -742,11 +755,12 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
            diskExpiryThreadIntervalSeconds="1"
            memoryStoreEvictionPolicy="LFU">
     </cache>
+	-->
 
     <!--
     Sample Terracotta clustered cache named sampleTerracottaCache.
     This cache uses Terracotta to cluster the contents of the cache.
-    -->
+    
     <cache name="sampleTerracottaCache"
            maxBytesLocalHeap="10m"
            eternal="false"
@@ -754,6 +768,7 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
            timeToLiveSeconds="1800">
         <terracotta/>
     </cache>
+    -->
 
     <!--
       Sample xa enabled cache named xaCache
