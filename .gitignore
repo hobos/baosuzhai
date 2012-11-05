@@ -15,6 +15,7 @@ server/bundles/com.zizibujuan.drip.server.dao/target
 server/bundles/com.zizibujuan.drip.server.dao.mysql/target
 server/bundles/com.zizibujuan.drip.server.util/target
 server/bundles/com.zizibujuan.drip.server.exception/target
+server/bundles/com.zizibujuan.cache.ehcache/target
 
 server/bundles/com.zizibujuan.drip.server.logback.config/target
 
@@ -44,6 +45,8 @@ server/bundles/com.zizibujuan.drip.server.util/bin
 server/bundles/com.zizibujuan.drip.server.exception/bin
 
 server/bundles/com.zizibujuan.drip.server.logback.config/bin
+
+server/bundles/com.zizibujuan.cache.ehcache/bin
 
 client/bundles/com.zizibujuan.drip.client.core/bin
 client/bundles/com.zizibujuan.drip.client.editor/bin
