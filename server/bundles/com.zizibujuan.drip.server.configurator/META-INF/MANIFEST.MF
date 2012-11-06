@@ -6,6 +6,7 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: zizibujuan.com
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.zizibujuan.drip.server.servlet,
+ com.zizibujuan.drip.server.util,
  com.zizibujuan.drip.server.util.servlet,
  org.eclipse.jetty.servlets;version="8.1.3",
  org.osgi.framework;version="1.3.0",

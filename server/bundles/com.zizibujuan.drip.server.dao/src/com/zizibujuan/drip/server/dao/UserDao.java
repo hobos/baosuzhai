@@ -1,5 +1,6 @@
 package com.zizibujuan.drip.server.dao;
 
+import java.sql.Connection;
 import java.util.Map;
 
 /**
@@ -53,5 +54,19 @@ public interface UserDao {
 	 * @return 已存在则返回<code>true</code>；否则返回<code>false</code>
 	 */
 	boolean emailIsExist(String email);
+	
+	/**
+	 * 添加一道习题后，在用户的添加习题数上加1
+	 * @param con 数据库链接
+	 * @param userId 用户标识
+	 */
+	void increaseExerciseCount(Connection con, Long userId);
+	
+	/**
+	 * 用户回答了一套习题后，在用户回答的习题数上加1
+	 * @param con 数据库链接
+	 * @param userId 用户标识
+	 */
+	void increaseAnswerCount(Connection con, Long userId);
 	
 }

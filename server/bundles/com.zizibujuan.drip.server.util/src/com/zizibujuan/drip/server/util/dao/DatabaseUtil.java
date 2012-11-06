@@ -447,7 +447,7 @@ public abstract class DatabaseUtil {
 		}
 	}
 	
-	public static int insert(Connection con, String sql, Object... inParams) throws SQLException {
+	public static int insert(Connection con, String sql, Object... inParams){
 		if(inParams == null){
 			inParams = new Object[]{};
 		}
@@ -465,7 +465,29 @@ public abstract class DatabaseUtil {
 			return rst.getInt(1);
 		}catch(SQLException e){
 			System.out.println(e);
-			throw e;
+			throw new DataAccessException(e);
+		}finally{
+			DatabaseUtil.closeResultSet(rst);
+			DatabaseUtil.closeStatement(pst);
+		}
+	}
+
+	public static void update(Connection con, String sql, Object... inParams) {
+		if(inParams == null){
+			inParams = new Object[]{};
+		}
+		PreparedStatement pst = null;
+		ResultSet rst = null;
+		try{
+			pst = con.prepareStatement(sql);
+			int len = inParams.length;
+			for(int i = 0; i < len; i++){
+				pst.setObject((i+1), inParams[i]);
+			}
+			pst.executeUpdate();
+		}catch(SQLException e){
+			System.out.println(e);
+			throw new DataAccessException(e);
 		}finally{
 			DatabaseUtil.closeResultSet(rst);
 			DatabaseUtil.closeStatement(pst);

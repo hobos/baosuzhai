@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 		if(userInfo.isEmpty()){
 			return null;
 		}else{
-			String userId = userInfo.get("DBID").toString();
+			String userId = userInfo.get("id").toString();
 			userDao.updateLastLoginTime(Long.valueOf(userId));
 			return userInfo;
 		}

@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zizibujuan.drip.server.dao.ExerciseDao;
+import com.zizibujuan.drip.server.dao.UserDao;
+import com.zizibujuan.drip.server.exception.dao.DataAccessException;
 import com.zizibujuan.drip.server.util.ExerciseType;
 import com.zizibujuan.drip.server.util.dao.AbstractDao;
 import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
@@ -17,7 +22,9 @@ import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
  * @since 0.0.1
  */
 public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
-
+	private static final Logger logger = LoggerFactory.getLogger(ExerciseDaoImpl.class);
+	private UserDao userDao;
+	
 	private static final String SQL_LIST_EXERCISE = 
 			"SELECT DBID, CONTENT, CRT_TM, CRT_USER_ID FROM DRIP_EXERCISE ORDER BY CRT_TM DESC";
 	@Override
@@ -51,6 +58,8 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			Object oUserId = exerciseInfo.get("userId");
 			Object oExerType = exerciseInfo.get("exerType");
 			
+			Long userId = Long.valueOf(oUserId.toString());
+			
 			exerId = this.addExercise(con, exerciseInfo);
 			// 如果存在选项，则添加习题选项
 			Object options = exerciseInfo.get("options");
@@ -61,6 +70,11 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 					optionIds = this.addOptions(con, exerId, optionContents);
 				}
 			}
+			
+			// 习题添加成功后，在用户的“创建的习题数”上加1
+			// 同时修改后端和session中缓存的该记录
+			userDao.increaseExerciseCount(con, userId);
+			
 			// 如果存在答案，则添加答案
 			Object oAnswers = exerciseInfo.get("answers");
 			if(oAnswers != null){
@@ -82,9 +96,18 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			if(oGuide != null){
 				this.addGuide(con, exerId, oUserId, oGuide);
 			}
+			
+			// 答案回答完成后，在用户的“已回答的习题数”上加1
+			// 同时修改后端和session中缓存的该记录
+			userDao.increaseAnswerCount(con, userId);
+			
 			con.commit();
-		}catch(Exception e){
+		}catch(SQLException e){
 			DatabaseUtil.safeRollback(con);
+			throw new DataAccessException(e);
+		}catch(DataAccessException e){
+			DatabaseUtil.safeRollback(con);
+			throw e;
 		}finally{
 			DatabaseUtil.closeConnection(con);
 		}
@@ -94,7 +117,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	private static final String SQL_INSERT_EXERCISE = 
 			"INSERT INTO DRIP_EXERCISE (CONTENT,EXER_TYPE, EXER_CATEGORY, CRT_TM, CRT_USER_ID) VALUES (?,?,?,now(),?)";
 	// 1. 新增习题
-	private int addExercise(Connection con, Map<String,Object> exerciseInfo) throws SQLException{
+	private int addExercise(Connection con, Map<String,Object> exerciseInfo){
 		Object oContent = exerciseInfo.get("content");
 		Object oExerType = exerciseInfo.get("exerType");
 		Object oExerCategory = exerciseInfo.get("exerCategory");
@@ -106,7 +129,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(EXER_ID,CONTENT,OPT_SEQ) VALUES " +
 			"(?,?,?)";
 	// 2. 添加选项
-	private List<Integer> addOptions(Connection con, int exerId, List<String> optionContents) throws SQLException {
+	private List<Integer> addOptions(Connection con, int exerId, List<String> optionContents){
 		List<Integer> result = new ArrayList<Integer>();
 		int len = optionContents.size();
 		for(int i = 0; i < len; i++){
@@ -118,7 +141,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	
 	private static final String SQL_INSERT_EXER_GUIDE = "INSERT INTO DRIP_EXER_GUIDE " +
 			"(EXER_ID, CONTENT,CRT_TM, CRT_USER_ID) VALUES (?,?,now(),?)";
-	private void addGuide(Connection con, int exerId, Object oUserId, Object oGuide) throws SQLException {
+	private void addGuide(Connection con, int exerId, Object oUserId, Object oGuide){
 		DatabaseUtil.insert(con, SQL_INSERT_EXER_GUIDE, exerId, oGuide, oUserId);
 	}
 	
@@ -129,7 +152,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
 	// TODO：移到AnswerDao中？
-	private void addAnswer(Connection con, int exerId, Object oUserId, List<Integer> optIds, List<String> answers) throws SQLException{
+	private void addAnswer(Connection con, int exerId, Object oUserId, List<Integer> optIds, List<String> answers){
 		int answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
 		
 		if(optIds == null){
@@ -185,5 +208,17 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	
 	// 2. 回答习题
 	// 3. 新增习题的同时，回答习题，放在一个事务中。
+	
+	
+	public void setUserDao(UserDao userDao) {
+		logger.info("注入userDao");
+		this.userDao = userDao;
+	}
 
+	public void unsetUserDao(UserDao userDao) {
+		if (this.userDao == userDao) {
+			logger.info("注销userDao");
+			this.userDao = null;
+		}
+	}
 }

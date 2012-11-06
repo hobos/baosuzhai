@@ -43,7 +43,7 @@ public class WelcomeFileFilter implements Filter {
 		if (requestPath.equals("/")) { //$NON-NLS-1$
 			System.out.println("初步满足跳转要求");
 			String fileName = "";
-			if(UserSession.getUserId(httpRequest)==null){
+			if(UserSession.getUser(httpRequest)==null){
 				fileName = requestPath + PUBLIC_WELCOME_FILE_NAME;
 			}else{
 				fileName = requestPath + PRIVATE_WELCOME_FILE_NAME;

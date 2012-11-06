@@ -1,5 +1,6 @@
 package com.zizibujuan.drip.server.dao.mysql;
 
+import java.sql.Connection;
 import java.util.Map;
 
 import com.zizibujuan.drip.server.dao.UserDao;
@@ -28,12 +29,25 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 				userInfo.get("realName"));
 	}
 
-	private static final String SQL_GET_USER = "SELECT " +
-			"DBID,LOGIN_NM,LOGIN_EMAIL,LOGIN_PWD,MOBILE,REAL_NM,CRT_TM " +
-			"FROM DRIP_USER_INFO WHERE LOGIN_EMAIL = ? AND LOGIN_PWD = ?";
+	// 这里只查询出需要在界面上显示的用户信息，主要存储在当前用户的session中。
+	private static final String SQL_GET_USER_FOR_SESSION = "SELECT " +
+			"DBID \"id\"," +
+			//"LOGIN_NM," +
+			"LOGIN_EMAIL \"email\"," +
+			//"LOGIN_PWD," + 登录密码，不在session中缓存
+			"MOBILE \"mobile\"," +
+			"REAL_NM \"displayName\"," +
+			//"CRT_TM \"createTime\" " +
+			"FAN_COUNT \"fanCount\","+
+			"FOLLOW_COUNT \"followCount\","+
+			"EXER_DRAFT_COUNT \"exerDraftCount\","+
+			"EXER_PUBLISH_COUNT \"exerPublishCount\", "+
+			"ANSWER_COUNT \"answerCount\" "+
+			"FROM DRIP_USER_INFO " +
+			"WHERE LOGIN_EMAIL = ? AND LOGIN_PWD = ?";
 	@Override
 	public Map<String, Object> get(String email, String md5Password) {
-		return DatabaseUtil.queryForMap(getDataSource(), SQL_GET_USER, email, md5Password);
+		return DatabaseUtil.queryForMap(getDataSource(), SQL_GET_USER_FOR_SESSION, email, md5Password);
 	}
 	
 	private static final String SQL_UPDATE_USER = "UPDATE DRIP_USER_INFO SET LAST_LOGIN_TM = now() " +
@@ -54,6 +68,22 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 	public boolean emailIsExist(String email) {
 		String result = DatabaseUtil.queryForString(getDataSource(), SQL_EMAIL_EXIST, email);
 		return result != null;
+	}
+	
+	private static final String SQL_UPDATE_EXERCISE_COUNT = "UPDATE DRIP_USER_INFO SET " +
+			"EXER_PUBLISH_COUNT=EXER_PUBLISH_COUNT+1 " +
+			"where DBID=?";
+	@Override
+	public void increaseExerciseCount(Connection con, Long userId) {
+		DatabaseUtil.update(con, SQL_UPDATE_EXERCISE_COUNT, userId);
+	}
+	
+	private static final String SQL_UPDATE_ANSWER_COUNT = "UPDATE DRIP_USER_INFO SET " +
+			"ANSWER_COUNT=ANSWER_COUNT+1 " +
+			"where DBID=?";
+	@Override
+	public void increaseAnswerCount(Connection con, Long userId) {
+		DatabaseUtil.update(con, SQL_UPDATE_ANSWER_COUNT, userId);
 	}
 
 }

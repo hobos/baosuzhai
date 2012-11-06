@@ -7,7 +7,7 @@
    		unbind="unsetUserDao" 
    		cardinality="0..1" 
    		interface="com.zizibujuan.drip.server.dao.UserDao" 
-   		name="exerciseDao" 
+   		name="userDao" 
    		policy="dynamic"/>
    <service>
       <provide interface="com.zizibujuan.drip.server.service.UserService"/>
