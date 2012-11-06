@@ -48,8 +48,8 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public int add(Map<String, Object> exerciseInfo) {
-		int exerId = -1;
+	public Long add(Map<String, Object> exerciseInfo) {
+		Long exerId = -1l;
 		Connection con = null;
 		try{
 			con = getDataSource().getConnection();
@@ -63,7 +63,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			exerId = this.addExercise(con, exerciseInfo);
 			// 如果存在选项，则添加习题选项
 			Object options = exerciseInfo.get("options");
-			List<Integer> optionIds = null;
+			List<Long> optionIds = null;
 			if(options != null){
 				ArrayList<String> optionContents = (ArrayList<String>)options;
 				if(optionContents.size()>0){
@@ -80,9 +80,9 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			if(oAnswers != null){
 				if(ExerciseType.SINGLE_OPTION.equals(oExerType)){
 					ArrayList<String> answers = (ArrayList<String>)oAnswers;
-					List<Integer> optIds = null;
+					List<Long> optIds = null;
 					if(optionIds != null){
-						optIds = new ArrayList<Integer>();
+						optIds = new ArrayList<Long>();
 						for(String i : answers){
 							optIds.add(optionIds.get(Integer.valueOf(i)));
 						}
@@ -117,7 +117,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	private static final String SQL_INSERT_EXERCISE = 
 			"INSERT INTO DRIP_EXERCISE (CONTENT,EXER_TYPE, EXER_CATEGORY, CRT_TM, CRT_USER_ID) VALUES (?,?,?,now(),?)";
 	// 1. 新增习题
-	private int addExercise(Connection con, Map<String,Object> exerciseInfo){
+	private Long addExercise(Connection con, Map<String,Object> exerciseInfo){
 		Object oContent = exerciseInfo.get("content");
 		Object oExerType = exerciseInfo.get("exerType");
 		Object oExerCategory = exerciseInfo.get("exerCategory");
@@ -129,11 +129,11 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(EXER_ID,CONTENT,OPT_SEQ) VALUES " +
 			"(?,?,?)";
 	// 2. 添加选项
-	private List<Integer> addOptions(Connection con, int exerId, List<String> optionContents){
-		List<Integer> result = new ArrayList<Integer>();
+	private List<Long> addOptions(Connection con, Long exerId, List<String> optionContents){
+		List<Long> result = new ArrayList<Long>();
 		int len = optionContents.size();
 		for(int i = 0; i < len; i++){
-			int id = DatabaseUtil.insert(con, SQL_INSERT_EXER_OPTION, exerId, optionContents.get(i),(i+1));
+			Long id = DatabaseUtil.insert(con, SQL_INSERT_EXER_OPTION, exerId, optionContents.get(i),(i+1));
 			result.add(id);
 		}
 		return result;
@@ -141,7 +141,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	
 	private static final String SQL_INSERT_EXER_GUIDE = "INSERT INTO DRIP_EXER_GUIDE " +
 			"(EXER_ID, CONTENT,CRT_TM, CRT_USER_ID) VALUES (?,?,now(),?)";
-	private void addGuide(Connection con, int exerId, Object oUserId, Object oGuide){
+	private void addGuide(Connection con, Long exerId, Object oUserId, Object oGuide){
 		DatabaseUtil.insert(con, SQL_INSERT_EXER_GUIDE, exerId, oGuide, oUserId);
 	}
 	
@@ -152,8 +152,8 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
 	// TODO：移到AnswerDao中？
-	private void addAnswer(Connection con, int exerId, Object oUserId, List<Integer> optIds, List<String> answers){
-		int answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
+	private void addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers){
+		Long answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
 		
 		if(optIds == null){
 			for(String content : answers){

@@ -36,7 +36,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	}
 
 	@Override
-	public int add(Map<String, Object> exerciseInfo) {
+	public Long add(Map<String, Object> exerciseInfo) {
 		return exerciseDao.add(exerciseInfo);
 	}
 

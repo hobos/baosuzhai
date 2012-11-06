@@ -22,7 +22,7 @@ public interface UserDao {
 	 * @param userInfo 用户信息
 	 * @return 新增用户的标识
 	 */
-	int add(Map<String,Object> userInfo);
+	Long add(Map<String,Object> userInfo);
 
 	/**
 	 * 获取用户信息

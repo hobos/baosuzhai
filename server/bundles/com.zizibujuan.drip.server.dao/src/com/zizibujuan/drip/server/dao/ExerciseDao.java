@@ -34,7 +34,7 @@ public interface ExerciseDao {
 	 * @param exerciseInfo 习题信息
 	 * @return 新增习题的标识,如果返回-1，则新增用户失败。
 	 */
-	int add(Map<String, Object> exerciseInfo);
+	Long add(Map<String, Object> exerciseInfo);
 
 	/**
 	 * 获取习题详情

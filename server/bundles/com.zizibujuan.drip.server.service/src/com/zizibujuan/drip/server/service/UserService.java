@@ -21,7 +21,7 @@ public interface UserService {
 	 * @param userInfo 用户信息
 	 * @return 新增用户的标识
 	 */
-	int add(Map<String,Object> userInfo);
+	Long add(Map<String,Object> userInfo);
 
 	/**
 	 * 用户登录

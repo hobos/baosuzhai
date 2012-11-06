@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
-	name="com.zizibujuan.drip.server.dao.mysql.userDaoImpl">
-   <implementation class="com.zizibujuan.drip.server.dao.mysql.UserDaoImpl"/>
+	name="com.zizibujuan.drip.server.dao.mysql.userRelationDaoImpl">
+   <implementation class="com.zizibujuan.drip.server.dao.mysql.UserRelationDaoImpl"/>
    <reference 
 	     bind="setDataSourceService" 
 	     unbind="unsetDataSourceService" 
@@ -9,7 +9,15 @@
 	     interface="com.zizibujuan.dbaccess.mysql.service.DataSourceService" 
 	     name="dataSourceService" 
 	     policy="dynamic"/>
+	<reference 
+   		bind="setUserRelationDao" 
+   		unbind="unsetUserRelationDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.UserRelationDao" 
+   		name="userRelationDao" 
+   		policy="dynamic"/>
+   		
    <service>
-      <provide interface="com.zizibujuan.drip.server.dao.UserDao"/>
+      <provide interface="com.zizibujuan.drip.server.dao.UserRelationDao"/>
    </service>
 </scr:component>

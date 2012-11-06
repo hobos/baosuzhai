@@ -420,11 +420,11 @@ public abstract class DatabaseUtil {
 	 * @param inParams
 	 * @return 新增记录的标识。
 	 */
-	public static int insert(DataSource ds, String sql,  Object...inParams) {
+	public static long insert(DataSource ds, String sql,  Object...inParams) {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rst = null;
-		int result = 0;
+		long result = 0;
 		try {
 			con = ds.getConnection();
 			pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -436,7 +436,7 @@ public abstract class DatabaseUtil {
 			pst.executeUpdate();
 			ResultSet rs = pst.getGeneratedKeys();    
 			rs.next();         
-			result = rs.getInt(1); 
+			result = rs.getLong(1); 
 			con.commit();
 			return result;
 		}catch(SQLException e){
@@ -447,7 +447,7 @@ public abstract class DatabaseUtil {
 		}
 	}
 	
-	public static int insert(Connection con, String sql, Object... inParams){
+	public static long insert(Connection con, String sql, Object... inParams){
 		if(inParams == null){
 			inParams = new Object[]{};
 		}
@@ -462,7 +462,7 @@ public abstract class DatabaseUtil {
 			pst.executeUpdate();
 			rst = pst.getGeneratedKeys();    
 			rst.next();         
-			return rst.getInt(1);
+			return rst.getLong(1);
 		}catch(SQLException e){
 			System.out.println(e);
 			throw new DataAccessException(e);

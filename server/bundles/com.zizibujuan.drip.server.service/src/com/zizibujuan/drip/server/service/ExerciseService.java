@@ -41,5 +41,5 @@ public interface ExerciseService {
 	 * @param exerciseInfo 习题信息
 	 * @return 新增习题的标识
 	 */
-	int add(Map<String, Object> exerciseInfo);
+	Long add(Map<String, Object> exerciseInfo);
 }
