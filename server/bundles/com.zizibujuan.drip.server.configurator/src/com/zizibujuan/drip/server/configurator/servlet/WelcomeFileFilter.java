@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zizibujuan.drip.server.util.WebConstants;
 import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
@@ -27,11 +28,6 @@ public class WelcomeFileFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(WelcomeFileFilter.class);
 	
-	// 公共首页
-	private static final String PUBLIC_WELCOME_FILE_NAME = "index.html";//"exercises"; //$NON-NLS-1$
-	// 个人首页
-	private static final String PRIVATE_WELCOME_FILE_NAME = "dashboard.html";//"exercises"; //$NON-NLS-1$
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
@@ -44,9 +40,9 @@ public class WelcomeFileFilter implements Filter {
 			System.out.println("初步满足跳转要求");
 			String fileName = "";
 			if(UserSession.getUser(httpRequest)==null){
-				fileName = requestPath + PUBLIC_WELCOME_FILE_NAME;
+				fileName = requestPath + WebConstants.PUBLIC_WELCOME_FILE_NAME;
 			}else{
-				fileName = requestPath + PRIVATE_WELCOME_FILE_NAME;
+				fileName = requestPath + WebConstants.PRIVATE_WELCOME_FILE_NAME;
 			}
 			httpResponse.setHeader("Cache-Control", "no-cache"); //$NON-NLS-1$ //$NON-NLS-2$
 			httpResponse.setHeader("Cache-Control", "no-store"); //$NON-NLS-1$ //$NON-NLS-2$

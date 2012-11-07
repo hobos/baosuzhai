@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zizibujuan.drip.server.service.AccessLogService;
 import com.zizibujuan.drip.server.service.ApplicationPropertyService;
+import com.zizibujuan.drip.server.util.WebConstants;
 import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
@@ -45,7 +46,7 @@ public class AccessLogFilter implements Filter {
 		String pathInfo = httpServletRequest.getPathInfo();
 		
 		// TODO：提取常量
-		if(pathInfo != null && (pathInfo.endsWith("index.html") || pathInfo.endsWith("dashboard.html") || pathInfo.indexOf(".")==-1)){
+		if(pathInfo != null && isValidPath(pathInfo)){
 
 			
 			// 获取访问者ip
@@ -94,6 +95,12 @@ public class AccessLogFilter implements Filter {
 				
 				
 		filterChain.doFilter(servletRequest, servletResponse);
+	}
+
+	private boolean isValidPath(String pathInfo) {
+		return pathInfo.endsWith(WebConstants.PRIVATE_WELCOME_FILE_NAME)
+				|| pathInfo.endsWith(WebConstants.PUBLIC_WELCOME_FILE_NAME)
+				|| pathInfo.indexOf(".") == -1;
 	}
 
 	@Override
