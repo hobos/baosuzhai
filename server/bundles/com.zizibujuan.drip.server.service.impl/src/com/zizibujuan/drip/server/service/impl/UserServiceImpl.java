@@ -19,17 +19,6 @@ public class UserServiceImpl implements UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	private UserDao userDao;
 	
-	public void setUserDao(UserDao userDao) {
-		logger.info("注入userDao");
-		this.userDao = userDao;
-	}
-
-	public void unsetUserDao(UserDao userDao) {
-		if (this.userDao == userDao) {
-			logger.info("注销userDao");
-			this.userDao = null;
-		}
-	}
 	// FIXME:学习如何加入salt，明白加入salt有哪些具体好处
 	@Override
 	public Long add(Map<String, Object> userInfo) {
@@ -66,6 +55,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean emailIsExist(String email) {
 		return userDao.emailIsExist(email);
+	}
+	
+	public void setUserDao(UserDao userDao) {
+		logger.info("注入userDao");
+		this.userDao = userDao;
+	}
+
+	public void unsetUserDao(UserDao userDao) {
+		if (this.userDao == userDao) {
+			logger.info("注销userDao");
+			this.userDao = null;
+		}
 	}
 
 }

@@ -53,4 +53,8 @@ public abstract class UserSession {
 		userInfo.put("answerCount", answerCount);
 	}
 
+	public static boolean isLogged(HttpServletRequest req) {
+		return getUser(req) != null;
+	}
+
 }

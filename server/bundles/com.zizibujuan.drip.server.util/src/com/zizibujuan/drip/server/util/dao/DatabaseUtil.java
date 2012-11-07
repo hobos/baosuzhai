@@ -164,6 +164,34 @@ public abstract class DatabaseUtil {
 		return result;
 	}
 	
+	public static Long queryForLong(DataSource ds,
+			String sql, Object... inParams) {
+		Long result=0l;
+		PreparedStatement stmt = null;
+		ResultSet rst = null;
+		Connection con = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			stmt = con.prepareStatement(sql);
+			addParams(stmt, inParams);
+			
+			rst = stmt.executeQuery();
+
+			if(rst.next())
+			{
+				result = rst.getLong(1);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
+		finally
+		{
+			DatabaseUtil.safeClose(con, rst, stmt);
+		}
+		return result;
+	}
+	
 	public static int queryForInt(DataSource ds, String sql, Object... params) {
 		int result=0;
 		PreparedStatement stmt = null;
@@ -355,6 +383,7 @@ public abstract class DatabaseUtil {
 	public static String insert(DataSource ds, Map<String,Object> map){
 		return insert(ds, map,true);
 	}
+	
 	
 	public static int update(DataSource ds, String sql, Object...inParams){
 		Connection con = null;

@@ -87,9 +87,14 @@
             class="com.zizibujuan.drip.server.configurator.servlet.RestHtmlFilter">
       </filter>
       
-       <filter
+      <filter
             alias="/"
             class="com.zizibujuan.drip.server.configurator.servlet.WelcomeFileFilter">
+      </filter>
+      
+      <filter
+            alias="/"
+            class="com.zizibujuan.drip.server.servlet.AccessLogFilter">
       </filter>
       
       <filter

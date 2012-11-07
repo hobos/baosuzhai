@@ -29,4 +29,12 @@
 		interface="com.zizibujuan.drip.server.service.ActivityService" 
 		name="activityService" 
 		policy="dynamic" />
+		
+	<reference 
+		bind="setAccessLogService" 
+		unbind="unsetAccessLogService" 
+		cardinality="0..1" 
+		interface="com.zizibujuan.drip.server.service.AccessLogService" 
+		name="accessLogService" 
+		policy="dynamic" />
 </scr:component>

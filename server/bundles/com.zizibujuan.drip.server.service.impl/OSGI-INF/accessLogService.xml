@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	name="com.zizibujuan.drip.server.service.impl.accessLogServiceImpl">
+   <implementation class="com.zizibujuan.drip.server.service.impl.AccessLogServiceImpl"/>
+   <reference 
+   		bind="setAccessLogDao" 
+   		unbind="unsetAccessLogDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.AccessLogDao" 
+   		name="accessLogDao" 
+   		policy="dynamic"/>
+   <service>
+      <provide interface="com.zizibujuan.drip.server.service.AccessLogService"/>
+   </service>
+</scr:component>

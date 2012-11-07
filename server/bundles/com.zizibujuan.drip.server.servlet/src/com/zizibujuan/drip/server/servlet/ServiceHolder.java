@@ -3,7 +3,9 @@ package com.zizibujuan.drip.server.servlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zizibujuan.drip.server.service.AccessLogService;
 import com.zizibujuan.drip.server.service.ActivityService;
+import com.zizibujuan.drip.server.service.ApplicationPropertyService;
 import com.zizibujuan.drip.server.service.ExerciseService;
 import com.zizibujuan.drip.server.service.UserService;
 
@@ -85,6 +87,38 @@ public class ServiceHolder {
 	}
 	public ActivityService getActivityService() {
 		return this.activityService;
+	}
+
+	private AccessLogService accessLogService;
+	public AccessLogService getAccessLogService() {
+		return this.accessLogService;
+	}
+	public void setAccessLogService(AccessLogService accessLogService) {
+		logger.info("注入AccessLogService");
+		this.accessLogService = accessLogService;
+	}
+
+	public void unsetAccessLogService(AccessLogService accessLogService) {
+		logger.info("注销AccessLogService");
+		if (this.accessLogService == accessLogService) {
+			this.accessLogService = null;
+		}
+	}
+
+	private ApplicationPropertyService applicationPropertyService;
+	public ApplicationPropertyService getApplicationPropertyService() {
+		return applicationPropertyService;
+	}
+	public void setApplicationPropertyService(ApplicationPropertyService applicationPropertyService) {
+		logger.info("注入ApplicationPropertyService");
+		this.applicationPropertyService = applicationPropertyService;
+	}
+
+	public void unsetApplicationPropertyService(ApplicationPropertyService applicationPropertyService) {
+		logger.info("注销ApplicationPropertyService");
+		if (this.applicationPropertyService == applicationPropertyService) {
+			this.applicationPropertyService = null;
+		}
 	}
 	
 }
