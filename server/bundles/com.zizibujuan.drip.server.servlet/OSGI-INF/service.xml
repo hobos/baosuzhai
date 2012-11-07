@@ -37,4 +37,12 @@
 		interface="com.zizibujuan.drip.server.service.AccessLogService" 
 		name="accessLogService" 
 		policy="dynamic" />
+		
+	<reference 
+		bind="setApplicationPropertyService" 
+		unbind="unsetApplicationPropertyService" 
+		cardinality="0..1" 
+		interface="com.zizibujuan.drip.server.service.ApplicationPropertyService" 
+		name="applicationPropertyService" 
+		policy="dynamic" />
 </scr:component>

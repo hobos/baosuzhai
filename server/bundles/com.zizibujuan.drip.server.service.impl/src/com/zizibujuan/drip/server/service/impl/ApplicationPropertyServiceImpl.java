@@ -1,5 +1,8 @@
 package com.zizibujuan.drip.server.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zizibujuan.drip.server.dao.ApplicationPropertyDao;
 import com.zizibujuan.drip.server.service.ApplicationPropertyService;
 import com.zizibujuan.drip.server.util.ApplicationPropertyKey;
@@ -11,9 +14,9 @@ import com.zizibujuan.drip.server.util.ApplicationPropertyKey;
  */
 public class ApplicationPropertyServiceImpl implements
 		ApplicationPropertyService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationPropertyServiceImpl.class);
 	private ApplicationPropertyDao applicationPropertyDao;
-
+	
 	@Override
 	public Long getNextAnonymouseId() {
 		// TODO:缓存?
@@ -22,6 +25,18 @@ public class ApplicationPropertyServiceImpl implements
 		id++;
 		applicationPropertyDao.putLong(propertyName, id);
 		return id;
+	}
+	
+	public void setApplicationPropertyDao(ApplicationPropertyDao applicationPropertyDao) {
+		logger.info("注入ApplicationPropertyDao");
+		this.applicationPropertyDao = applicationPropertyDao;
+	}
+
+	public void unsetApplicationPropertyDao(ApplicationPropertyDao applicationPropertyDao) {
+		if (this.applicationPropertyDao == applicationPropertyDao) {
+			logger.info("注销ApplicationPropertyDao");
+			this.applicationPropertyDao = null;
+		}
 	}
 
 }
