@@ -1,4 +1,4 @@
-insert into DRIP_I18N (CODENAME, CODEVALUE) VALUES ('0101','zh_cn');
+insert into DRIP_I18N (CODE_NAME, CODE_VALUE) VALUES ('0101','zh_cn');
 
 --1表示字符串,2表示整数，3表示日期，4表示小数
 
