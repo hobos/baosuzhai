@@ -19,7 +19,7 @@ public class ActivityDaoImpl extends AbstractDao implements ActivityDao {
 	// 获取用户关注者列表
 
 	private static final String SQL_LIST_ACTIVITY_INDEX = "select " +
-				"a.RELATION_USER_ID \"userId\"," +
+				"a.WATCH_USER_ID \"userId\"," +
 				"c.REAL_NM \"displayUserName\", " +
 				"b.CRT_TM \"createTime\"," +
 				"b.CONTENT_ID \"contentId\"," +
@@ -29,7 +29,7 @@ public class ActivityDaoImpl extends AbstractDao implements ActivityDao {
 			"DRIP_ACTIVITY b," +
 			"DRIP_USER_INFO c" +
 			" where " +
-			"a.USER_ID = ? AND a.RELATION_USER_ID=b.USER_ID AND a.RELATION_USER_ID=c.DBID ORDER BY b.CRT_TM DESC";
+			"a.USER_ID = ? AND a.WATCH_USER_ID=b.USER_ID AND a.WATCH_USER_ID=c.DBID ORDER BY b.CRT_TM DESC";
 
 	@Override
 	public List<Map<String, Object>> get(Long userId, PageInfo pageInfo) {
