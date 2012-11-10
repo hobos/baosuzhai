@@ -76,7 +76,6 @@ define(["dojo/_base/declare",
 			on(textarea, "keydown", lang.hitch(this,function(e){
 				console.log(e, e.keyCode);
 				if(e.keyCode === keys.LEFT_ARROW){
-					debugger;
 					this.model.moveLeft();// 注意在move系列方法中不调用model.onChange方法
 					this.view.showCursor();
 				}else if(e.keyCode === keys.RIGHT_ARROW){

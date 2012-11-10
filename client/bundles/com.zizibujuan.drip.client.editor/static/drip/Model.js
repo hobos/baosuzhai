@@ -120,7 +120,6 @@ define([ "dojo/_base/declare",
 			
 			if(nodeName != ""){
 				if(nodeName == "mfrac"){
-					debugger;
 					this._splitNodeIfNeed();
 					var node = this.cursorPosition.node;
 					var offset = this.cursorPosition.offset;

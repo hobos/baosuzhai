@@ -186,7 +186,6 @@ define([ "doh","drip/Model" ], function(doh,Model) {
   				// 如果是中文，则放在text节点中
   				model.setData({data:"中"});
   				model.moveLeft();
-  				debugger;
   				model.setData({data:"1"});
   				t.is("/root/line[1]/math[1]/mn[1]", model.getPath());
   				t.is(model.getFocusNode().nodeName, "mn");

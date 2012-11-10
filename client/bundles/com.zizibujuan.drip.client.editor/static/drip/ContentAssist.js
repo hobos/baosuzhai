@@ -169,7 +169,6 @@ define(["dojo/_base/declare",
 		
 		_onApplyProposal: function(data,nodeName, evt){
 			// 因为cacheString的值是实时变化的，所以需要在外面加一层方法调用。
-			debugger;
 			this.apply(data, nodeName, this.cacheString.length,evt);
 		},
 		
