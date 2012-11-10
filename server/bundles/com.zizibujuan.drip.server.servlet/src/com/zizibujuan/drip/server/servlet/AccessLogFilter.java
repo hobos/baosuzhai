@@ -28,7 +28,7 @@ public class AccessLogFilter implements Filter {
 	private AccessLogService accessLogService;
 	private ApplicationPropertyService applicationPropertyService;
 	
-	private static final String COKIE_NAME = "zzbj_user_cookie_id";
+	private static final String COKIE_NAME = "zzbjusercookieid";
 	
 	@Override
 	public void destroy() {
@@ -64,9 +64,7 @@ public class AccessLogFilter implements Filter {
 				
 				// 判断是否存在cookie，如果不存在的话，则新建一个
 				if(cookies == null){
-					userId = applicationPropertyService.getNextAnonymouseId();
-					Cookie cookie = new Cookie(COKIE_NAME, userId.toString());
-					httpServletResponse.addCookie(cookie);
+					userId = addCookieUserId(httpServletResponse);
 				}else{
 					for(Cookie c : cookies){
 						if(c.getName().equals(COKIE_NAME)){
@@ -75,9 +73,7 @@ public class AccessLogFilter implements Filter {
 						}
 					}
 					if(userId == null){
-						userId = applicationPropertyService.getNextAnonymouseId();
-						Cookie cookie = new Cookie(COKIE_NAME, userId.toString());
-						httpServletResponse.addCookie(cookie);
+						userId = addCookieUserId(httpServletResponse);
 					}
 				}
 			}
@@ -95,6 +91,15 @@ public class AccessLogFilter implements Filter {
 				
 				
 		filterChain.doFilter(servletRequest, servletResponse);
+	}
+
+	private Long addCookieUserId(HttpServletResponse httpServletResponse) {
+		Long userId = null;
+		userId = applicationPropertyService.getNextAnonymouseId();
+		Cookie cookie = new Cookie(COKIE_NAME, userId.toString());
+		cookie.setMaxAge(365*24*60*60);//一年有效
+		httpServletResponse.addCookie(cookie);
+		return userId;
 	}
 
 	private boolean isValidPath(String pathInfo) {
