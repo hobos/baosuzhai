@@ -43,7 +43,7 @@ define(["dojo/_base/declare",
 		
 		optionLength: 4,
 		
-		_optionName:"answer-option",
+		_optionName:"exercise-option",
 		
 		postCreate: function(){
 			this.inherited(arguments);

@@ -1,8 +1,8 @@
 <div class="item">
 	<div>
-		<a href="#">张三</a>
-		<span>录入新习题</span>
-		<span class="time" style="margin-left: 20px;"><time title="">三分钟前</time></span>
+		<a href="#" data-dojo-attach-point="userInfo"></a>
+		<span data-dojo-attach-point="action"></span>
+		<span class="time" style="margin-left: 20px;"><time title="" data-dojo-attach-point="time">三分钟前</time></span>
 	</div>
 	<div>
 	<!-- TODO：放置用户头像 
@@ -10,9 +10,8 @@
 	-->
 		
 		<div>
-			<div class="exercise">
-				<div class="content">习题</div>
-				<div class="option">选项</div>
+			<div class="exercise" data-dojo-attach-point="exerciseNode">
+				
 			</div>
 			<div style="float: right">
 				<a href="#">关注(100)</a>

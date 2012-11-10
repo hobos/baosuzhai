@@ -2,25 +2,82 @@
 define(["dojo/_base/declare",
         "dojo/_base/array",
         "dojo/_base/lang",
+        "dojo/dom-construct",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dojo/store/JsonRest",
+        "classCode",
         "dojo/text!/templates/ActivityNode.html",
         "dojo/text!/templates/ActivityList.html"], function(
         		declare,
         		array,
         		lang,
+        		domConstruct,
         		_WidgetBase,
         		_TemplatedMixin,
         		JsonRest,
+        		classCode,
         		nodeTemplate,
         		listTemplate){
+	// TODO:重复存在，重构
+	var optionLabel = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	var ActivityNode = declare("ActivityNode",[_WidgetBase, _TemplatedMixin],{
 		templateString: nodeTemplate,
 		data:{},
+		_optionName:"exercise_option",
 		postCreate : function(){
 			this.inherited(arguments);
+			this._showActionLabel();
+			
+			// 为模板赋值
+			var exerciseInfo = this.data.exercise;
+			this._createExercise(exerciseInfo);
+		},
+		
+		_showActionLabel: function(){
+			var data = this.data;
+			
+			var userName = data.displayUserName;
+			this.userInfo.innerHTML = userName;
+			this.action.innerHTML = classCode.ActionTypeMap[data.actionType];
+			this.time.innerHTML = this._prettyTime(data.createTime);
+			this.time.title = data.createTime;
+		},
+		
+		_prettyTime: function(date){
+			return date;
+		},
+
+		_createExercise: function(exerciseInfo){
+			var _contentDiv = domConstruct.create("div", {innerHTML:exerciseInfo.content,"class":"content"},this.exerciseNode);
+			
+			var options = exerciseInfo.options;
+			if(options && options.length > 0){
+				var inputType = "radio";
+				if(exerciseInfo.exerType == classCode.ExerciseType.SINGLE_OPTION){
+					inputType = "radio";
+				}else if(exerciseInfo.exerType == classCode.ExerciseType.MULTI_OPTION){
+					inputType = "checkbox";
+				}
+					
+				var _optionsDiv = domConstruct.create("div",{"class":"option"},this.exerciseNode);
+				var table = domConstruct.create("table", null, _optionsDiv);
+				// 循环填写options节点
+				array.forEach(options,lang.hitch(this, this._createOption, table, inputType));
+			}
+		},
+		
+		_createOption: function(parentNode,inputType, data, index){
+			console.log(parentNode, data, index);
+			var tr = domConstruct.place('<tr></tr>', parentNode);
+			var td1 = domConstruct.place('<td></td>', tr);
+			var input = domConstruct.create("input",{type:inputType, name:this._optionName, id:data.id}, td1);
+			
+			var td2 = domConstruct.place('<td></td>', tr);
+			var label = domConstruct.place('<label>'+optionLabel.charAt(index)+'</label>', td2);
+			var td3 = domConstruct.place('<td></td>', tr);
+			td3.innerHTML = data.content;
 		}
 		
 	});
@@ -44,6 +101,7 @@ define(["dojo/_base/declare",
 			 if(items.length == 0){
 				 this.domNode.innerHTML = "没有活动";
 			 }else{
+				 console.log(items);
 				 array.forEach(items, lang.hitch(this,function(item, index){
 					 var node = new ActivityNode({
 						 data : item
