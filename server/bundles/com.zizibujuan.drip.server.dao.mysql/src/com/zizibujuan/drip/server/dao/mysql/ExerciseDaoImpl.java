@@ -61,6 +61,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			// 添加习题
 			Object oUserId = exerciseInfo.get("userId");
 			Object oExerType = exerciseInfo.get("exerType");
+			String exerType = oExerType.toString();
 			
 			Long userId = Long.valueOf(oUserId.toString());
 			
@@ -85,7 +86,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			Object oAnswers = exerciseInfo.get("answers");
 			if(oAnswers != null){
 				Long answerId = null;
-				if(ExerciseType.SINGLE_OPTION.equals(oExerType)){
+				if(ExerciseType.SINGLE_OPTION.equals(exerType)){
 					ArrayList<String> answers = (ArrayList<String>)oAnswers;
 					List<Long> optIds = null;
 					if(optionIds != null){
@@ -94,7 +95,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 							optIds.add(optionIds.get(Integer.valueOf(i)));
 						}
 					}
-					answerId = this.addAnswer(con, exerId, oUserId, optIds, answers);
+					answerId = this.addAnswer(con, exerId, oUserId, optIds, answers,exerType);
 				}
 				
 				// 答案回答完成后，在用户的“已回答的习题数”上加1
@@ -171,7 +172,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
 	// TODO：移到AnswerDao中？
-	private Long addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers){
+	private Long addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers, String exerType){
 		Long answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
 		
 		if(optIds == null){
@@ -179,10 +180,17 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 				DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, null,content);
 			}
 		}else{
-			int i = 0;
-			for(String content : answers){
-				DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, optIds.get(i),content);
-				i++;
+			if(exerType.equals(ExerciseType.SINGLE_OPTION) || exerType.equals(ExerciseType.MULTI_OPTION)){
+				// 如果是选择题，则不要往content中写任何内容
+				for(Long optId : optIds){
+					DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, optId,null);
+				}
+			}else if(exerType.equals(ExerciseType.FILL)){
+				int i = 0;
+				for(String content : answers){
+					DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, optIds.get(i),content);
+					i++;
+				}
 			}
 		}
 		return answerId;
