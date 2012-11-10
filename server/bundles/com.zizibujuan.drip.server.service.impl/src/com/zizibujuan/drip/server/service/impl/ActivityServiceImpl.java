@@ -40,7 +40,7 @@ public class ActivityServiceImpl implements ActivityService {
 				each.put("exercise", exercise);
 			}else if(actionType.equals(ActionType.ANSWER_EXERCISE)){
 				Map<String,Object> answer = getAnswer(contentId);
-				Long answerId = Long.valueOf(answer.get("answerId").toString());
+				Long answerId = Long.valueOf(answer.get("id").toString());
 				Map<String,Object> exercise = getExercise(answerId);
 				each.put("exercise", exercise);
 				each.put("answer", answer);

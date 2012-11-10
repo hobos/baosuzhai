@@ -16,6 +16,14 @@
    		interface="com.zizibujuan.drip.server.dao.UserDao" 
    		name="userDao" 
    		policy="dynamic"/>
+   <reference 
+   		bind="setActivityDao" 
+   		unbind="unsetActivityDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.ActivityDao" 
+   		name="activityDao" 
+   		policy="dynamic"/>
+   		
    <service>
       <provide interface="com.zizibujuan.drip.server.dao.ExerciseDao"/>
    </service>

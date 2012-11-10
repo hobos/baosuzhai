@@ -1,5 +1,6 @@
 package com.zizibujuan.drip.server.dao.mysql;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,19 @@ public class ActivityDaoImpl extends AbstractDao implements ActivityDao {
 	public List<Map<String, Object>> get(Long userId, PageInfo pageInfo) {
 		return DatabaseUtil.queryForList(getDataSource(),
 				SQL_LIST_ACTIVITY_INDEX, pageInfo, userId);
+	}
+
+	private static final String SQL_INSERT_ACTIVITY = "INSERT INTO DRIP_ACTIVITY " +
+			"(USER_ID,ACTION_TYPE,IS_IN_HOME,CONTENT_ID,CRT_TM) " +
+			"VALUES " +
+			"(?,?,?,?,now())";
+	@Override
+	public Long add(Connection con, Map<String, Object> activityInfo) {
+		Object userId = activityInfo.get("USER_ID");
+		Object actionType = activityInfo.get("ACTION_TYPE");
+		Object isInHome = activityInfo.get("IS_IN_HOME");
+		Object contentId = activityInfo.get("CONTENT_ID");
+		return DatabaseUtil.insert(con, SQL_INSERT_ACTIVITY, userId,actionType,isInHome,contentId);
 	}
 
 }

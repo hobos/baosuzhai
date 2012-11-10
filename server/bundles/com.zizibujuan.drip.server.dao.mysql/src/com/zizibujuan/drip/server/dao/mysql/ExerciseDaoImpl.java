@@ -3,15 +3,18 @@ package com.zizibujuan.drip.server.dao.mysql;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zizibujuan.drip.server.dao.ActivityDao;
 import com.zizibujuan.drip.server.dao.ExerciseDao;
 import com.zizibujuan.drip.server.dao.UserDao;
 import com.zizibujuan.drip.server.exception.dao.DataAccessException;
+import com.zizibujuan.drip.server.util.ActionType;
 import com.zizibujuan.drip.server.util.ExerciseType;
 import com.zizibujuan.drip.server.util.dao.AbstractDao;
 import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
@@ -24,6 +27,7 @@ import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
 public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseDaoImpl.class);
 	private UserDao userDao;
+	private ActivityDao activityDao;
 	
 	private static final String SQL_LIST_EXERCISE = 
 			"SELECT DBID, CONTENT, CRT_TM, CRT_USER_ID FROM DRIP_EXERCISE ORDER BY CRT_TM DESC";
@@ -74,10 +78,13 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			// 习题添加成功后，在用户的“创建的习题数”上加1
 			// 同时修改后端和session中缓存的该记录
 			userDao.increaseExerciseCount(con, userId);
+			// 在活动表中插入一条记录
+			addActivity(con, userId,exerId,ActionType.SAVE_EXERCISE);
 			
 			// 如果存在答案，则添加答案
 			Object oAnswers = exerciseInfo.get("answers");
 			if(oAnswers != null){
+				Long answerId = null;
 				if(ExerciseType.SINGLE_OPTION.equals(oExerType)){
 					ArrayList<String> answers = (ArrayList<String>)oAnswers;
 					List<Long> optIds = null;
@@ -87,8 +94,14 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 							optIds.add(optionIds.get(Integer.valueOf(i)));
 						}
 					}
-					this.addAnswer(con, exerId, oUserId, optIds, answers);
+					answerId = this.addAnswer(con, exerId, oUserId, optIds, answers);
 				}
+				
+				// 答案回答完成后，在用户的“已回答的习题数”上加1
+				// 同时修改后端和session中缓存的该记录
+				userDao.increaseAnswerCount(con, userId);
+				// 在活动表中插入一条记录
+				addActivity(con, userId,answerId,ActionType.ANSWER_EXERCISE);
 			}
 			
 			// 如果存在习题解析，则添加习题解析
@@ -96,10 +109,6 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			if(oGuide != null){
 				this.addGuide(con, exerId, oUserId, oGuide);
 			}
-			
-			// 答案回答完成后，在用户的“已回答的习题数”上加1
-			// 同时修改后端和session中缓存的该记录
-			userDao.increaseAnswerCount(con, userId);
 			
 			con.commit();
 		}catch(SQLException e){
@@ -112,6 +121,16 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			DatabaseUtil.closeConnection(con);
 		}
 		return exerId;
+	}
+
+	private void addActivity(Connection con,Long userId, Long contentId, String actionType) {
+		// FIXME:是不是直接传各自的参数更好一些，而不是现在传入map对象，还需要两遍转换
+		Map<String,Object> activityInfo = new HashMap<String, Object>();
+		activityInfo.put("USER_ID", userId);
+		activityInfo.put("ACTION_TYPE", actionType);
+		activityInfo.put("IS_IN_HOME", 1);
+		activityInfo.put("CONTENT_ID", contentId);
+		activityDao.add(con, activityInfo);
 	}
 	
 	private static final String SQL_INSERT_EXERCISE = 
@@ -152,7 +171,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
 	// TODO：移到AnswerDao中？
-	private void addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers){
+	private Long addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers){
 		Long answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
 		
 		if(optIds == null){
@@ -166,6 +185,7 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 				i++;
 			}
 		}
+		return answerId;
 	}
 
 	// TODO:不在sql中联合查询编码，而是从缓存中获取编码对应的文本信息
@@ -219,6 +239,18 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 		if (this.userDao == userDao) {
 			logger.info("注销userDao");
 			this.userDao = null;
+		}
+	}
+	
+	public void setActivityDao(ActivityDao activityDao) {
+		logger.info("注入ActivityDao");
+		this.activityDao = activityDao;
+	}
+
+	public void unsetActivityDao(ActivityDao activityDao) {
+		if (this.activityDao == activityDao) {
+			logger.info("注销ActivityDao");
+			this.activityDao = null;
 		}
 	}
 }
