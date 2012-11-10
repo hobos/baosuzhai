@@ -31,7 +31,6 @@ define(["dojo/_base/declare",
 		 content:"",
 		 
 		 postCreate : function(){
-			 debugger;
 			 // 将自定义的xml字符串转换为html格式的字符串。
 			 this.divContent.innerHTML = dataUtil.xmlStringToHtml(this.content);
 			 this.buttonAnswer.set("label",common.buttonAnswer);
@@ -60,7 +59,6 @@ define(["dojo/_base/declare",
 		 },
 		 
 		 _load : function(items){
-			 debugger;
 			 if(items.length == 0){
 				 // TODO：定制样式
 				 this.domNode.innerHTML = "没有习题做,yeah!";

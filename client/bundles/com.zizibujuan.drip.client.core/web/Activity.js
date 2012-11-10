@@ -3,6 +3,8 @@ define(["dojo/_base/declare",
         "dojo/_base/array",
         "dojo/_base/lang",
         "dojo/dom-construct",
+        "dojo/dom-prop",
+        "dojo/query",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dojo/store/JsonRest",
@@ -13,6 +15,8 @@ define(["dojo/_base/declare",
         		array,
         		lang,
         		domConstruct,
+        		domProp,
+        		query,
         		_WidgetBase,
         		_TemplatedMixin,
         		JsonRest,
@@ -25,7 +29,6 @@ define(["dojo/_base/declare",
 	var ActivityNode = declare("ActivityNode",[_WidgetBase, _TemplatedMixin],{
 		templateString: nodeTemplate,
 		data:{},
-		_optionName:"exercise_option",
 		postCreate : function(){
 			this.inherited(arguments);
 			this._showActionLabel();
@@ -33,6 +36,26 @@ define(["dojo/_base/declare",
 			// 为模板赋值
 			var exerciseInfo = this.data.exercise;
 			this._createExercise(exerciseInfo);
+			// 针对不同的题型，有不同的渲染方式
+			
+			var exerType = exerciseInfo.exerType;
+			var answerInfo = this.data.answer;
+			if(answerInfo){
+				if(exerType == classCode.ExerciseType.SINGLE_OPTION || exerType == classCode.ExerciseType.MULTI_OPTION){
+					array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
+				}
+			}
+		},
+		
+		_setOptionAnswer: function(answer, index){
+			var optionId = answer.optionId;
+			query("input[type=radio]",this.table).some(function(node,index){
+				if(domProp.get(node,"optionId") == optionId){
+					domProp.set(node,"checked", true);
+					return true;
+				}
+				return false;
+			});
 		},
 		
 		_showActionLabel: function(){
@@ -62,7 +85,7 @@ define(["dojo/_base/declare",
 				}
 					
 				var _optionsDiv = domConstruct.create("div",{"class":"option"},this.exerciseNode);
-				var table = domConstruct.create("table", null, _optionsDiv);
+				var table = this.table = domConstruct.create("table", null, _optionsDiv);
 				// 循环填写options节点
 				array.forEach(options,lang.hitch(this, this._createOption, table, inputType));
 			}
@@ -72,8 +95,8 @@ define(["dojo/_base/declare",
 			console.log(parentNode, data, index);
 			var tr = domConstruct.place('<tr></tr>', parentNode);
 			var td1 = domConstruct.place('<td></td>', tr);
-			var input = domConstruct.create("input",{type:inputType, name:this._optionName, id:data.id}, td1);
-			
+			var input = domConstruct.create("input",{type:inputType}, td1);
+			domProp.set(input,{"disabled":true,optionId:data.id});
 			var td2 = domConstruct.place('<td></td>', tr);
 			var label = domConstruct.place('<label>'+optionLabel.charAt(index)+'</label>', td2);
 			var td3 = domConstruct.place('<td></td>', tr);
@@ -97,7 +120,6 @@ define(["dojo/_base/declare",
 		 },
 		 
 		 _load : function(items){
-			 debugger;
 			 if(items.length == 0){
 				 this.domNode.innerHTML = "没有活动";
 			 }else{

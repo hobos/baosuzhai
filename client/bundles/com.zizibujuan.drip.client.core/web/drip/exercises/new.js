@@ -212,7 +212,6 @@ define(["dojo/_base/declare",
 				// 先删除tr中的所有dijit部件
 				
 				registry.findWidgets(tr).forEach(function(w,index){
-					debugger;
 					w.destroyRecursive();
 				});
 				domConstruct.destroy(tr);
