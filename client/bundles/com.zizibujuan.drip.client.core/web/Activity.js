@@ -42,20 +42,34 @@ define(["dojo/_base/declare",
 			var answerInfo = this.data.answer;
 			if(answerInfo){
 				if(exerType == classCode.ExerciseType.SINGLE_OPTION || exerType == classCode.ExerciseType.MULTI_OPTION){
+					this._optionLabels = [];
 					array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
+					// 即使是选择题，也要在答案面板中回答
+					var answerDiv = domConstruct.create("div",{"class":"answer"}, this.exerciseNode,"after");
+					answerDiv.innerHTML = "答案是："+"<span>"+ this._optionLabels.join(",") +"</span>";
 				}
+				
 			}
 		},
 		
 		_setOptionAnswer: function(answer, index){
 			var optionId = answer.optionId;
-			query("input[type=radio]",this.table).some(function(node,index){
+			// TODO:从性能角度上将，可先缓存这些radio
+			this._getOptionEls().some(lang.hitch(this,function(node,index){
 				if(domProp.get(node,"optionId") == optionId){
 					domProp.set(node,"checked", true);
+					this._optionLabels.push(node.parentNode.nextSibling.firstChild.innerHTML);
 					return true;
 				}
 				return false;
-			});
+			}));
+		},
+		
+		_getOptionEls: function(){
+			if(!this._optionEls){
+				this._optionEls = query("input[type=radio]",this.table);
+			}
+			return this._optionEls;
 		},
 		
 		_showActionLabel: function(){
