@@ -440,7 +440,7 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 			params[key] = this[key];
 		}
 
-		// Step 2: Call set() for each property that wasn't passed as a parameter to the constructor
+		// Step 2: Call set() for each property with a non-falsy value that wasn't passed as a parameter to the constructor
 		array.forEach(list, function(attr){
 			if(attr in params){
 				// skip this one, do it below
@@ -784,11 +784,11 @@ return declare("dijit._WidgetBase", [Stateful, Destroyable], {
 			// attribute name (ex: accept-charset attribute matches jsObject.acceptCharset).
 			// Note also that Tree.focusNode() is a function not a DOMNode, so test for that.
 			var defaultNode = this.focusNode && !lang.isFunction(this.focusNode) ? "focusNode" : "domNode",
-				tag = this[defaultNode].tagName,
-				attrsForTag = tagAttrs[tag] || (tagAttrs[tag] = getAttrs(this[defaultNode])),
+				tag = this[defaultNode] && this[defaultNode].tagName,
+				attrsForTag = tag && (tagAttrs[tag] || (tagAttrs[tag] = getAttrs(this[defaultNode]))),
 				map =	name in this.attributeMap ? this.attributeMap[name] :
 						names.s in this ? this[names.s] :
-						((names.l in attrsForTag && typeof value != "function") ||
+						((attrsForTag && names.l in attrsForTag && typeof value != "function") ||
 							/^aria-|^data-|^role$/.test(name)) ? defaultNode : null;
 			if(map != null){
 				this._attrToDom(name, value, map);

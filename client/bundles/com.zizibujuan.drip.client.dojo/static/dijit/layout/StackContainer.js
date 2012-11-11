@@ -3,15 +3,17 @@ define([
 	"dojo/cookie", // cookie
 	"dojo/_base/declare", // declare
 	"dojo/dom-class", // domClass.add domClass.replace
+	"dojo/dom-construct",
 	"dojo/has",	// has("dijit-legacy-requires")
 	"dojo/_base/lang",	// lang.extend
 	"dojo/ready",
 	"dojo/topic", // publish
+	"dojo/when",
 	"../registry",	// registry.byId
 	"../_WidgetBase",
 	"./_LayoutWidget",
 	"dojo/i18n!../nls/common"
-], function(array, cookie, declare, domClass, has, lang, ready, topic,
+], function(array, cookie, declare, domClass, domConstruct, has, lang, ready, topic, when,
 			registry, _WidgetBase, _LayoutWidget){
 
 // module:
@@ -61,7 +63,6 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 	buildRendering: function(){
 		this.inherited(arguments);
 		domClass.add(this.domNode, "dijitLayoutContainer");
-		this.containerNode.setAttribute("role", "tabpanel");
 	},
 
 	postCreate: function(){
@@ -122,6 +123,13 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 	_setupChild: function(/*dijit/_WidgetBase*/ child){
 		// Overrides _LayoutWidget._setupChild()
 
+		// For aria support, wrap child widget in a <div role="tabpanel">
+		var old = child.domNode;
+		var label = child["aria-label"] || child.title || child.label;
+		var wrapper = domConstruct.place("<div role='tabpanel' aria-label='"+label+"'>", child.domNode, "replace");
+		domConstruct.place(old, wrapper);
+		child._wrapper = wrapper;	// to set the aria-labelledby in StackController
+				
 		this.inherited(arguments);
 
 		domClass.replace(child.domNode, "dijitHidden", "dijitVisible");
@@ -161,6 +169,8 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 		var idx = array.indexOf(this.getChildren(), page);
 
 		this.inherited(arguments);
+		
+		domConstruct.destroy(page._wrapper);	// Remove the child widget wrapper we use to set aria roles
 
 		if(this._started){
 			// this will notify any tablists to remove a button; do this first because it may affect sizing
@@ -197,11 +207,13 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 		// page:
 		//		Reference to child widget or id of child widget
 
+		var d;
+
 		page = registry.byId(page);
 
 		if(this.selectedChildWidget != page){
 			// Deselect old page and select new one
-			var d = this._transition(page, this.selectedChildWidget, animate);
+			d = this._transition(page, this.selectedChildWidget, animate);
 			this._set("selectedChildWidget", page);
 			topic.publish(this.id+"-selectChild", page);	// publish
 
@@ -210,7 +222,8 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 			}
 		}
 
-		return d;		// If child has an href, promise that fires when the child's href finishes loading
+		// d may be null, or a scalar like true.  Return a promise in all cases
+		return when(d || true);		// Promise
 	},
 
 	_transition: function(newWidget, oldWidget /*===== ,  animate =====*/){
@@ -318,7 +331,7 @@ var StackContainer = declare("dijit.layout.StackContainer", _LayoutWidget, {
 		//		If onClose() returns true then remove and destroy the child.
 		// tags:
 		//		private
-		var remove = page.onClose(this, page);
+		var remove = page.onClose && page.onClose(this, page);
 		if(remove){
 			this.removeChild(page);
 			// makes sure we can clean up executeScripts in ContentPane onUnLoad

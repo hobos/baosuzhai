@@ -146,7 +146,7 @@ define([
 		//		Class to use to instantiate title
 		//		(Wish we didn't have a separate widget for just the title but maintaining it
 		//		for backwards compatibility, is it worth it?)
-		 buttonWidget: null,
+		buttonWidget: null,
 =====*/
 
 /*=====
@@ -190,7 +190,9 @@ define([
 
 			// and then the actual content widget (changing it from prior-sibling to last-child),
 			// wrapped by a <div class=dijitAccordionChildWrapper>
-			this.containerNode = domConstruct.place("<div class='dijitAccordionChildWrapper' style='display:none'>", this.domNode);
+			this.containerNode = domConstruct.place("<div class='dijitAccordionChildWrapper' role='tabpanel' style='display:none'>", this.domNode);
+			this.containerNode.setAttribute("aria-labelledby", this.button.id);
+
 			domConstruct.place(this.contentWidget.domNode, this.containerNode);
 		},
 
@@ -275,7 +277,7 @@ define([
 		buildRendering: function(){
 			this.inherited(arguments);
 			this.domNode.style.overflow = "hidden";		// TODO: put this in dijit.css
-			this.domNode.setAttribute("role", "tablist");	// TODO: put this in template
+			this.domNode.setAttribute("role", "tablist");
 		},
 
 		startup: function(){
@@ -306,7 +308,7 @@ define([
 			// get cumulative height of all the unselected title bars
 			var totalCollapsedHeight = 0;
 			array.forEach(this.getChildren(), function(child){
-	            if(child != openPane){
+				if(child != openPane){
 					// Using domGeometry.getMarginSize() rather than domGeometry.position() since claro has 1px bottom margin
 					// to separate accordion panes.  Not sure that works perfectly, it's probably putting a 1px
 					// margin below the bottom pane (even though we don't want one).
@@ -344,44 +346,10 @@ define([
 			});
 
 			this.inherited(arguments);
-		},
 
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex){
-			// Overrides _LayoutWidget.addChild().
-			if(this._started){
-				// Adding a child to a started Accordion is complicated because children have
-				// wrapper widgets.  Default code path (calling this.inherited()) would add
-				// the new child inside another child's wrapper.
-
-				// First add in child as a direct child of this AccordionContainer
-				var refNode = this.containerNode;
-				if(insertIndex && typeof insertIndex == "number"){
-					var children = _Widget.prototype.getChildren.call(this);	// get wrapper panes
-					if(children && children.length >= insertIndex){
-						refNode = children[insertIndex-1].domNode;
-						insertIndex = "after";
-					}
-				}
-				domConstruct.place(child.domNode, refNode, insertIndex);
-
-				if(!child._started){
-					child.startup();
-				}
-
-				// Then stick the wrapper widget around the child widget
-				this._setupChild(child);
-
-				// Code below copied from StackContainer
-				topic.publish(this.id+"-addChild", child, insertIndex);	// publish
-				this.layout();
-				if(!this.selectedChildWidget){
-					this.selectChild(child);
-				}
-			}else{
-				// We haven't been started yet so just add in the child widget directly,
-				// and the wrapper will be created on startup()
-				this.inherited(arguments);
-			}
+			// Since we are wrapping children in AccordionInnerContainer, replace the default
+			// wrapper that we created in StackContainer.
+			domConstruct.place(child.domNode, child._wrapper, "replace");																															
 		},
 
 		removeChild: function(child){
@@ -390,6 +358,7 @@ define([
 			// Destroy wrapper widget first, before StackContainer.getChildren() call.
 			// Replace wrapper widget with true child widget (ContentPane etc.).
 			// This step only happens if the AccordionContainer has been started; otherwise there's no wrapper.
+			// (TODO: since StackContainer destroys child._wrapper, maybe it can do this step too?)
 			if(child._wrapperWidget){
 				domConstruct.place(child.domNode, child._wrapperWidget.domNode, "after");
 				child._wrapperWidget.destroy();

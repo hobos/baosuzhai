@@ -378,11 +378,11 @@ div.dijitArrowButton {
 .dijitTextBoxDisabled {
 	color: gray;
 }
-.dj_webkit .dijitTextBoxDisabled input {
-	color: #eee; /* because WebKit lightens disabled input/textarea no matter what color you specify */
+.dj_safari .dijitTextBoxDisabled input {
+	color: #B0B0B0; /* because Safari lightens disabled input/textarea no matter what color you specify */
 }
-.dj_webkit textarea.dijitTextAreaDisabled {
-	color: #333; /* because WebKit lightens disabled input/textarea no matter what color you specify */
+.dj_safari textarea.dijitTextAreaDisabled {
+	color: #333; /* because Safari lightens disabled input/textarea no matter what color you specify */
 }
 .dj_gecko .dijitTextBoxReadOnly input.dijitInputField, /* disable arrow and validation presentation inputs but allow real input for text selection */
 .dj_gecko .dijitTextBoxDisabled input {
@@ -922,10 +922,6 @@ body .dijitAlignClient { position: absolute; }
 	overflow: hidden;
 	display: block;
 }
-.dj_ff3 .dj_a11y div.dijitSplitter:focus {
-	outline-style:dotted;
-	outline-width: 2px;
-}
 
 .dijitSplitPane {
 	position: absolute;
@@ -1276,10 +1272,7 @@ Hiding the focus border also works around webkit bug https://code.google.com/p/c
 .dj_a11y .dijitMenuItemSelected {
 	border: 1px dotted black !important;	/* for 2.0 use outline instead, to prevent jitter */
 }
-.dj_ff3 .dj_a11y .dijitMenuItem td {
-	padding: 0 !important;
-	background:none !important;
-}
+
 .dj_a11y .dijitMenuItemSelected .dijitMenuItemLabel {
 	border-width: 1px;
 	border-style: solid;
@@ -1569,6 +1562,11 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 	white-space: nowrap;
 }
 
+.dj_ie .dijitTreeLabel:focus {
+	/* workaround IE9 behavior where down arrowing through TreeNodes doesn't show focus outline */
+	outline: 1px dotted black;
+}
+
 .dijitTreeRow img {
 	/* make the expando and folder icons line up with the label */
 	vertical-align: middle;
@@ -1612,6 +1610,9 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 }
 .dijitDialogCloseIcon {
 	cursor: pointer;
+}
+.dijitDialogPaneContent {
+	-webkit-overflow-scrolling: touch;
 }
 .dijitDialogUnderlayWrapper {
 	position: absolute;
@@ -2193,4 +2194,7 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 .dj_gecko .dijitArrowButtonInner INPUT,
 .dj_gecko INPUT.dijitArrowButtonInner {
 	-moz-user-focus:ignore;
+}
+.dijitFocused .dijitMenuItemShortcutKey {
+	text-decoration: underline;
 }

@@ -9,14 +9,14 @@ define([
 	"dojo/dom-geometry", // domGeometry.isBodyLtr
 	"dojo/dom-style", // domStyle.set
 	"dojo/_base/event", // event.stop
+	"dojo/has", // has("bgIframe")
 	"dojo/keys",
 	"dojo/_base/lang", // lang.hitch
 	"dojo/on",
-	"dojo/sniff", // has("ie") has("mozilla")
 	"./place",
 	"./BackgroundIframe",
 	"./main"	// dijit (defining dijit.popup to match API doc)
-], function(array, aspect, connect, declare, dom, domAttr, domConstruct, domGeometry, domStyle, event, keys, lang, on, has,
+], function(array, aspect, connect, declare, dom, domAttr, domConstruct, domGeometry, domStyle, event, has, keys, lang, on,
 			place, BackgroundIframe, dijit){
 
 	// module:
@@ -213,17 +213,17 @@ define([
 				dijitPopupParent: args.parent ? args.parent.id : ""
 			});
 
-			if(has("ie") || has("mozilla")){
-				if(!widget.bgIframe){
-					// setting widget.bgIframe triggers cleanup in _Widget.destroy()
-					widget.bgIframe = new BackgroundIframe(wrapper);
-				}
+			if(has("bgIframe") && !widget.bgIframe){
+				// setting widget.bgIframe triggers cleanup in _Widget.destroy()
+				widget.bgIframe = new BackgroundIframe(wrapper);
 			}
 
 			// position the wrapper node and make it visible
-			var best = around ?
-				place.around(wrapper, around, orient, ltr, widget.orient ? lang.hitch(widget, "orient") : null) :
-				place.at(wrapper, args, orient == 'R' ? ['TR','BR','TL','BL'] : ['TL','BL','TR','BR'], args.padding);
+			var layoutFunc = widget.orient ? lang.hitch(widget, "orient") : null,
+				best = around ?
+					place.around(wrapper, around, orient, ltr, layoutFunc) :
+					place.at(wrapper, args, orient == 'R' ? ['TR','BR','TL','BL'] : ['TL','BL','TR','BR'], args.padding,
+						layoutFunc);
 
 			wrapper.style.display = "";
 			wrapper.style.visibility = "visible";
@@ -295,7 +295,9 @@ define([
 					onClose = top.onClose;
 
 				if(widget.onClose){
-					// TODO: in 2.0 standardize onHide() (used by StackContainer) and onClose() (used here)
+					// TODO: in 2.0 standardize onHide() (used by StackContainer) and onClose() (used here).
+					// Actually, StackContainer also calls onClose(), but to mean that the pane is being deleted
+					// (i.e. that the TabContainer's tab's [x] icon was clicked)
 					widget.onClose();
 				}
 
