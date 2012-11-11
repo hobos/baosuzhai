@@ -22,7 +22,7 @@ define(["dojo/_base/declare",
         		 Model,
         		 View,
         		 ContentAssist){
-	
+
 	return declare("drip.Editor",[_WidgetBase],{
 		model : null,
 		view : null,
@@ -45,7 +45,7 @@ define(["dojo/_base/declare",
 	    
 		postCreate : function(){
 			domStyle.set(this.domNode, {position: "relative"});
-			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"-40px",left:'700px'}}, this.domNode);
+			var textarea = this.textarea = domConstruct.create("textarea",{style:{position:"absolute",top:"-10000px",left:'-10000px'}}, this.domNode);
 			
 			var model = this.model = new Model();
 			this.view = new View({
@@ -71,6 +71,10 @@ define(["dojo/_base/declare",
 			on(textarea, "input", function(e){
 				//console.log(e);
 			});
+			
+			on(textarea, "blur", lang.hitch(this,function(e){
+				this.view.blur();
+			}));
 			
 			// FIXME:一种重构思路是将key与方法绑定，然后根据key自动调用方法，即把if改为json对象
 			on(textarea, "keydown", lang.hitch(this,function(e){

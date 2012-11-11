@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+.drip_editor {
+	
+}
+
 .drip_layer {
     z-index: 1;
     position: absolute;

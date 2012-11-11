@@ -68,29 +68,37 @@ define(["dojo/_base/declare",
 			// summary:
 			//		隐藏光标
 			
+			this.caret.style.visibility = "hidden";
 			this.isVisible = false;
-			clearInterval(this.blinkId);
-			this.blinkId = null;
+			clearInterval(this.intervalId);
+			this.intervalId = null;
+			
+			// 当失去光标的时候，确保不要随机的显示出光标，因为关闭了interval,
+			// 但是timeout方法还会再执行一次，所以需要显式关闭。
+			clearTimeout(this.timeoutId);
+			this.timeoutId = null;
 		},
 		
 		_restartTimer: function(){
-			if(this.blinkId != null){
-				clearInterval(this.blinkId);
-				this.blinkId = null;
+			if(this.intervalId != null){
+				clearInterval(this.intervalId);
+				this.intervalId = null;
 			}
 			
 			var caret = this.caret;
-			this.blinkId = setInterval(function(){
+			var self = this;
+			this.intervalId = setInterval(function(){
 				caret.style.visibility = "hidden";
-	            setTimeout(function() {
+	            self.timeoutId = setTimeout(function() {
 	            	caret.style.visibility = "";
+	            	console.log(self.timeoutId);
 	            }, 400);
 			},1000);
 		},
 		
 		destroy: function(){
-			if(this.blinkId != null){
-				clearInterval(this.blinkId);
+			if(this.intervalId != null){
+				clearInterval(this.intervalId);
 			}
 			// 删除光标
 			domConstruct.destroy(this.caret);

@@ -1,6 +1,7 @@
 define(["dojo/_base/declare",
         "dojo/_base/lang",
         "dojo/_base/array",
+        "dojo/_base/event",
         "dojo/dom",
         "dojo/dom-class",
         "dojo/dom-construct",
@@ -13,6 +14,7 @@ define(["dojo/_base/declare",
 		declare,
 		lang,
 		array,
+		event,
 		dom,
 		domClass,
 		domConstruct,
@@ -33,31 +35,52 @@ define(["dojo/_base/declare",
 		
 		readOnly: false, // 有时，编辑状态和只读状态显示的样式，是不一样的。暂时还没有区分对待。
 		
+		// focused: Boolean
+		//		判断当前视图是否已获取焦点
+		focused: false,
+		
 		constructor: function(options){
 			lang.mixin(this, options);
 			// 创建一个div容器，然后其中按照垂直层次，罗列各div
-			var editorDiv = this.editorDiv = domConstruct.create("div",{style:{height:"100%",width:"100%", position:"absolute"}}, this.parentNode);
+			// 不能将style移到class中，因为移到class中让一些样式无效了，FIXME：什么原因呢？
+			var style={
+				//"border-radius":"3px",
+				height:"100%",
+				width:"100%",
+				border:"solid 1px black",
+				position:"absolute",
+				cursor:"text"
+			};
+			var editorDiv = this.editorDiv = domConstruct.create("div",{"style":style}, this.parentNode);
 			// 内容层
 			var textLayer = this.textLayer = domConstruct.create("div",{"class":"drip_layer"}, editorDiv);
 			this.textLayerPosition = domGeom.position(textLayer);
 			// 光标层， 看是否需要把光标放到光标层中
 			var cursor = this.cursor = new Cursor({parentEl:editorDiv});
 			
-			on(editorDiv, "mousedown",lang.hitch(this, this.focus));
+			on(editorDiv, "mousedown",lang.hitch(this, this._onMouseDownHandler));
 			
 			// 初始化视图
 			textLayer.innerHTML = this.model.getHTML();
 			aspect.after(this.model, "onChange", lang.hitch(this,this._onChange));
 		},
 		
-		focus: function(){
-			var textarea = this.textarea;
-			var cursor = this.cursor;
-			
-			setTimeout(function() {
-				 textarea.focus();
-				 cursor.show();
-		    });
+		_onMouseDownHandler: function(e){
+			this._focus();
+			event.stop(e);
+		},
+		
+		_focus: function(){
+			if(this.focused==false){
+				this.focused = true;
+				var textarea = this.textarea;
+				var cursor = this.cursor;
+				
+				setTimeout(function() {
+					 textarea.focus();
+					 cursor.show();
+			    });
+			}
 		},
 		
 		_onChange : function(){
@@ -65,6 +88,15 @@ define(["dojo/_base/declare",
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this.textLayer]);
 			// 因为是异步操作，需要把显示光标的方法放在MathJax的异步函数中。
 			MathJax.Hub.Queue(lang.hitch(this,this.showCursor));
+		},
+		
+		// summary
+		//		编辑器失去焦点之后调用该方法
+		blur: function(){
+			if(this.focused == true){
+				this.focused = false;
+				this.cursor.hide();
+			}
 		},
 		
 		showCursor: function(){
