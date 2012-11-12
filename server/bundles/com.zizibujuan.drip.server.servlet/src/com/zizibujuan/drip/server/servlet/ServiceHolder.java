@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zizibujuan.drip.server.service.AccessLogService;
 import com.zizibujuan.drip.server.service.ActivityService;
+import com.zizibujuan.drip.server.service.AnswerService;
 import com.zizibujuan.drip.server.service.ApplicationPropertyService;
 import com.zizibujuan.drip.server.service.ExerciseService;
 import com.zizibujuan.drip.server.service.UserService;
@@ -118,6 +119,23 @@ public class ServiceHolder {
 		logger.info("注销ApplicationPropertyService");
 		if (this.applicationPropertyService == applicationPropertyService) {
 			this.applicationPropertyService = null;
+		}
+	}
+
+	private AnswerService answerService;
+	
+	public AnswerService getAnswerService() {
+		return answerService;
+	}
+	public void setAnswerService(AnswerService answerService) {
+		logger.info("注入answerService");
+		this.answerService = answerService;
+	}
+
+	public void unsetAnswerService(AnswerService answerService) {
+		logger.info("注销answerService");
+		if (this.answerService == answerService) {
+			this.answerService = null;
 		}
 	}
 	

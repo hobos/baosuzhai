@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" 
+	name="com.zizibujuan.drip.server.service.impl.answerServiceImpl">
+   <implementation class="com.zizibujuan.drip.server.service.impl.AnswerServiceImpl"/>
+   <reference 
+   		bind="setAnswerDao" 
+   		unbind="unsetAnswerDao" 
+   		cardinality="0..1" 
+   		interface="com.zizibujuan.drip.server.dao.AnswerDao" 
+   		name="answerDao" 
+   		policy="dynamic"/>
+   		
+   <reference 
+   		bind="setExerciseGuideDao" 
+   		unbind="unsetExerciseGuideDao" 
+   		cardinality="0..1"
+   		interface="com.zizibujuan.drip.server.dao.ExerciseGuideDao" 
+   		name="exerciseGuideDao" 
+   		policy="dynamic"/>
+   		
+   <service>
+      <provide interface="com.zizibujuan.drip.server.service.AnswerService"/>
+   </service>
+</scr:component>

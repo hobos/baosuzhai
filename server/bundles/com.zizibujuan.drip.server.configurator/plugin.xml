@@ -47,6 +47,10 @@
       		alias="/activities"
       		class="com.zizibujuan.drip.server.servlet.DashboardServlet">
       </servlet>
+      <servlet 
+      		alias="/answers"
+      		class="com.zizibujuan.drip.server.servlet.AnswerServlet">
+      </servlet>
     </extension>
 
 	<extension

@@ -29,5 +29,28 @@ public interface AnswerDao {
 	 * </pre>
 	 */
 	Map<String, Object> get(Long answerId);
+	
+	/**
+	 * 获取某用户对某道习题的答案
+	 * @param userId 用户标识
+	 * @param exerciseId 习题标识
+	 * @return 答案信息，其中带上了习题解析内容
+	 */
+	Map<String, Object> get(Long userId, Long exerciseId);
+
+	/**
+	 * 执行用户新增或更新指定习题的答案
+	 * @param userId 用户标识
+	 * @param answer 答案内容，包括习题解析
+	 * <pre>
+	 * map结构为：
+	 * 		exerId: 习题标识
+	 * 		guide: 习题解析内容
+	 * 		detail：Array
+	 * 			content：答案内容
+	 * 			optionId:选项标识
+	 * </pre>
+	 */
+	void saveOpUpdate(Long userId, Map<String, Object> answer);
 
 }
