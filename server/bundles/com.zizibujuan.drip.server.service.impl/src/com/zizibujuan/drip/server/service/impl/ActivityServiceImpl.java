@@ -45,6 +45,7 @@ public class ActivityServiceImpl implements ActivityService {
 				each.put("exercise", exercise);
 				each.put("answer", answer);
 			}
+			
 		}
 		return list;
 	}

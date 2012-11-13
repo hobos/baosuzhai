@@ -15,7 +15,8 @@ import com.zizibujuan.drip.server.util.servlet.ResponseUtil;
 import com.zizibujuan.drip.server.util.servlet.UserSession;
 
 /**
- * 习题
+ * 习题,修改完习题后，需要对修改的内容进行审批。
+ * 如果要修改习题的选项，则要记录历史的选项列表。并将答案与这些习题的具体版本相关联。
  * @author jinzw
  * @since 0.0.1
  */

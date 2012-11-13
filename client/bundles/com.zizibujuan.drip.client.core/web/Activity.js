@@ -3,10 +3,13 @@ define(["dojo/_base/declare",
         "dojo/_base/array",
         "dojo/_base/lang",
         "dojo/_base/event",
+        "dojo/request/xhr",
         "dojo/dom-construct",
         "dojo/dom-prop",
+        "dojo/dom-style",
         "dojo/query",
         "dojo/on",
+        "dojo/json",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dijit/form/Button",
@@ -19,10 +22,13 @@ define(["dojo/_base/declare",
         		array,
         		lang,
         		event,
+        		xhr,
         		domConstruct,
         		domProp,
+        		domStyle,
         		query,
         		on,
+        		JSON,
         		_WidgetBase,
         		_TemplatedMixin,
         		Button,
@@ -47,6 +53,8 @@ define(["dojo/_base/declare",
 			
 			// 为模板赋值
 			var exerciseInfo = this.data.exercise;
+			var exerciseId = exerciseInfo.id;
+			console.log(exerciseInfo);
 			this._createExercise(exerciseInfo);
 			// 针对不同的题型，有不同的渲染方式
 			
@@ -57,46 +65,133 @@ define(["dojo/_base/declare",
 					this._optionLabels = [];
 					array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
 					// 即使是选择题，也要在答案面板中回答
-					var answerDiv = domConstruct.create("div",{"class":"answer"}, this.exerciseNode,"after");
-					answerDiv.innerHTML = "答案是："+"<span>"+ this._optionLabels.join(",") +"</span>";
+					
+					var answerDiv = this.answerDiv = domConstruct.create("div",{"class":"answer"}, this.exerciseNode,"after");
+					if(this._optionLabels.length > 0){
+						answerDiv.innerHTML = "答案是："+"<span>"+ this._optionLabels.join(",") +"</span>";
+					}else{
+						answerDiv.innerHTML = "答案是："+"<span>未作答</span>";
+					}
+					
+				}
+				// 如果用户为该题添加了习题解析，则显示出来，如果没有则不显示
+				var guide = answerInfo.guide;
+				if(guide && guide != ""){
+					// 添加习题解析，只读的
+					var guideContainerDiv = this.guideContainerDiv = domConstruct.create("div",{"class":"guide"}, this.exerciseNode);
+					var guideLabel = domConstruct.create("div",{innerHTML:"习题解析"}, guideContainerDiv);
+					var guideContentDiv = domConstruct.create("div",{innerHTML:guide}, guideContainerDiv);
 				}
 			}
+			
 			
 			// 解答按钮
 			on(this.btnAnswer,"click", lang.hitch(this, function(e){
 				event.stop(e);
 				
+				// TODO: 先查询用户是否已经回答过，如果已经回答过了，则将答案加载过来
+				// TODO：然后编辑答案，如果没有回答过，则直接新增
+				// 传递习题标识，然后在servlet中传递userId，注意，因为这里传过去的是习题标识，
+				// 不是答案标识，所以不能直接拼在url后面，而应该使用/?exerId=xxx的query的方式传递。
+				
+				
+				
+				// 需要 习题解析框， 习题答案框
+				
+				// TODO：如果回答显示答案的习题时，应先把别人隐藏的答案删除掉
+				//		如果存在答案，则清空答案或删除答案面板
+				//		如果存在习题解析，则删除习题解析面板
+				if(this.answerDiv){
+					domStyle.set(this.answerDiv,"display","none");
+				}
+				if(this.guideContainerDiv){
+					domStyle.set(this.guideContainerDiv,"display","none");
+				}
+				// 清除答案
 				// 如果是选择题
 				if(this._isOptionExercise(exerType)){
 					// 把所有option设置为有效
 					this._getOptionEls().forEach(function(optEl,index){
 						domProp.set(optEl,"disabled",false);
+						if(domProp.get(optEl,"checked") == true){
+							domProp.set(optEl, "checked", false);
+						}
 					});
+				}else{
+					// TODO:删除答案面板
 				}
 				
-				// 需要 习题解析框， 习题答案框
-				
-				// 如果回答显示答案的习题时，应先把别人隐藏的答案删除掉
 				
 				var doAnswerPane = this.doAnswerPane = domConstruct.create("div",null, this.exerciseNode, "after");
 				var guideDiv = domConstruct.create("div",{"class":"guide"}, doAnswerPane);
 				var guideLabel = domConstruct.create("div",{innerHTML:"习题解析"},guideDiv);
 				var editor = new Editor({style:"height:50px;width:98%"});
 				editor.placeAt(guideDiv);
+				
 				// FIXME：当div中有float元素时，怎么让div的高度根据其中元素的高度自适应
 				var btnContainer = domConstruct.create("div",{style:"height:18px"},doAnswerPane);
 				
-				var btnSave = new Button({"label":"保存", style:"float:right"});
+				var btnSave = new Button({"label":"保存", style:"float:right"}); // TODO:i18n
 				btnSave.placeAt(btnContainer);
 				
 				var btnCancel = new Button({"label":"不做了",style:"float:right"});
 				btnCancel.placeAt(btnContainer);
-				btnSave.on("click", function(e){
-					alert("save");
-				});
+				btnSave.on("click", lang.hitch(this,function(e){
+					var answerData = {};
+					answerData.exerId = exerciseInfo.id;
+					answerData.detail = [];
+					if(this._isOptionExercise(exerType)){
+						this._getOptionEls().forEach(lang.hitch(this,function(optionEl, index){
+							if(domProp.get(optionEl, "checked") === true){
+								var optionData = {optionId: domProp.get(optionEl,"optionId")};
+								answerData.detail.push(optionData);
+							}
+						}));
+						
+						// 习题答案
+						/*
+						 guide
+						 
+						 exerId
+						 detail
+						 	content
+						 	optionId
+						 */
+					}
+					// 习题解析
+					var guide = editor.get("value");
+					if(guide != ""){
+						console.log("习题解析:",guide);
+						answerData.guide = guide;
+					}
+					// 在post中执行新增或更新操作，确保每个人对每道习题的最终答案只有一个。
+					// 但是在答案历史记录中要记录
+					// TODO：保存的时候进行判断，如果answerId已经存在，则执行put;如果不存在，则执行post
+					xhr.post("/answers/",{handleAs:"json",data:JSON.stringify(answerData)}).then(lang.hitch(this,function(response){
+						this._destroyAnswerPane();
+					}),lang.hitch(this,function(error){
+						// 出错时
+					}));
+				}));
+				
 				btnCancel.on("click", lang.hitch(this,function(e){
 					// 删除答题面板
 					this._destroyAnswerPane();
+					// 恢复之前的状态，所以需要提取出数据，并将这些数据缓存起来。
+					// 恢复显示隐藏的面板
+					if(this.answerDiv){
+						domStyle.set(this.answerDiv,"display","");
+					}
+					if(this.guideContainerDiv){
+						domStyle.set(this.guideContainerDiv,"display","");
+					}
+					
+					var answerInfo = this.data.answer;
+					if(answerInfo){
+						if(this._isOptionExercise(exerType)){
+							array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
+						}
+					}
 				}));
 				
 				// 回答问题相关的dijit部件 
@@ -104,6 +199,23 @@ define(["dojo/_base/declare",
 				answerWidget.push(editor);
 				answerWidget.push(btnSave);
 				answerWidget.push(btnCancel);
+				
+				// 把加载数据放在最后
+				xhr.get("/answers/",{query:{exerId:exerciseId},handleAs:"json"}).then(lang.hitch(this,function(data){
+					this._currentUserAnswer = data;
+					console.log("answer:",data);
+					// 如果已经作答过了，则之前做过的答案显示出来，并标出这是用户何时作答的答案，并提醒用户可以继续完善答案。
+					// 如果没有作答，则这里什么也不做。
+					if(data.guide){
+						editor.set("value",data.guide);
+						console.log("guide:",data.guide);
+						// TODO:在label上显示出这是在什么时候解答的，绿色显示。
+					}
+					if(data.detail){
+						array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
+					}
+					
+				}));
 			}));
 		},
 		

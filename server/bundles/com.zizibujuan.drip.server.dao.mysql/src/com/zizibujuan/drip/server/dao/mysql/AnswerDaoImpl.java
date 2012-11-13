@@ -15,15 +15,17 @@ import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
  */
 public class AnswerDaoImpl extends AbstractDao implements AnswerDao {
 
+	// 暂定，将习题解析看作答案的一部分。
 	private static final String SQL_GET_ANSWER = "SELECT " +
-			"DBID \"id\"," +
-			"EXER_ID \"exerId\"," +
-			"CRT_TM \"createTime\"," +
-			"CRT_USER_ID \"createUserId\"," +
-			"UPT_TM \"updateTime\"," +
-			"UPT_USER_ID \"updateUserId\" " +
-			"FROM DRIP_ANSWER " +
-			"WHERE DBID=? ";
+			"a.DBID \"id\"," +
+			"a.EXER_ID \"exerId\"," +
+			"b.CONTENT \"guide\", " +
+			"a.CRT_TM \"createTime\"," +
+			"a.CRT_USER_ID \"createUserId\"," +
+			"a.UPT_TM \"updateTime\"," +
+			"a.UPT_USER_ID \"updateUserId\" " +
+			"FROM DRIP_EXER_GUIDE b LEFT JOIN DRIP_ANSWER a " +
+			"ON b.EXER_ID = a.EXER_ID WHERE a.DBID=? ";
 	private static final String SQL_LIST_ANSWER_DETAIL = "SELECT " +
 			"DBID \"id\"," +
 			"ANSWER_ID \"answerId\"," +

@@ -10,13 +10,15 @@ import java.util.Map;
 public interface AnswerDao {
 
 	/**
-	 * 根据答案标识获取答案详情
+	 * 根据答案标识获取答案详情。不单独提供录入习题解析，而是与录入答案的界面绑在一起。
+	 * 但是允许只输入习题解析，而不输入答案。
 	 * @param answerId 答案标识
-	 * @return 答案
+	 * @return 答案,	确保习题解析和答案一直在一个界面中捆绑。
 	 * <pre>
 	 * map结构为：
 	 * 		id: 答案标识
 	 * 		exerId: 答案所属习题标识
+	 * 		guide: 习题解析
 	 * 		createTime: 创建时间
 	 * 		updateTime: 更新时间
 	 * 		createUserId: 创建用户标识
