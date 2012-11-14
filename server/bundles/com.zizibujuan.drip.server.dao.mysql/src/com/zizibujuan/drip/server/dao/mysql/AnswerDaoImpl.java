@@ -14,18 +14,20 @@ import com.zizibujuan.drip.server.util.dao.DatabaseUtil;
  * @since 0.0.1
  */
 public class AnswerDaoImpl extends AbstractDao implements AnswerDao {
+	
+	private static final String SQL_GET_ANSWER = "SELECT " +
+			"DBID \"id\"," +
+			"EXER_ID \"exerciseId\"," +
+			"GUIDE \"guide\"," +
+			"CRT_TM \"createTime\"," +
+			"CRT_USER_ID \"createUserId\"," +
+			"UPT_TM \"updateTime\"," +
+			"UPT_USER_ID \"updateUserId\" " +
+			"FROM DRIP_ANSWER ";
 
 	// 暂定，将习题解析看作答案的一部分。
-	private static final String SQL_GET_ANSWER = "SELECT " +
-			"a.DBID \"id\"," +
-			"a.EXER_ID \"exerId\"," +
-			"b.CONTENT \"guide\", " +
-			"a.CRT_TM \"createTime\"," +
-			"a.CRT_USER_ID \"createUserId\"," +
-			"a.UPT_TM \"updateTime\"," +
-			"a.UPT_USER_ID \"updateUserId\" " +
-			"FROM DRIP_EXER_GUIDE b LEFT JOIN DRIP_ANSWER a " +
-			"ON b.EXER_ID = a.EXER_ID WHERE a.DBID=? ";
+	private static final String SQL_GET_ANSWER_BY_ID = SQL_GET_ANSWER + "WHERE DBID=? ";
+	
 	private static final String SQL_LIST_ANSWER_DETAIL = "SELECT " +
 			"DBID \"id\"," +
 			"ANSWER_ID \"answerId\"," +
@@ -35,7 +37,8 @@ public class AnswerDaoImpl extends AbstractDao implements AnswerDao {
 			"WHERE ANSWER_ID=?";
 	@Override
 	public Map<String, Object> get(Long answerId) {
-		Map<String,Object> result = DatabaseUtil.queryForMap(getDataSource(), SQL_GET_ANSWER, answerId);
+		Map<String,Object> result = DatabaseUtil.queryForMap(getDataSource(), SQL_GET_ANSWER_BY_ID, answerId);
+		
 		if(!result.isEmpty()){
 			List<Map<String,Object>> detail = DatabaseUtil.queryForList(getDataSource(), SQL_LIST_ANSWER_DETAIL, answerId);
 			result.put("detail", detail);
@@ -60,15 +63,7 @@ public class AnswerDaoImpl extends AbstractDao implements AnswerDao {
 	}
 
 
-	private static final String SQL_GET_EXERCISE_ANSWER_BY_USER_ID = "SELECT " +
-			"DBID \"id\"," +
-			"EXER_ID \"exerciseId\"," +
-			"CRT_TM \"createTime\"," +
-			"CRT_USER_ID \"createUserId\"," +
-			"UPT_TM \"updateTime\"," +
-			"UPT_USER_ID \"updateUserId\" " +
-			"FROM DRIP_ANSWER " +
-			"WHERE CRT_USER_ID=? AND EXER_ID=?";
+	private static final String SQL_GET_EXERCISE_ANSWER_BY_USER_ID = SQL_GET_ANSWER + "WHERE CRT_USER_ID=? AND EXER_ID=?";
 	@Override
 	public Map<String, Object> get(Long userId, Long exerciseId) {
 		Map<String,Object> result = DatabaseUtil.queryForMap(getDataSource(), SQL_GET_EXERCISE_ANSWER_BY_USER_ID, userId, exerciseId);

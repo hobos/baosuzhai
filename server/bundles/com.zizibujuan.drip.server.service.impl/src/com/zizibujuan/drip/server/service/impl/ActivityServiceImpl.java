@@ -39,8 +39,9 @@ public class ActivityServiceImpl implements ActivityService {
 				Map<String,Object> exercise = getExercise(contentId);
 				each.put("exercise", exercise);
 			}else if(actionType.equals(ActionType.ANSWER_EXERCISE)){
+				// TODO：将答案和习题解析看作一体，是用户在答题时写下的做题思路
 				Map<String,Object> answer = getAnswer(contentId);
-				Long exerciseId = Long.valueOf(answer.get("exerId").toString());
+				Long exerciseId = Long.valueOf(answer.get("exerciseId").toString());
 				Map<String,Object> exercise = getExercise(exerciseId);
 				each.put("exercise", exercise);
 				each.put("answer", answer);

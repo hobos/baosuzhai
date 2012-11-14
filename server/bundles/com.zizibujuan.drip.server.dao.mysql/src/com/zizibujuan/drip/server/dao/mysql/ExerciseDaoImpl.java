@@ -83,32 +83,31 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 			addActivity(con, userId,exerId,ActionType.SAVE_EXERCISE);
 			
 			// 如果存在答案，则添加答案
-			Object oAnswers = exerciseInfo.get("answers");
-			if(oAnswers != null){
-				Long answerId = null;
-				if(ExerciseType.SINGLE_OPTION.equals(exerType)){
-					ArrayList<String> answers = (ArrayList<String>)oAnswers;
-					List<Long> optIds = null;
-					if(optionIds != null){
-						optIds = new ArrayList<Long>();
-						for(String i : answers){
-							optIds.add(optionIds.get(Integer.valueOf(i)));
+			Object oAnswer = exerciseInfo.get("answer");
+			if(oAnswer != null){
+				Map<String,Object> answerMap = (Map<String,Object>)oAnswer;
+				ArrayList<String> detail = (ArrayList<String>)answerMap.get("detail");
+				List<Long> optIds = null;
+				if(detail != null && detail.size()>0){
+					if(ExerciseType.SINGLE_OPTION.equals(exerType)){
+						if(optionIds != null){
+							optIds = new ArrayList<Long>();
+							for(String i : detail){
+								optIds.add(optionIds.get(Integer.valueOf(i)));
+							}
 						}
 					}
-					answerId = this.addAnswer(con, exerId, oUserId, optIds, answers,exerType);
+					
 				}
-				
+				// 如果存在习题解析，则添加习题解析
+				Object oGuide = answerMap.get("guide");
+				Long answerId = null;
+				answerId = this.addAnswer(con, exerId, oUserId, optIds, detail,exerType,oGuide);
 				// 答案回答完成后，在用户的“已回答的习题数”上加1
 				// 同时修改后端和session中缓存的该记录
 				userDao.increaseAnswerCount(con, userId);
 				// 在活动表中插入一条记录
 				addActivity(con, userId,answerId,ActionType.ANSWER_EXERCISE);
-			}
-			
-			// 如果存在习题解析，则添加习题解析
-			Object oGuide = exerciseInfo.get("guide");
-			if(oGuide != null){
-				this.addGuide(con, exerId, oUserId, oGuide);
 			}
 			
 			con.commit();
@@ -159,25 +158,27 @@ public class ExerciseDaoImpl extends AbstractDao implements ExerciseDao {
 		return result;
 	}
 	
-	private static final String SQL_INSERT_EXER_GUIDE = "INSERT INTO DRIP_EXER_GUIDE " +
-			"(EXER_ID, CONTENT,CRT_TM, CRT_USER_ID) VALUES (?,?,now(),?)";
-	private void addGuide(Connection con, Long exerId, Object oUserId, Object oGuide){
-		DatabaseUtil.insert(con, SQL_INSERT_EXER_GUIDE, exerId, oGuide, oUserId);
-	}
+//	private static final String SQL_INSERT_EXER_GUIDE = "INSERT INTO DRIP_EXER_GUIDE " +
+//			"(EXER_ID, CONTENT,CRT_TM, CRT_USER_ID) VALUES (?,?,now(),?)";
+//	private void addGuide(Connection con, Long exerId, Object oUserId, Object oGuide){
+//		DatabaseUtil.insert(con, SQL_INSERT_EXER_GUIDE, exerId, oGuide, oUserId);
+//	}
 	
 	private static final String SQL_INSERT_EXER_ANSWER = "INSERT INTO DRIP_ANSWER " +
-			"(EXER_ID,CRT_TM,CRT_USER_ID) VALUES " +
-			"(?,now(),?)";
+			"(EXER_ID,GUIDE,CRT_TM,CRT_USER_ID) VALUES " +
+			"(?,?,now(),?)";
 	private static final String SQL_INSERT_EXER_ANSWER_DETAIL = "INSERT INTO DRIP_ANSWER_DETAIL " +
 			"(ANSWER_ID,OPT_ID,CONTENT) VALUES " +
 			"(?,?,?)";
 	// TODO：移到AnswerDao中？
-	private Long addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers, String exerType){
-		Long answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId, oUserId);
+	private Long addAnswer(Connection con, Long exerId, Object oUserId, List<Long> optIds, List<String> answers, String exerType, Object guide){
+		Long answerId = DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER, exerId,guide, oUserId);
 		
 		if(optIds == null){
-			for(String content : answers){
-				DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, null,content);
+			if(answers != null){
+				for(String content : answers){
+					DatabaseUtil.insert(con, SQL_INSERT_EXER_ANSWER_DETAIL, answerId, null,content);
+				}
 			}
 		}else{
 			if(exerType.equals(ExerciseType.SINGLE_OPTION) || exerType.equals(ExerciseType.MULTI_OPTION)){
