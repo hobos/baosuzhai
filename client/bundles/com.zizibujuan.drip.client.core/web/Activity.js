@@ -70,7 +70,7 @@ define(["dojo/_base/declare",
 					if(this._optionLabels.length > 0){
 						answerDiv.innerHTML = "答案是："+"<span>"+ this._optionLabels.join(",") +"</span>";
 					}else{
-						answerDiv.innerHTML = "答案是："+"<span>未作答</span>";
+						answerDiv.innerHTML = "答案是："+"<span>您还没有作答。	</span>";
 					}
 					
 				}
@@ -211,8 +211,8 @@ define(["dojo/_base/declare",
 						console.log("guide:",data.guide);
 						// TODO:在label上显示出这是在什么时候解答的，绿色显示。
 					}
-					if(data.detail){
-						array.forEach(answerInfo.detail, lang.hitch(this,this._setOptionAnswer));
+					if(data.detail && data.detail.length > 0){
+						array.forEach(data.detail, lang.hitch(this,this._setOptionAnswer));
 					}
 					
 				}));
@@ -242,7 +242,11 @@ define(["dojo/_base/declare",
 			this._getOptionEls().some(lang.hitch(this,function(node,index){
 				if(domProp.get(node,"optionId") == optionId){
 					domProp.set(node,"checked", true);
-					this._optionLabels.push(node.parentNode.nextSibling.firstChild.firstChild.innerHTML);
+					// 要是放在这里的话，加载当前用户的答案时，会覆盖掉原有的值，虽然并不会改变页面上显示的值。
+					if(this._optionLabels){
+						this._optionLabels.push(node.parentNode.nextSibling.firstChild.firstChild.innerHTML);
+					}
+					
 					return true;
 				}
 				return false;

@@ -54,33 +54,52 @@ define(["dojo/_base/declare",
 			this._createSingleSelectForm();
 			
 			// 为保存按钮绑定事件
-			var btnNewExercise = registry.byId("btnNewExercise");
+			var btnNewExercise = this.btnNewExercise = registry.byId("btnNewExercise");
 			btnNewExercise.on("click",lang.hitch(this, this.doSave));
 		},
 		
-		doSave: function(){
+		doSave: function(e){
 			// 保存之前要先校验
+			
+			// 失效保存按钮，防止重复提交
+			this.btnNewExercise.set("disabled",true);
+			
 			var data = this.data;
 			data.content = this.editorExerContent.get("value");
-			data.guide = this.editorGuide.get("value");
 			data.options = [];
-			data.answers = [];
-			query("[name="+this._optionName+"]:checked", this.tblOption).forEach(function(inputEl, index){
-				console.log(inputEl, index);
-				data.answers.push(inputEl.value);
-			});
 			registry.findWidgets(this.tblOption).forEach(function(widget, index){
 				console.log(widget, index, widget.get("value"));
 				data.options.push(widget.get("value"));
 			});
+			
+			var answer = {};
+			var answerDetail = [];
+			query("[name="+this._optionName+"]:checked", this.tblOption).forEach(function(inputEl, index){
+				console.log(inputEl, index);
+				answerDetail.push(inputEl.value);
+			});
+			
+			if(answerDetail.length > 0){
+				answer.detail = answerDetail;
+			}
+			var guide = this.editorGuide.get("value");
+			if(guide!= null && guide.length > 0){
+				answer.guide = guide;
+			}
+			if(answer.detail || answer.guide){
+				data.answer = answer;
+			}
+			
 			
 			console.log("将要保存的习题数据为：",data);
 			
 			xhr("/exercises/",{method:"POST", data:JSON.stringify(data)}).then(lang.hitch(this,function(response){
 				// 保存成功，在界面上清除用户输入数据，使处于新增状态。在页面给出保存成功的提示，在按钮旁边显示。
 				this._reset();
+				this.btnNewExercise.set("disabled",false);
 			}),lang.hitch(this, function(error){
 				// 保存失败，不清除用户输入数据，并给出详尽的错误提示
+				this.btnNewExercise.set("disabled",false);
 			}));
 		},
 		
