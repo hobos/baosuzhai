@@ -1,5 +1,10 @@
 抱素小书屋(drip)--高等数学篇
 ====
+
+
+**该仓库已迁移到 https://github.com/zizibujuan/drip**
+
+
 **让学习变的有趣！**
 
 抱素守一，孜孜不倦学习小书屋 www.zizibujuan.com ，一个开源的学习平台。
